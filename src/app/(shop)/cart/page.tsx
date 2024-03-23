@@ -1,27 +1,20 @@
-import { Metadata } from 'next';
+import { titleFont, paragraph } from '@/config/fonts';
 import styles from './page.module.css';
-import { paragraph, titleFont } from '@/config/fonts';
-
-export const metadata: Metadata = {
-  title: "Teslo Shop - Login",
-  description: "Login Page",
-  robots: "noindex, nofollow",
-};
 
 const headingClasses = [titleFont.className, styles.heading].join(' ');
 const paragraphClasses = [paragraph.className, styles.paragraph].join(' ');
 
-const LoginPage = () => {
+export const CartPage = () => {
   return (
-    <>
+    <div>
       <h1 className={headingClasses}>
-        Login Page
+        Cart Page
       </h1>
       <p className={paragraphClasses}>
         This website is under construction
       </p>
-    </>
+    </div>
   );
-}
+};
 
-export default LoginPage;
+export default CartPage;

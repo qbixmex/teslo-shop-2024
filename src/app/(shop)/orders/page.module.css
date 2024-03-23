@@ -1,0 +1,7 @@
+.heading {
+  @apply text-4xl font-bold text-center pt-5 mb-4 text-stone-700;
+}
+
+.paragraph {
+  @apply text-center text-stone-600 text-lg;
+}
