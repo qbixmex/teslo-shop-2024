@@ -1,18 +1,20 @@
 import { titleFont, paragraph } from '@/config/fonts';
-import styles from './home.module.css';
+import styles from './shop.module.css';
 
 const headingClasses = `${titleFont.className} ${styles.heading}`;
 const paragraphClasses = `${paragraph.className} ${styles.paragraph}`;
 
-export default function Home() {
+const AuthPage = () => {
   return (
-    <main className={styles.main}>
+    <div className={styles.main}>
       <h1 className={headingClasses}>
-        Welcome to Teslo Shop
+        Auth Page
       </h1>
       <p className={paragraphClasses}>
         This website is under construction
       </p>
-    </main>
+    </div>
   );
 }
+
+export default AuthPage;
