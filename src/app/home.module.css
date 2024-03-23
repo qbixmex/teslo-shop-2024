@@ -1,0 +1,11 @@
+.main {
+  @apply min-h-screen grid place-content-center;
+}
+
+.heading {
+  @apply text-4xl font-semibold text-center pt-5 mb-4 text-stone-700;
+}
+
+.content {
+  @apply text-center text-stone-600 text-lg;
+}
