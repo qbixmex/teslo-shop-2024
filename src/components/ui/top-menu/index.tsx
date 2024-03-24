@@ -1,1 +1,1 @@
-export * from './top-menu.component';
+export { default as TopMenu } from './top-menu.component';
