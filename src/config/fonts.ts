@@ -10,5 +10,5 @@ export const titleFont = Montserrat_Alternates({
 
 export const paragraph = Inter({
   subsets: ["latin"],
-  weight: ['500']
+  weight: ['200', '400', '500']
 });

@@ -1,0 +1,11 @@
+.heading {
+  @apply text-4xl font-bold text-stone-600;
+}
+
+.btnBox {
+  @apply text-center mt-5;
+}
+
+.btnLink {
+  @apply text-lg font-normal  bg-blue-600 hover:bg-blue-500 text-white transition-all px-4 py-2 rounded-lg;
+}
