@@ -1,19 +1,16 @@
-import { titleFont, paragraph } from '@/config/fonts';
 import styles from './shop.module.css';
+import { Title } from '@/components';
 
-const headingClasses = `${titleFont.className} ${styles.heading}`;
-const paragraphClasses = `${paragraph.className} ${styles.paragraph}`;
 
 export const ShopPage = () => {
   return (
-    <div>
-      <h1 className={headingClasses}>
-        Shop Page
-      </h1>
-      <p className={paragraphClasses}>
-        This website is under construction
-      </p>
-    </div>
+    <>
+      <Title
+        title="Store"
+        subtitle="All products"
+        className="mb-2"
+      />
+    </>
   );
 };
 

@@ -1,0 +1,7 @@
+.title {
+  @apply antialiased text-4xl font-semibold mt-10 mb-5 text-slate-700;
+}
+
+.subtitle {
+  @apply antialiased text-xl mb-5;
+}
