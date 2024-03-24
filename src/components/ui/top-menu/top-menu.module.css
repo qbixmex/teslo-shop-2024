@@ -1,0 +1,35 @@
+.navigation {
+  @apply flex mt-5 px-5 justify-between items-center w-full;
+}
+
+.logo {
+  @apply antialiased font-bold;
+}
+
+.centerLinks {
+  @apply hidden md:flex md:gap-x-2 mt-3 text-stone-700;
+}
+
+.linkActive {
+  @apply bg-stone-300;
+}
+
+.links {
+  @apply px-4 py-2 font-bold rounded-lg transition-all hover:bg-stone-300 hover:underline;
+}
+
+.boxChip {
+  @apply relative;
+}
+
+.chip {
+  @apply absolute grid place-content-center bg-blue-600 size-4 -top-2 -right-2 text-xs text-white rounded-full;
+}
+
+.icons {
+  @apply flex items-center gap-x-3;
+}
+
+.menuBtn {
+  @apply ml-2 px-4 py-2 rounded-md active:bg-stone-300 bg-stone-400 bg-opacity-40 text-white transition-all hidden lg:block;
+}
