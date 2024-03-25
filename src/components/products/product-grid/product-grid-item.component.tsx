@@ -1,4 +1,5 @@
-import { FC } from 'react';
+"use client";
+import { FC, useState } from 'react';
 import { Product } from '@/interfaces';
 import Image from "next/image";
 import styles from './product-grid-item.module.css';
@@ -8,6 +9,8 @@ import Link from 'next/link';
 type Props = { product: Product; };
 
 const ProductGridItem: FC<Props> = ({ product }) => {
+  const [ displayImage, setDisplayImage ] = useState(product.images[0]);
+
   return (
     <section className={`${styles.card} fade-in`}>
       <Link
@@ -16,11 +19,12 @@ const ProductGridItem: FC<Props> = ({ product }) => {
         title={`View "${product.title}" details`}
       >
         <Image
-          src={`/products/${product.images[0]}`}
+          src={`/products/${displayImage}`}
           alt={product.title}
-          className={""}
           width={500}
           height={500}
+          onMouseEnter={() => setDisplayImage(product.images[1])}
+          onMouseLeave={() => setDisplayImage(product.images[0])}
         />
       </Link>
       <div className={styles.cardDetails}>
