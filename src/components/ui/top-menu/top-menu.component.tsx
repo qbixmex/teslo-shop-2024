@@ -1,7 +1,10 @@
+"use client";
+
 import { titleFont, paragraph } from "@/config/fonts";
 import Link from "next/link";
 import styles from "./top-menu.module.css";
 import { IoSearchOutline, IoCartOutline } from "react-icons/io5";
+import { useUIStore } from "@/store";
 
 type Props = {};
 
@@ -9,6 +12,7 @@ const navigationClasses = [paragraph.className, styles.navigation].join(' ');
 const linkClasses = [titleFont.className, styles.logo].join(' ');
 
 const TopMenu: React.FC<Readonly<Props>> = () => {
+  const openSideMenu = useUIStore((store) => store.openSideMenu);
 
   return (
     <nav className={navigationClasses}>
@@ -61,6 +65,7 @@ const TopMenu: React.FC<Readonly<Props>> = () => {
         <button
           type="button"
           className={styles.menuBtn}
+          onClick={openSideMenu}
         >Menu</button>
       </section>
     </nav>

@@ -6,6 +6,10 @@
   @apply fixed top-0 left-0 z-20 w-screen h-screen backdrop-filter backdrop-blur-sm;
 }
 
+.closedMenu {
+  @apply translate-x-full;
+}
+
 .nav {
   @apply fixed p-5 right-0 top-0 z-30 w-[400px] h-screen bg-stone-100 shadow-[-10px_0px_20px_5px_rgba(0,0,0,0.4)] transform transition-all duration-300;
 }

@@ -31,5 +31,5 @@
 }
 
 .menuBtn {
-  @apply ml-2 px-4 py-2 rounded-md active:bg-stone-300 bg-stone-400 bg-opacity-40 text-white transition-all hidden lg:block;
+  @apply ml-2 px-4 py-2 rounded-md active:bg-stone-300 bg-stone-400 bg-opacity-40 text-white transition-all;
 }
