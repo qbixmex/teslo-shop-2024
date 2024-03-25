@@ -32,12 +32,12 @@ const TopMenu: React.FC<Readonly<Props>> = () => {
         >Men</Link>
 
         <Link
-          href="/category/woman"
+          href="/category/women"
           className={`${false ? styles.linkActive : ''} ${styles.links}`}
         >Woman</Link>
 
         <Link
-          href="/category/kids"
+          href="/category/kid"
           className={`${false ? styles.linkActive : ''} ${styles.links}`}
         >Kids</Link>
       </section>
