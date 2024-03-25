@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
-import { TopMenu } from "@/components";
-import styles from "./layout.module.css";
+import { Sidebar, TopMenu } from "@/components";
 
 export const metadata: Metadata = {
   title: "Teslo Shop",
@@ -13,6 +12,7 @@ const ShopLayout: React.FC<Readonly<Props>> = ({ children }) => {
   return (
     <>
       <TopMenu />
+      <Sidebar />
       <main>
         <div className="w-[95%] lg:w-[90%] xl:[80%] mx-auto">
           {children}

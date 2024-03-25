@@ -1,4 +1,5 @@
 "use client";
+
 import { FC, useState } from 'react';
 import { Product } from '@/interfaces';
 import Image from "next/image";
@@ -23,6 +24,7 @@ const ProductGridItem: FC<Props> = ({ product }) => {
           alt={product.title}
           width={500}
           height={500}
+          priority={true}
           onMouseEnter={() => setDisplayImage(product.images[1])}
           onMouseLeave={() => setDisplayImage(product.images[0])}
         />
