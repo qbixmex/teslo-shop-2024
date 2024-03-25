@@ -1,0 +1,4 @@
+.grid {
+  @apply grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:md:grid-cols-4 gap-5 sm:gap-4 md:gap-3 lg:gap-4;
+}
+

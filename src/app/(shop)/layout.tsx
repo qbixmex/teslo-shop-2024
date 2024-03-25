@@ -14,7 +14,7 @@ const ShopLayout: React.FC<Readonly<Props>> = ({ children }) => {
     <>
       <TopMenu />
       <main>
-        <div className={styles.container}>
+        <div className="w-[95%] lg:w-[90%] xl:[80%] mx-auto">
           {children}
         </div>
       </main>

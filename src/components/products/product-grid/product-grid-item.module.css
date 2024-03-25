@@ -1,0 +1,31 @@
+.card {
+  @apply border border-gray-400 rounded-md w-[100%];
+}
+
+.cardImage {
+  @apply max-w-[640px] w-[100%] h-auto rounded-t-md;
+}
+
+.cardDetails {
+  @apply flex flex-col place-content-center h-[120px] bg-gray-50 border-t rounded-b-md p-4;
+}
+
+.cardTitle {
+  @apply text-lg text-slate-600 font-semibold;
+}
+
+.cardLink {
+  @apply hover:text-sky-600 font-bold transition-all;
+}
+
+.cardPrice {
+  @apply text-lg font-bold;
+}
+
+.cardPriceLabel {
+  @apply text-gray-600;
+}
+
+.cardPriceValue {
+  @apply text-green-700;
+}

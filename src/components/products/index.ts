@@ -1,1 +1,1 @@
-export {};
+export { default as ProductGrid } from './product-grid/product-grid.component';
