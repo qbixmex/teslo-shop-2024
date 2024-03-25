@@ -1,5 +1,5 @@
 .blackBG {
-  @apply fixed top-0 left-0 z-10 w-screen h-screen bg-black bg-opacity-30;
+  @apply fixed top-0 left-0 z-10 w-screen min-h-screen bg-black bg-opacity-30;
 }
 
 .blurBG {
@@ -11,15 +11,15 @@
 }
 
 .nav {
-  @apply fixed p-5 right-0 top-0 z-30 w-[400px] h-screen bg-stone-100 shadow-[-10px_0px_20px_5px_rgba(0,0,0,0.4)] transform transition-all duration-300;
+  @apply fixed p-5 right-0 top-0 z-30 w-[400px] min-h-screen bg-stone-100 shadow-[-10px_0px_20px_5px_rgba(0,0,0,0.4)] transform transition-all duration-300;
 }
 
 .closeIcon {
-  @apply text-slate-700 hover:text-slate-500 size-[50px] absolute top-5 right-5 cursor-pointer transition-colors duration-150;
+  @apply text-slate-700 hover:text-slate-500 size-[50px] absolute top-5 right-2 cursor-pointer transition-colors duration-150;
 }
 
 .searchWrapper {
-  @apply mt-16 relative;
+  @apply relative w-[310px];
 }
 
 .searchIcon {
@@ -39,9 +39,13 @@
 }
 
 .linkIcon {
-  @apply size-6;
+  @apply text-slate-600 size-6;
 }
 
 .linkText {
   @apply text-lg;
+}
+
+.separator {
+  @apply w-full bg-slate-300 h-px my-5;
 }
