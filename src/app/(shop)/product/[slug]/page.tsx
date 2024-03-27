@@ -2,11 +2,10 @@ import { FC } from 'react';
 
 import { Metadata } from 'next';
 import { initialData } from '@/seed/seed';
-import Image from 'next/image';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { notFound } from 'next/navigation';
 import styles from './page.module.css';
-import { SizeSelector } from '@/components';
+import { SizeSelector, SlideShow } from '@/components';
 
 export const metadata: Metadata = {
   title: "Teslo Shop - Product #",
@@ -34,15 +33,10 @@ export const ProductPage: FC<Props> = ({ params: { slug } }) => {
 
   return (
     <section className={styles.container}>
-      {/* Slice Show */}
       <section className={styles.sliceShow}>
-        <Image
-          src={`/products/${product?.images[0]}`}
-          alt={product?.title ?? 'Product Image'}
-          className={styles.sliceShowImage}
-          width={810}
-          height={810}
-          priority
+        <SlideShow
+          images={product.images}
+          productTitle={product.title}
         />
       </section>
 
