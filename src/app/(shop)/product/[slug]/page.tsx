@@ -34,10 +34,7 @@ export const ProductPage: FC<Props> = ({ params: { slug } }) => {
   return (
     <section className={styles.container}>
       <section className={styles.sliceShow}>
-        <SlideShow
-          images={product.images}
-          productTitle={product.title}
-        />
+        <SlideShow images={product.images} productTitle={product.title} />
       </section>
 
       {/* Details */}
@@ -92,7 +89,7 @@ export const ProductPage: FC<Props> = ({ params: { slug } }) => {
 
       {/* Description */}
       <section className={styles.description}>
-        <h2 className={styles.subheading}>Description</h2>
+        <h2 className={styles.heading}>Description</h2>
         <p className={styles.text}>{product?.description}</p>
       </section>
     </section>

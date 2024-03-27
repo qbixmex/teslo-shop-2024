@@ -1,3 +1,7 @@
 .image {
-  @apply rounded-lg w-full h-[800px] object-cover;
+  @apply rounded-lg w-full h-[600px] object-cover;
+}
+
+.thumbnails {
+  @apply rounded-lg w-full h-full object-contain;
 }

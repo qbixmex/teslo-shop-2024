@@ -9,8 +9,8 @@ import 'swiper/css/free-mode';
 import 'swiper/css/navigation';
 import 'swiper/css/thumbs';
 import './swiper-styles.css';
+import { Autoplay, FreeMode, Navigation, Thumbs } from "swiper/modules";
 import styles from "./product-slide-show.module.css";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 
 type Props = {
   images: string[];
@@ -18,7 +18,7 @@ type Props = {
 };
 
 const SlideShow: FC<Readonly<Props>> = ({ images, productTitle }) => {
-  const [ thumbsSwiper, setThumbsSwiper ] = useState<SwiperType>();
+  const [ thumbsSwiper, setThumbsSwiper ] = useState<SwiperType | null>(null);
 
   return (
     <section className={styles.sliceShow}>
@@ -31,16 +31,19 @@ const SlideShow: FC<Readonly<Props>> = ({ images, productTitle }) => {
         }
         spaceBetween={10}
         navigation={true}
-        thumbs={{ swiper: thumbsSwiper }}
-        modules={[ FreeMode, Navigation, Thumbs ]}
+        autoplay={{ delay: 3000 }}
+        thumbs={{
+          swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
+        }}
+        modules={[ FreeMode, Navigation, Thumbs, Autoplay ]}
         className="mySwiper2"
       >
       {images.map(image => (
         <SwiperSlide key={image}>
           <Image
             src={`/products/${image}`}
-            width={1024}
-            height={800}
+            width={600}
+            height={600}
             priority
             alt={productTitle}
             className={styles.image}
@@ -49,7 +52,7 @@ const SlideShow: FC<Readonly<Props>> = ({ images, productTitle }) => {
       ))}
         
       </Swiper>
-      {/* <Swiper
+      <Swiper
         onSwiper={setThumbsSwiper}
         spaceBetween={10}
         slidesPerView={4}
@@ -58,10 +61,19 @@ const SlideShow: FC<Readonly<Props>> = ({ images, productTitle }) => {
         modules={[FreeMode, Navigation, Thumbs]}
         className="mySwiper"
       >
-        <SwiperSlide>
-          <img src="https://swiperjs.com/demos/images/nature-1.jpg" />
-        </SwiperSlide>
-      </Swiper> */}
+        {images.map(image => (
+          <SwiperSlide key={image}>
+            <Image
+              src={`/products/${image}`}
+              width={300}
+              height={300}
+              priority
+              alt={productTitle}
+              className={styles.thumbnails}
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </section>
   );
 
