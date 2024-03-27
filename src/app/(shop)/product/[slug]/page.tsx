@@ -2,10 +2,9 @@ import { FC } from 'react';
 
 import { Metadata } from 'next';
 import { initialData } from '@/seed/seed';
-import { FaPlus, FaMinus } from 'react-icons/fa';
 import { notFound } from 'next/navigation';
 import styles from './page.module.css';
-import { SizeSelector, SlideShow, SlideShowMobile } from '@/components';
+import { QuantitySelector, SizeSelector, SlideShow, SlideShowMobile } from '@/components';
 
 export const metadata: Metadata = {
   title: "Teslo Shop - Product #",
@@ -18,9 +17,6 @@ type Props = {
     slug: string;
   };
 };
-
-const buttonCSS = `group ${styles.buttons}`;
-const buttonIconCSS = `${styles.buttonsIcon} group-hover:text-stone-600 group-active:text-stone-100`;
 
 export const ProductPage: FC<Props> = ({ params: { slug } }) => {
 
@@ -78,17 +74,8 @@ export const ProductPage: FC<Props> = ({ params: { slug } }) => {
         <section>
           <h2 className={styles.heading}>Quantity</h2>
 
-          <section className={styles.buttonsContainer}>
-            <button className={buttonCSS}>
-              <FaPlus className={buttonIconCSS} />
-            </button>
-            <div className={styles.quantity}>
-              4
-            </div>
-            <button className={buttonCSS}>
-              <FaMinus className={buttonIconCSS} />
-            </button>
-          </section>
+          {/* Quantity Selector */}
+          <QuantitySelector />
 
           <section>
             <button className={styles.addToCart}>
