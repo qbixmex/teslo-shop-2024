@@ -9,25 +9,33 @@ type Props = {
 };
 
 const QuantitySelector: React.FC<Readonly<Props>> = ({ quantity = 0 }) => {
-  const [ value, setValue ] = useState(quantity)
+  const [ value, setValue ] = useState(quantity);
+
+  const handleIncrement = () => {
+    setValue(prev => prev + 1);
+  };
+
+  const handleDecrement = () => {
+    if (value > 0) setValue(prev => prev - 1);
+  };
+
   return (
     <section className={styles.buttonsContainer}>
-      <button
-        className={styles.buttons}
-        onClick={() => setValue(value + 1)}
-      >
-        <FaPlus className={styles.buttonsIcon} />
-      </button>
+      {
+        <button
+          className={styles.buttons}
+          onClick={handleIncrement}
+        >
+          <FaPlus className={styles.buttonsIcon} />
+        </button>
+      }
       <div className={styles.quantity}>
         {value}
       </div>
       <button
-        className={styles.buttons}
-        onClick={() => {
-          if (value > 0) {
-            setValue(value - 1);
-          }
-        }}
+        className={(value === 0) ? styles["buttons--disabled"] : styles.buttons}
+        disabled={value === 0}
+        onClick={handleDecrement}
       >
         <FaMinus className={styles.buttonsIcon} />
       </button>
