@@ -1,0 +1,19 @@
+.sizeSection {
+  @apply mb-4;
+}
+
+.heading {
+  @apply antialiased text-stone-600 font-semibold text-xl mb-3;
+}
+
+.sizesContainer {
+  @apply flex gap-3;
+}
+
+.sizeBTN {
+  @apply bg-stone-400 hover:bg-stone-300 w-[50px] h-[35px] rounded-lg text-gray-100 font-bold transition-colors;
+}
+
+.size--selected {
+  @apply bg-stone-500;
+}

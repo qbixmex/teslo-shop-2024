@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { notFound } from 'next/navigation';
 import styles from './page.module.css';
+import { SizeSelector } from '@/components';
 
 export const metadata: Metadata = {
   title: "Teslo Shop - Product #",
@@ -66,11 +67,10 @@ export const ProductPage: FC<Props> = ({ params: { slug } }) => {
           </section>
         </section>
 
-        {/* Size */}
-        <section className={styles.sizeSection}>
-          <h2 className={styles.subheading}>Size</h2>
-          <p className={styles.text}>{product?.sizes.join(' | ')}</p>
-        </section>
+        <SizeSelector
+          sizeSelected={product?.sizes[0]}
+          availableSizes={product?.sizes}
+        />
 
         {/* Quantity */}
         <section>
