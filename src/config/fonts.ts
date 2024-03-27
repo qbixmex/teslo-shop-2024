@@ -1,14 +1,16 @@
 import {
-  Inter,
-  Montserrat_Alternates
+  Open_Sans,
+  Montserrat_Alternates,
 } from "next/font/google";
 
-export const titleFont = Montserrat_Alternates({
+export const montserrat_alternates = Montserrat_Alternates({
   subsets: ["latin"],
-  weight: ['500', '700']
+  weight: ['500', '700'],
+  variable: '--font-montserrat-alternates',
 });
 
-export const paragraph = Inter({
+export const open_sans = Open_Sans({
   subsets: ["latin"],
-  weight: ['200', '400', '500']
+  weight: ['400', '600'],
+  variable: '--font-roboto-mono',
 });

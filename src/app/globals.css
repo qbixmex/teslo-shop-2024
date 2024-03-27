@@ -9,6 +9,14 @@
   --background-end-rgb: 255, 255, 255;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-montserrat-alternates);
+}
+
+div, span, p, a, button, input, label, li, th, td {
+  font-family: var(--font-roboto-mono);
+}
+
 @keyframes fadeIn {
   0% {opacity: 0;}
   100% {opacity: 1;}

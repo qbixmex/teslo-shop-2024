@@ -5,7 +5,6 @@ import { IoClose, IoList, IoLogIn, IoLogOut, IoMan, IoPeople, IoPerson, IoSearch
 import { FaChildren } from "react-icons/fa6";
 import styles from './sidebar.module.css';
 import Link from 'next/link';
-import { paragraph } from '@/config/fonts';
 import { useUIStore } from '@/store';
 import clsx from 'clsx';
 
@@ -55,12 +54,12 @@ const Sidebar = () => {
         <section className={styles.linksWrapper}>
           <Link href="#" className={styles.link} onClick={closeSideMenu}>
             <IoPerson className={styles.linkIcon} />
-            <span className={`${paragraph.className} ${styles.linkText}`}>Profile</span>
+            <span className={styles.linkText}>Profile</span>
           </Link>
 
           <Link href="#" className={styles.link} onClick={closeSideMenu}>
             <IoTicket className={styles.linkIcon} />
-            <span className={`${paragraph.className} ${styles.linkText}`}>Orders</span>
+            <span className={styles.linkText}>Orders</span>
           </Link>
         </section>
 
@@ -70,27 +69,27 @@ const Sidebar = () => {
         <section className={styles.linksWrapper}>
           <Link href="/products" className={styles.link} onClick={closeSideMenu}>
             <IoShirt className={styles.linkIcon} />
-            <span className={`${paragraph.className} ${styles.linkText}`}>Products</span>
+            <span className={styles.linkText}>Products</span>
           </Link>
 
           <Link href="/category/men" className={styles.link} onClick={closeSideMenu}>
             <IoMan className={styles.linkIcon} />
-            <span className={`${paragraph.className} ${styles.linkText}`}>Men</span>
+            <span className={styles.linkText}>Men</span>
           </Link>
 
           <Link href="/category/women" className={styles.link} onClick={closeSideMenu}>
             <IoWoman className={styles.linkIcon} />
-            <span className={`${paragraph.className} ${styles.linkText}`}>Women</span>
+            <span className={styles.linkText}>Women</span>
           </Link>
 
           <Link href="/category/kid" className={styles.link} onClick={closeSideMenu}>
             <FaChildren className={styles.linkIcon} />
-            <span className={`${paragraph.className} ${styles.linkText}`}>Kids</span>
+            <span className={styles.linkText}>Kids</span>
           </Link>
 
           <Link href="#" className={styles.link} onClick={closeSideMenu}>
             <IoPeople className={styles.linkIcon} />
-            <span className={`${paragraph.className} ${styles.linkText}`}>For Everyone</span>
+            <span className={styles.linkText}>For Everyone</span>
           </Link>
 
         </section>
@@ -100,12 +99,12 @@ const Sidebar = () => {
 
         <Link href="#" className={styles.link} onClick={closeSideMenu}>
           <IoList className={styles.linkIcon} />
-          <span className={`${paragraph.className} ${styles.linkText}`}>Orders</span>
+          <span className={styles.linkText}>Orders</span>
         </Link>
 
         <Link href="#" className={styles.link} onClick={closeSideMenu}>
           <IoPeople className={styles.linkIcon} />
-          <span className={`${paragraph.className} ${styles.linkText}`}>Users</span>
+          <span className={styles.linkText}>Users</span>
         </Link>
 
         {/* Line Separator */}
@@ -115,12 +114,12 @@ const Sidebar = () => {
         {true ? (
             <Link href="#" className={styles.link} onClick={closeSideMenu}>
               <IoLogOut className={styles.linkIcon} />
-              <span className={`${paragraph.className} ${styles.linkText}`}>Log-Out</span>
+              <span className={styles.linkText}>Log-Out</span>
             </Link>
           ) : (
             <Link href="#" className={styles.link} onClick={closeSideMenu}>
               <IoLogIn className={styles.linkIcon} />
-              <span className={`${paragraph.className} ${styles.linkText}`}>Log-In</span>
+              <span className={styles.linkText}>Log-In</span>
             </Link>
         )}
         {/* TODO END */}
