@@ -11,17 +11,26 @@ import 'swiper/css/thumbs';
 import './swiper-styles.css';
 import { Autoplay, FreeMode, Navigation, Thumbs } from "swiper/modules";
 import styles from "./product-slide-show.module.css";
+import clsx from "clsx";
 
 type Props = {
   images: string[];
   productTitle: string;
+  className?: string;
 };
 
-const SlideShow: FC<Readonly<Props>> = ({ images, productTitle }) => {
+const SlideShow: FC<Readonly<Props>> = ({
+  images,
+  productTitle,
+  className
+}) => {
   const [ thumbsSwiper, setThumbsSwiper ] = useState<SwiperType | null>(null);
 
   return (
-    <section className={styles.sliceShow}>
+    <section className={clsx(
+      styles.sliceShow,
+      { [className ?? '']: className }
+    )}>
       <Swiper
         style={
           {

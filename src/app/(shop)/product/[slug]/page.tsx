@@ -5,7 +5,7 @@ import { initialData } from '@/seed/seed';
 import { FaPlus, FaMinus } from 'react-icons/fa';
 import { notFound } from 'next/navigation';
 import styles from './page.module.css';
-import { SizeSelector, SlideShow } from '@/components';
+import { SizeSelector, SlideShow, SlideShowMobile } from '@/components';
 
 export const metadata: Metadata = {
   title: "Teslo Shop - Product #",
@@ -34,13 +34,24 @@ export const ProductPage: FC<Props> = ({ params: { slug } }) => {
   return (
     <section className={styles.container}>
       <section className={styles.sliceShow}>
-        <SlideShow images={product.images} productTitle={product.title} />
+        {/* Slideshow Mobile */}
+        <SlideShowMobile
+          images={product.images}
+          productTitle={product.title}
+          className="block md:hidden"
+        />
+        {/* Slideshow Desktop */}
+        <SlideShow
+          images={product.images}
+          productTitle={product.title}
+          className="hidden md:block"
+        />
       </section>
 
       {/* Details */}
       <section className={styles.details}>
         {/* Heading */}
-        <h1 className={styles.heading}>
+        <h1 className={styles.title}>
           {product?.title}
         </h1>
 
@@ -51,7 +62,7 @@ export const ProductPage: FC<Props> = ({ params: { slug } }) => {
 
         {/* Color */}
         <section className={styles.colorSection}>
-          <h2 className={styles.subheading}>Color</h2>
+          <h2 className={styles.heading}>Color</h2>
           <section className={styles.colorContainer}>
             <button className={`${styles.color} ${styles['color--light']}`} />
             <button className={`${styles.color} ${styles['color--dark']}`} />
@@ -65,7 +76,7 @@ export const ProductPage: FC<Props> = ({ params: { slug } }) => {
 
         {/* Quantity */}
         <section>
-          <h2 className={styles.subheading}>Quantity</h2>
+          <h2 className={styles.heading}>Quantity</h2>
 
           <section className={styles.buttonsContainer}>
             <button className={buttonCSS}>
