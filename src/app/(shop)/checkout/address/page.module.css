@@ -1,7 +1,27 @@
-.heading {
-  @apply text-4xl font-bold text-center pt-5 mb-4 text-stone-700;
+.container {
+  @apply w-full mx-auto flex flex-col sm:w-[80%] md:w-[640px] lg:w-[768px] xl:w-[1024px];
 }
 
-.paragraph {
-  @apply text-center text-stone-600 text-lg;
+.subContainer {
+  @apply flex flex-col gap-y-3 text-left;
+}
+
+.label {
+  @apply font-bold mb-2;
+}
+
+.fieldsContainer {
+  @apply grid grid-cols-1 lg:grid-cols-2 gap-x-5 bg-stone-100 p-5 rounded;
+}
+
+.fieldsColumn {
+  @apply col-span-1;
+}
+
+.field {
+  @apply px-3 py-2 border rounded-md bg-gray-200 text-gray-700 focus:outline-none;
+}
+
+.nextBTN {
+  @apply block my-10 bg-blue-600 hover:bg-blue-500 rounded text-white w-full py-2 text-center transition-colors lg:w-[100px];
 }
