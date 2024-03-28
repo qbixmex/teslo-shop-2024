@@ -7,9 +7,10 @@ import styles from "./cart-item.module.css";
 
 type Props = {
   product: Product;
+  checkout?: boolean;
 };
 
-const CartItem: React.FC<Readonly<Props>> = ({ product }) => {
+const CartItem: React.FC<Readonly<Props>> = ({ product, checkout = false }) => {
 
   return (
     <section key={product.slug} className={styles.container}>
@@ -22,9 +23,18 @@ const CartItem: React.FC<Readonly<Props>> = ({ product }) => {
       />
       <section>
         <h2 className={styles.title}>{product.title}</h2>
-        <QuantitySelector quantity={3} />
-        <p className={styles.price}>$ {product.price.toFixed(2)}</p>
-        <button className={styles.btn}>remove</button>
+        {
+          (checkout)
+            ? <div className={styles.quantity}>3 items</div>
+            : <QuantitySelector quantity={3} />
+        }
+        <div className={styles.priceContainer}>
+          <span className={styles.priceLabel}>Subtotal:</span>
+          <span className={styles.priceValue}>
+            $ {(product.price * 3).toFixed(2)}
+          </span>
+        </div>
+        { !checkout && (<button className={styles.btn}>remove</button>) }
       </section>
     </section>
   );

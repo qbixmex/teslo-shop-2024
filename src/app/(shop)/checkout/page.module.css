@@ -1,0 +1,95 @@
+.container {
+  @apply mb-72 px-10 sm:px-0;
+}
+
+.header {
+  @apply flex flex-col mb-10;
+}
+
+.headerMessage {
+  @apply text-xl mb-2;
+}
+
+.mainContainer {
+  @apply grid grid-cols-1 gap-5 lg:grid-cols-3;
+}
+
+.cart {
+  @apply lg:col-span-2 flex flex-col gap-5;
+}
+
+.heading {
+  @apply text-4xl font-bold text-center pt-5 mb-4 text-stone-700;
+}
+
+.paragraph {
+  @apply text-center text-stone-600 text-lg;
+}
+
+.divider {
+  @apply my-5 border-b-2 border-stone-300 border-dotted;
+}
+
+.deliveryAddressTable {
+  @apply mb-5 w-full;
+}
+
+.addressRow {
+  @apply text-left border-b-2 last-of-type:border-b-0;
+}
+
+.addressRow th {
+  @apply font-semibold text-stone-700 w-[150px];
+}
+
+.addressRow th, .addressRow td {
+  @apply p-2;
+}
+
+.addressRow td {
+  @apply text-stone-500;
+}
+
+.summary {
+  @apply lg:col-span-1 bg-stone-100 rounded-md shadow h-fit p-7;
+}
+
+.summaryTable {
+  @apply w-full mb-5;
+}
+
+.summaryHeading {
+  @apply text-2xl font-bold text-stone-700 mb-3;
+}
+
+.summaryRow {
+  @apply border-b-2;
+}
+
+.summaryTableHeader {
+  @apply p-2 text-stone-600 text-left text-base font-semibold;
+}
+
+.summaryTableData {
+  @apply text-left p-2;
+}
+
+.summaryAmount {
+  @apply text-blue-600 font-bold;
+}
+
+.summaryTotal {
+  @apply text-green-600 font-bold text-xl;
+}
+
+.summaryExtraInfo {
+  @apply ml-3 text-stone-500 text-sm;
+}
+
+.disclaimer {
+  @apply text-center text-stone-600 text-sm;
+}
+
+.summaryCheckoutBtn {
+  @apply bg-blue-600 hover:bg-blue-500 active:bg-green-200 px-4 py-2 text-white rounded block w-full mt-5 text-center transition-colors;
+}

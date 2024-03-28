@@ -18,7 +18,7 @@ type Props = {
   };
 };
 
-export const ProductPage: FC<Props> = ({ params: { slug } }) => {
+const ProductPage: FC<Props> = ({ params: { slug } }) => {
 
   const seedProducts = initialData.products;
   const product = seedProducts.find(product => product.slug === slug);

@@ -2,7 +2,7 @@ import ProductGrid from '@/components/products/product-grid/product-grid.compone
 import { Title } from '@/components';
 import { initialData } from '@/seed/seed';
 
-export const ShopPage = () => {
+const ShopPage = () => {
   return (
     <>
       <Title

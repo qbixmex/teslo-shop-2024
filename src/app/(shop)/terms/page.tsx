@@ -2,22 +2,22 @@ import styles from './page.module.css';
 import { Metadata } from 'next';
 
 export const metadata: Metadata = {
-  title: "Teslo Shop - Empty",
-  description: "Empty Page",
+  title: "Teslo Shop - Terms of service",
+  description: "Terms of service for using Teslo Shop",
   robots: "noindex, nofollow",
 };
 
-const EmptyPage = () => {
+const TermsPage = () => {
   return (
     <div>
       <h1 className={styles.heading}>
-        Empty Page
+        Terms Page
       </h1>
       <p className={styles.paragraph}>
-        This website is under construction
+        Terms of service for using Teslo Shop.
       </p>
     </div>
   );
 };
 
-export default EmptyPage;
+export default TermsPage;

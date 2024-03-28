@@ -1,16 +1,12 @@
-import { titleFont, paragraph } from '@/config/fonts';
 import styles from './page.module.css';
 
-const headingClasses = [titleFont.className, styles.heading].join(' ');
-const paragraphClasses = [paragraph.className, styles.paragraph].join(' ');
-
-export const AdminPage = () => {
+const AdminPage = () => {
   return (
     <div>
-      <h1 className={headingClasses}>
+      <h1 className={styles.heading}>
         Admin Page
       </h1>
-      <p className={paragraphClasses}>
+      <p className={styles.paragraph}>
         This website is under construction
       </p>
     </div>

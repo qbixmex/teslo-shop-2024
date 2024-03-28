@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   robots: "noindex, nofollow",
 };
 
-export const AddressPage = () => {
+const AddressPage = () => {
   return (
     <section className={styles.container}>
       <section className={styles.subContainer}>

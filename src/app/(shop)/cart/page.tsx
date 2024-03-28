@@ -9,7 +9,7 @@ const productsInCart = [
   initialData.products[40],
 ];
 
-export const CartPage = () => {
+const CartPage = () => {
   return (
     <section className={styles.container}>
       <section className={styles.header}>

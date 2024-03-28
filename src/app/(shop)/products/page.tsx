@@ -1,4 +1,3 @@
-import { titleFont, paragraph } from '@/config/fonts';
 import styles from './page.module.css';
 import { Metadata } from 'next';
 
@@ -8,16 +7,13 @@ export const metadata: Metadata = {
   robots: "noindex, nofollow",
 };
 
-const headingClasses = [titleFont.className, styles.heading].join(' ');
-const paragraphClasses = [paragraph.className, styles.paragraph].join(' ');
-
-export const ProductsPage = () => {
+const ProductsPage = () => {
   return (
     <div>
-      <h1 className={headingClasses}>
+      <h1 className={styles.heading}>
         Products Page
       </h1>
-      <p className={paragraphClasses}>
+      <p className={styles.paragraph}>
         This website is under construction
       </p>
     </div>
