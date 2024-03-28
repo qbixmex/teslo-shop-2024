@@ -1,0 +1,19 @@
+.container {
+  @apply flex gap-5;
+}
+
+.image {
+  @apply size-[200px] rounded object-cover;
+}
+
+.title {
+  @apply text-stone-700 text-2xl mb-4;
+}
+
+.price {
+  @apply text-green-600 text-xl font-bold mb-4;
+}
+
+.btn {
+  @apply bg-red-600 hover:bg-red-500 active:bg-red-200 px-4 py-2 text-white rounded-lg w-fit transition-colors;
+}
