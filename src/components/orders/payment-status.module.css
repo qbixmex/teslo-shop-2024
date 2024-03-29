@@ -1,0 +1,11 @@
+.status {
+  @apply flex items-center gap-2;
+}
+
+.isPaid {
+  @apply text-green-800;
+}
+
+.isUnpaid {
+  @apply text-red-800;
+}
