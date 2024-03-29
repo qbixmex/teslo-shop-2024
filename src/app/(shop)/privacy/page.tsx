@@ -9,14 +9,14 @@ export const metadata: Metadata = {
 
 const PrivacyPage = () => {
   return (
-    <div>
+    <section className={styles.container}>
       <h1 className={styles.heading}>
         Privacy
       </h1>
       <p className={styles.paragraph}>
         Policy on how we handle your data.
       </p>
-    </div>
+    </section>
   );
 };
 

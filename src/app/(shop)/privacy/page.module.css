@@ -1,3 +1,7 @@
+.container {
+  @apply min-h-[calc(100vh-200px)] grid place-content-center;
+}
+
 .heading {
   @apply text-4xl font-bold text-center pt-5 mb-4 text-stone-700;
 }

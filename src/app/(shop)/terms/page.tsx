@@ -9,14 +9,14 @@ export const metadata: Metadata = {
 
 const TermsPage = () => {
   return (
-    <div>
+    <section className={styles.container}>
       <h1 className={styles.heading}>
         Terms Page
       </h1>
       <p className={styles.paragraph}>
         Terms of service for using Teslo Shop.
       </p>
-    </div>
+    </section>
   );
 };
 

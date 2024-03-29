@@ -1,0 +1,11 @@
+.container {
+  @apply flex justify-center gap-5 mb-5 mt-20;
+}
+
+.copyright {
+  @apply text-gray-500;
+}
+
+.link {
+  @apply text-gray-500 hover:underline;
+}
