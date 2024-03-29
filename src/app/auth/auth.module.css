@@ -1,0 +1,43 @@
+.container {
+  @apply flex justify-center items-center h-screen;
+}
+
+.content {
+  @apply bg-stone-100 p-5 rounded w-[320px] mx-auto sm:w-[512px];
+}
+
+.heading {
+  @apply text-stone-700 text-2xl mb-5;
+}
+
+.group {
+  @apply flex flex-col mb-5 text-stone-600;
+}
+
+.label {
+  @apply text-base font-semibold mb-2;
+}
+
+.field {
+  @apply border border-stone-200 rounded-md px-3 py-2 focus:outline-stone-300;
+}
+
+.btn--extras {
+  @apply w-full mt-2;
+}
+
+.divisorContainer {
+  @apply flex items-center my-5;
+}
+
+.divisorLine {
+  @apply flex-1 border-b text-gray-800;
+}
+
+.divisorText {
+  @apply mx-2 text-stone-500 font-semibold;
+}
+
+.registerBtn {
+  @apply block w-full text-center;
+}

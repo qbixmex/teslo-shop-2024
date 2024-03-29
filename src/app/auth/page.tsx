@@ -1,16 +1,7 @@
-import styles from './shop.module.css';
+import { redirect } from 'next/navigation';
 
 const AuthPage = () => {
-  return (
-    <div className={styles.main}>
-      <h1 className={styles.heading}>
-        Auth Page
-      </h1>
-      <p className={styles.paragraph}>
-        This website is under construction
-      </p>
-    </div>
-  );
+  return redirect('/auth/login');
 }
 
 export default AuthPage;
