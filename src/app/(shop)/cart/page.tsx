@@ -1,15 +1,22 @@
+import { redirect } from 'next/navigation';
+import Link from 'next/link';
 import { CartItem, Title } from '@/components';
 import styles from './page.module.css';
 import { initialData } from '@/seed/seed';
-import Link from 'next/link';
+import { Product } from '@/interfaces';
 
-const productsInCart = [
+const productsInCart: Product[] = [
   initialData.products[25],
   initialData.products[35],
   initialData.products[40],
 ];
 
 const CartPage = () => {
+
+  if (productsInCart.length === 0) {
+    redirect('/empty');
+  }
+
   return (
     <section className={styles.container}>
       <section className={styles.header}>
