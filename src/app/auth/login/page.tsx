@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import styles from '../auth.module.css';
 import Link from 'next/link';
+import { FormFields } from '@/components';
 
 export const metadata: Metadata = {
   title: "Teslo Shop - Login",
@@ -14,31 +15,9 @@ const LoginPage = () => {
       <section className={styles.content}>
         <h1 className={styles.heading}>Sign In</h1>
         <form action="#">
-          <section className={styles.group}>
-            <label className={styles.label} htmlFor="email">Email:</label>
-            <input
-              id="email"
-              type="email"
-              name="email"
-              required
-              className={styles.field}
-              autoComplete="off"
-            />
-          </section>
-          <section className={styles.group}>
-            <label htmlFor="password" className={styles.label}>
-              password
-            </label>
-            <input
-              id="password"
-              name="password"
-              type="password"
-              value=""
-              required
-              className={styles.field}
-              autoComplete="off"
-            />
-          </section>
+
+          <FormFields />
+
           <section>
             <button
               type="submit"
