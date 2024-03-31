@@ -12,3 +12,60 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+enum Size {
+  XS
+  S
+  M
+  L
+  XL
+  XXL
+  XXXL
+}
+
+enum Gender {
+  men
+  women
+  kid
+  unisex
+}
+
+model Category {
+  id        String    @id @default(uuid())
+  name      String    @unique
+
+  // Relationship
+  Product   Product[]
+
+  @@map("categories")
+
+  // Timestamps
+  createdAt   DateTime @map("created_at") @default(now())
+  updatedAt   DateTime @map("updated_at") @updatedAt
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  title       String   @db.VarChar(150)
+  slug        String   @unique
+  description String   @db.VarChar(150)
+  // TODO: images (pending...)
+  inStock     Int?     @map("in_stock") @default(0)
+  price       Float?   @default(0)
+  size        Size[]   @default([])
+  tags        String[] @default([])
+  gender      Gender
+
+  // Relationship
+  category   Category @relation(fields: [categoryId], references: [id])
+  categoryId String @map("category_id")
+
+  // Timestamps
+  createdAt   DateTime @map("created_at") @default(now())
+  updatedAt   DateTime @map("updated_at") @updatedAt
+
+  @@map("products")
+
+  // Indexes
+  @@index([title, gender])
+}
