@@ -58,3 +58,11 @@ npx prisma migrate dev --name init
 
 # --name migration_name
 ```
+
+## Seed
+
+**Run in terminal to seed database:**
+
+```bash
+npm run seed
+```

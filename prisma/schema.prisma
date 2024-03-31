@@ -31,17 +31,17 @@ enum Gender {
 }
 
 model Category {
-  id        String    @id @default(uuid())
-  name      String    @unique
+  id   String @id @default(uuid())
+  name String @unique
 
   // Relationship
-  Product   Product[]
-
-  @@map("categories")
+  Product Product[]
 
   // Timestamps
-  createdAt   DateTime @map("created_at") @default(now())
-  updatedAt   DateTime @map("updated_at") @updatedAt
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("categories")
 }
 
 model Product {
@@ -49,8 +49,7 @@ model Product {
   title       String   @db.VarChar(150)
   slug        String   @unique
   description String   @db.VarChar(150)
-  // TODO: images (pending...)
-  inStock     Int?     @map("in_stock") @default(0)
+  inStock     Int?     @default(0) @map("in_stock")
   price       Float?   @default(0)
   size        Size[]   @default([])
   tags        String[] @default([])
@@ -58,14 +57,29 @@ model Product {
 
   // Relationship
   category   Category @relation(fields: [categoryId], references: [id])
-  categoryId String @map("category_id")
+  categoryId String   @map("category_id")
 
   // Timestamps
-  createdAt   DateTime @map("created_at") @default(now())
-  updatedAt   DateTime @map("updated_at") @updatedAt
-
-  @@map("products")
+  createdAt    DateTime       @default(now()) @map("created_at")
+  updatedAt    DateTime       @updatedAt @map("updated_at")
+  ProductImage ProductImage[]
 
   // Indexes
   @@index([title, gender])
+  @@map("products")
+}
+
+model ProductImage {
+  id        String @id @default(uuid())
+  productId String @map("product_id")
+  url       String
+
+  // Relationship
+  product Product @relation(fields: [productId], references: [id])
+
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("product_images")
 }

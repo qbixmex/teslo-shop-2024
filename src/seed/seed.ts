@@ -128,7 +128,7 @@ export const initialData: SeedData = {
       gender: 'men'
     },
     {
-      description: "Inspired by the world’s most unlimited resource, the Let the Sun Shine Tee highlights our fully integrated home solar and storage system. Designed for fit, comfort and style, the tee features a sunset graphic along with our Tesla wordmark on the front and our signature T logo printed above 'Solar Roof' on the back. Made from 100% Peruvian cotton.",
+      description: "Inspired by the world's most unlimited resource, the Let the Sun Shine Tee highlights our fully integrated home solar and storage system. Designed for fit, comfort and style, the tee features a sunset graphic along with our Tesla wordmark on the front and our signature T logo printed above 'Solar Roof' on the back. Made from 100% Peruvian cotton.",
       images: [
         '1700280-00-A_0_2000.jpg',
         '1700280-00-A_1.jpg',
@@ -184,7 +184,7 @@ export const initialData: SeedData = {
       slug: "men_3d_small_wordmark_tee",
       type: 'shirts',
       tags: ['shirt'],
-      title: "Men’s 3D Small Wordmark Tee",
+      title: "Men's 3D Small Wordmark Tee",
       gender: 'men'
     },
     {
@@ -244,7 +244,7 @@ export const initialData: SeedData = {
       slug: "men_cybertruck_bulletproof_tee",
       type: 'shirts',
       tags: ['shirt'],
-      title: "Men’s Cybertruck Bulletproof Tee",
+      title: "Men's Cybertruck Bulletproof Tee",
       gender: 'men'
     },
     {
@@ -353,7 +353,7 @@ export const initialData: SeedData = {
       gender: 'men'
     },
     {
-      description: "Introducing the Tesla Chill Collection. The Men’s Chill Quarter Zip Pullover has a premium, heavyweight exterior and soft fleece interior for comfort in any season. The pullover features subtle thermoplastic polyurethane Tesla logos on the left chest and below the back collar, as well as a custom matte zipper pull. Made from 60% cotton and 40% recycled polyester.",
+      description: "Introducing the Tesla Chill Collection. The Men's Chill Quarter Zip Pullover has a premium, heavyweight exterior and soft fleece interior for comfort in any season. The pullover features subtle thermoplastic polyurethane Tesla logos on the left chest and below the back collar, as well as a custom matte zipper pull. Made from 60% cotton and 40% recycled polyester.",
       images: [
         '1740140-00-A_0_2000.jpg',
         '1740140-00-A_1.jpg',
@@ -368,7 +368,7 @@ export const initialData: SeedData = {
       gender: 'men'
     },
     {
-      description: "Introducing the Tesla Chill Collection. The Men’s Chill Quarter Zip Pullover has a premium, heavyweight exterior and soft fleece interior for comfort in any season. The pullover features subtle thermoplastic polyurethane Tesla logos on the left chest and below the back collar, as well as a custom matte zipper pull. Made from 60% cotton and 40% recycled polyester.",
+      description: "Introducing the Tesla Chill Collection. The Men's Chill Quarter Zip Pullover has a premium, heavyweight exterior and soft fleece interior for comfort in any season. The pullover features subtle thermoplastic polyurethane Tesla logos on the left chest and below the back collar, as well as a custom matte zipper pull. Made from 60% cotton and 40% recycled polyester.",
       images: [
         '1740145-00-A_2_2000.jpg',
         '1740145-00-A_1.jpg',
@@ -604,7 +604,7 @@ export const initialData: SeedData = {
       slug: "women_powerwall_tee",
       type: 'shirts',
       tags: ['shirt'],
-      title: "Women’s Powerwall Tee",
+      title: "Women's Powerwall Tee",
       gender: 'women'
     },
     {
