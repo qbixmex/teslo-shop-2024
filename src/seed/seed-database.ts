@@ -19,7 +19,18 @@ async function main() {
 
   console.log('Deleted all tables 👍');
   
-  // console.log('Seed started 🚀');
+  console.log('Seed started 🚀');
+
+  const { categories } = initialData;
+
+  const categoriesData = categories.map(
+    (categoryName) => ({ name: categoryName })
+  );
+
+  await prisma.category.createMany({ data: categoriesData });
+
+  console.log('Categories Inserted 👍');
+
   // TODO: Seed your database here !
 
 
