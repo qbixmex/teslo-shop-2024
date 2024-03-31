@@ -1,12 +1,12 @@
 "use client";
 
 import { FC, useState } from 'react';
-import { Product } from '@/interfaces';
+import { ProductLight } from '@/interfaces';
 import Image from "next/image";
 import styles from './product-grid-item.module.css';
 import Link from 'next/link';
 
-type Props = { product: Product; };
+type Props = { product: ProductLight };
 
 const ProductGridItem: FC<Props> = ({ product }) => {
   const [ displayImage, setDisplayImage ] = useState(product.images[0]);

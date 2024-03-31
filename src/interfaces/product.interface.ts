@@ -1,5 +1,5 @@
 export interface Product {
-  // TODO: id: string;
+  id: string;
   title: string;
   description: string;
   images: string[];
@@ -8,10 +8,18 @@ export interface Product {
   sizes: Size[];
   slug: string;
   tags: string[];
-  type: Type;
+  type?: Type;
   gender: Category;
-  // TODO: createdAt: Date;
-  // TODO: updatedAt: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface ProductLight {
+  id: string;
+  title: string;
+  slug: string;
+  price: number;
+  images: string[];
 }
 
 export type Category = 'men'|'women'|'kid'|'unisex';

@@ -1,11 +1,10 @@
 import ProductGrid from '@/components/products/product-grid/product-grid.component';
 import { Title } from '@/components';
-import { initialData } from '@/seed/seed';
 import { getPaginatedProductsWithImages } from './actions';
 
 const HomePage = async () => {
 
-  await getPaginatedProductsWithImages();
+  const { products } = await getPaginatedProductsWithImages();
 
   return (
     <>
@@ -15,7 +14,7 @@ const HomePage = async () => {
         className="mb-2"
       />
 
-      <ProductGrid products={initialData.products} />
+      <ProductGrid products={products} />
     </>
   );
 };
