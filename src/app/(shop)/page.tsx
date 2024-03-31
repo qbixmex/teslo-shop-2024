@@ -1,8 +1,12 @@
 import ProductGrid from '@/components/products/product-grid/product-grid.component';
 import { Title } from '@/components';
 import { initialData } from '@/seed/seed';
+import { getPaginatedProductsWithImages } from './actions';
 
-const ShopPage = () => {
+const HomePage = async () => {
+
+  await getPaginatedProductsWithImages();
+
   return (
     <>
       <Title
@@ -16,4 +20,4 @@ const ShopPage = () => {
   );
 };
 
-export default ShopPage;
+export default HomePage;
