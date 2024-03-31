@@ -51,6 +51,12 @@ docker compose -p teslo_shop up -d
 npx init --datasource-provider postgressql
 ```
 
+**Prisma Client:**
+
+```bash
+npx prisma generate
+```
+
 **Create your migrations:**
 
 ```bash
