@@ -11,23 +11,23 @@ async function main() {
 
   console.log('Clearing data 🧹');
 
-  // await Promise.all([
-  //   prisma.productImage.deleteMany(),
-  //   prisma.product.deleteMany(),
-  //   prisma.category.deleteMany(),
-  // ]);
+  await Promise.all([
+    prisma.productImage.deleteMany(),
+    prisma.product.deleteMany(),
+    prisma.category.deleteMany(),
+  ]);
 
   console.log('Deleted all tables 👍');
   
   console.log('Seed started 🚀');
 
-  const { categories } = initialData;
+  const { categories, products } = initialData;
 
-  // const categoriesData = categories.map(
-  //   (categoryName) => ({ name: categoryName })
-  // );
+  const categoriesData = categories.map(
+    (categoryName) => ({ name: categoryName })
+  );
 
-  // await prisma.category.createMany({ data: categoriesData });
+  await prisma.category.createMany({ data: categoriesData });
 
   console.log('Categories Inserted 👍');
 
@@ -43,11 +43,20 @@ async function main() {
     return map;
   }, {} as Record<string, string>); // <category_name, category_id>
 
-  console.log(categoriesDB);
-  console.log(categoriesMap);
 
-  // TODO: Seed your database here !
+  products.forEach(async (product) => {
+    const { images, type, ...attributesRest } = product;
 
+    await Promise.all([
+      await prisma.product.create({
+       data: {
+         ...attributesRest,
+         categoryId: categoriesMap[type],
+       }
+     }),
+    ]);
+
+  });
 
   console.log('Seed executed 🎉👍');
 }

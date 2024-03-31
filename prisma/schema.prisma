@@ -46,12 +46,12 @@ model Category {
 
 model Product {
   id          String   @id @default(uuid())
-  title       String   @db.VarChar(150)
+  title       String   @db.VarChar(200)
   slug        String   @unique
-  description String   @db.VarChar(150)
+  description String
   inStock     Int?     @default(0) @map("in_stock")
   price       Float?   @default(0)
-  size        Size[]   @default([])
+  sizes       Size[]   @default([])
   tags        String[] @default([])
   gender      Gender
 

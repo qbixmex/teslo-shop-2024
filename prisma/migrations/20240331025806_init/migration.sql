@@ -17,12 +17,12 @@ CREATE TABLE "categories" (
 -- CreateTable
 CREATE TABLE "products" (
     "id" TEXT NOT NULL,
-    "title" VARCHAR(150) NOT NULL,
+    "title" VARCHAR(200) NOT NULL,
     "slug" TEXT NOT NULL,
-    "description" VARCHAR(150) NOT NULL,
+    "description" TEXT NOT NULL,
     "in_stock" INTEGER DEFAULT 0,
     "price" DOUBLE PRECISION DEFAULT 0,
-    "size" "Size"[] DEFAULT ARRAY[]::"Size"[],
+    "sizes" "Size"[] DEFAULT ARRAY[]::"Size"[],
     "tags" TEXT[] DEFAULT ARRAY[]::TEXT[],
     "gender" "Gender" NOT NULL,
     "category_id" TEXT NOT NULL,
