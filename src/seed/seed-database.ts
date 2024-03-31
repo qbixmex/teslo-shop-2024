@@ -6,19 +6,17 @@ import { initialData } from "./seed";
 })();
 
 async function main() {
-  
+
   if (process.env.NODE_ENV === 'production') return;
 
   console.log('Clearing data 🧹');
 
-  await Promise.all([
-    prisma.productImage.deleteMany(),
-    prisma.product.deleteMany(),
-    prisma.category.deleteMany(),
-  ]);
+  await prisma.productImage.deleteMany();
+  await prisma.product.deleteMany();
+  await prisma.category.deleteMany();
 
   console.log('Deleted all tables 👍');
-  
+
   console.log('Seed started 🚀');
 
   const { categories, products } = initialData;
@@ -47,16 +45,25 @@ async function main() {
   products.forEach(async (product) => {
     const { images, type, ...attributesRest } = product;
 
-    await Promise.all([
-      await prisma.product.create({
-       data: {
-         ...attributesRest,
-         categoryId: categoriesMap[type],
-       }
-     }),
-    ]);
+    const productDB = await prisma.product.create({
+      data: {
+        ...attributesRest,
+        categoryId: categoriesMap[type],
+      }
+    });
+
+    const imagesData = images.map((url) => ({
+      url: url,
+      productId: productDB.id,
+    }));
+
+    await prisma.productImage.createMany({
+      data: imagesData,
+    });
 
   });
 
-  console.log('Seed executed 🎉👍');
+  console.log('Products and Product Images Inserted 👍');
+
+  console.log('Seed executed 🎉');
 }
