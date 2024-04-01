@@ -1,7 +1,8 @@
+import { FC } from 'react';
+import { redirect } from 'next/navigation';
 import ProductGrid from '@/components/products/product-grid/product-grid.component';
 import { Title } from '@/components';
 import { getPaginatedProductsWithImages } from './actions';
-import { FC } from 'react';
 
 type Props = {
   searchParams: {
@@ -16,6 +17,10 @@ const HomePage: FC<Props> = async ({ searchParams }) => {
   const limit = searchParams.limit ? parseInt(searchParams.limit) : 12;
 
   const { products } = await getPaginatedProductsWithImages({ page, limit });
+
+  if (products.length === 0) {
+    redirect('/');
+  }
 
   return (
     <>
