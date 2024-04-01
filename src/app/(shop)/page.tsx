@@ -1,7 +1,7 @@
 import { FC } from 'react';
 import { redirect } from 'next/navigation';
 import ProductGrid from '@/components/products/product-grid/product-grid.component';
-import { Title } from '@/components';
+import { Pagination, Title } from '@/components';
 import { getPaginatedProductsWithImages } from './actions';
 
 type Props = {
@@ -37,6 +37,8 @@ const HomePage: FC<Props> = async ({ searchParams }) => {
       />
 
       <ProductGrid products={products} />
+
+      <Pagination totalPages={totalPages} />
     </>
   );
 };
