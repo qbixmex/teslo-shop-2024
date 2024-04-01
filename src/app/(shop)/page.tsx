@@ -16,7 +16,13 @@ const HomePage: FC<Props> = async ({ searchParams }) => {
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
   const limit = searchParams.limit ? parseInt(searchParams.limit) : 12;
 
-  const { products } = await getPaginatedProductsWithImages({ page, limit });
+  const {
+    products,
+    currentPage,
+    totalPages,
+  } = await getPaginatedProductsWithImages({ page, limit });
+
+  console.log({ currentPage, totalPages });
 
   if (products.length === 0) {
     redirect('/');
