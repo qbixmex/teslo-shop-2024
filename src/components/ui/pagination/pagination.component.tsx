@@ -1,53 +1,100 @@
+"use client";
+
 import Link from "next/link";
+import { usePathname, useSearchParams } from "next/navigation";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
+import clsx from "clsx";
+import styles from "./pagination.module.css";
 
 type Props = {
   totalPages: number;
 };
 
 const Pagination: React.FC<Readonly<Props>> = ({ totalPages }) => {
+
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const currentPage = parseInt(searchParams.get('page') ?? '1');
+
+  const createPageUrl = (pageNumber: number | string) => {
+    const params = new URLSearchParams(searchParams);
+
+    if (pageNumber === '...' || Number(pageNumber) > totalPages) {
+      return `${pathname}?${params.toString()}`;
+    }
+
+    if (Number(pageNumber) <= 0) {
+      return `${pathname}`;
+    }
+
+    params.set('page', pageNumber.toString());
+
+    return `${pathname}?${params.toString()}`;
+  };
+
   return (
-    <section className="flex text-center justify-center mt-10">
-      <nav aria-label="Page navigation example">
-        <ul className="flex items-center list-style-none">
-          <li className="page-item">
+    <section className={styles.container}>
+      <nav className={styles.container}>
+        {
+          (currentPage !== 1) ? (
             <Link
-              href="/?page=1"
-              className="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 text-gray-800 hover:text-stone-600 hover:bg-gray-200 focus:shadow-none"
+              href={createPageUrl(currentPage - 1)}
+              className={styles.arrow}
             >
-              <FaChevronLeft className="size-6" />
+              <FaChevronLeft className={styles.arrowIcon} />
             </Link>
-          </li>
-          <li className="page-item">
-            <Link
-              href="#"
-              className="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
-            >1</Link>
-          </li>
-          <li className="page-item active">
-            <Link
-              href="#"
-              className="page-link relative block py-1.5 px-3 rounded border-0 bg-blue-700 outline-none transition-all duration-300 text-white hover:text-white hover:bg-blue-600 shadow-md focus:shadow-md"
-            >
-              2&nbsp;
-              <span className="visually-hidden"></span>
+          ) : (
+            <span className={styles.arrowDisabled}>
+              <FaChevronLeft className={styles.arrowIcon} />
+            </span>
+          )
+        }
+        <Link
+          href="#"
+          className={clsx("page-link", {
+            [styles.listLink]: false,
+            [styles.listLinkActive]: true,
+          })}
+        >1</Link>
+        <Link
+          href="#"
+          className={clsx("page-link", {
+            [styles.listLink]: true,
+            [styles.listLinkActive]: false,
+          })}
+        >2</Link>
+        <Link
+          href="#"
+          className={clsx("page-link", {
+            [styles.listLink]: true,
+            [styles.listLinkActive]: false,
+          })}
+        >3</Link>
+        <Link
+          href="#"
+          className={clsx("page-link", {
+            [styles.listLink]: true,
+            [styles.listLinkActive]: false,
+          })}
+        >...</Link>
+        <Link
+          href="#"
+          className={clsx("page-link", {
+            [styles.listLink]: true,
+            [styles.listLinkActive]: false,
+          })}
+        >50</Link>
+        {
+          (currentPage < totalPages) ? (
+            <Link href={createPageUrl(currentPage + 1)} className={styles.arrow}>
+              <FaChevronRight className={styles.arrowIcon} />
             </Link>
-          </li>
-          <li className="page-item">
-            <Link
-              href="#"
-              className="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 text-gray-800 hover:text-gray-800 hover:bg-gray-200 focus:shadow-none"
-            >3</Link>
-            </li>
-          <li className="page-item">
-            <Link
-              href="/?page=2"
-              className="page-link relative block py-1.5 px-3 rounded border-0 bg-transparent outline-none transition-all duration-300 text-gray-800 hover:text-stone-600 hover:bg-gray-200 focus:shadow-none"
-            >
-              <FaChevronRight className="size-6" />
-            </Link>
-          </li>
-        </ul>
+          ) : (
+            <span className={styles.arrowDisabled}>
+              <FaChevronRight className={styles.arrowIcon} />
+            </span>
+          )
+        }
       </nav>
     </section>
   );
