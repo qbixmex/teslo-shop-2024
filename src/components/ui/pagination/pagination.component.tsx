@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { redirect, usePathname, useSearchParams } from "next/navigation";
 import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 import clsx from "clsx";
 import styles from "./pagination.module.css";
+import { generatePaginationNumbers } from "@/utils";
 
 type Props = {
   totalPages: number;
@@ -14,7 +15,17 @@ const Pagination: React.FC<Readonly<Props>> = ({ totalPages }) => {
 
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const currentPage = parseInt(searchParams.get('page') ?? '1');
+  
+  const pageString = searchParams.get('page') ?? 1;
+  const currentPage = isNaN(+pageString) ? 1 : +pageString;
+
+  if (currentPage < 1 || isNaN(+pageString)) {
+    redirect(pathname);
+  }
+
+  const allPages = generatePaginationNumbers(currentPage, totalPages);
+
+  console.log(allPages);
 
   const createPageUrl = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
@@ -49,14 +60,18 @@ const Pagination: React.FC<Readonly<Props>> = ({ totalPages }) => {
             </span>
           )
         }
-        <Link
-          href="#"
-          className={clsx("page-link", {
-            [styles.listLink]: false,
-            [styles.listLinkActive]: true,
-          })}
-        >1</Link>
-        <Link
+
+        {allPages.map(page => (
+          <Link
+            key={page + '-' + Math.random()}
+            href={`?page=${page}`}
+            className={clsx(styles.listLink, {
+              [styles.listLinkActive]: page === currentPage,
+            })}
+          >{page}</Link>
+        ))}
+
+        {/* <Link
           href="#"
           className={clsx("page-link", {
             [styles.listLink]: true,
@@ -83,7 +98,7 @@ const Pagination: React.FC<Readonly<Props>> = ({ totalPages }) => {
             [styles.listLink]: true,
             [styles.listLinkActive]: false,
           })}
-        >50</Link>
+        >50</Link> */}
         {
           (currentPage < totalPages) ? (
             <Link href={createPageUrl(currentPage + 1)} className={styles.arrow}>

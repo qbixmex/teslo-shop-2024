@@ -3,11 +3,11 @@
 }
 
 .listLink {
-  @apply py-1.5 px-3 rounded border-0 bg-transparent outline-none duration-300 text-stone-700 hover:bg-stone-300 hover:text-white focus:shadow-none transition-all;
+  @apply py-1.5 px-3 rounded border-0 bg-transparent outline-none duration-300 text-stone-700 focus:shadow-none hover:bg-stone-300 hover:font-bold hover:text-white transition-all;
 }
 
 .listLinkActive {
-  @apply py-1.5 px-3 rounded border-0 font-bold bg-blue-700 outline-none transition-all duration-300 text-white hover:text-white hover:bg-blue-600 hover:font-bold shadow-md focus:shadow-md;
+  @apply font-bold bg-blue-700 text-white focus:shadow-md hover:text-white hover:bg-blue-600 shadow-md  transition-all duration-300;
 }
 
 .arrow {
