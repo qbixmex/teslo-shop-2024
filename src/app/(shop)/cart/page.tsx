@@ -3,9 +3,9 @@ import Link from 'next/link';
 import { CartItem, Title } from '@/components';
 import styles from './page.module.css';
 import { initialData } from '@/seed/seed';
-import { Product } from '@/interfaces';
+import { ProductSeed } from '@/interfaces';
 
-const productsInCart: Product[] = [
+const productsInCart: ProductSeed[] = [
   initialData.products[25],
   initialData.products[35],
   initialData.products[40],

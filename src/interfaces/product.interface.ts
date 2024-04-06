@@ -14,6 +14,8 @@ export interface Product {
   updatedAt: Date;
 }
 
+export type ProductSeed = Omit<Product, 'id' | 'createdAt' | 'updatedAt'>
+
 export interface ProductLight {
   id: string;
   title: string;

@@ -1,15 +1,18 @@
 "use server";
 
 import prisma from "@/lib/prisma";
+import { Gender } from "@prisma/client";
 
 type PaginationOptions = {
   page?: number;
   limit?: number;
+  gender?: Gender;
 };
 
 export const getPaginatedProductsWithImages = async ({
   page = 1,
   limit = 12,
+  gender,
 }: PaginationOptions = {}) => {
 
   // In case for example: page=abc or similar, it will be converted to 1
@@ -27,10 +30,14 @@ export const getPaginatedProductsWithImages = async ({
           take: 2,
           select: { url: true },
         }
-      }
+      },
+      where: { gender },
     });
 
-    const totalProductsCount = await prisma.product.count();
+    const totalProductsCount = await prisma.product.count({
+      where: { gender }
+    });
+
     const totalPages = Math.ceil(totalProductsCount / limit);
 
     return {
@@ -47,7 +54,7 @@ export const getPaginatedProductsWithImages = async ({
 
   } catch (error) {
     if (error instanceof Error) {
-      throw `Error: ${ error.message }`;
+      throw new Error("Products cannot loaded !");
     }
     console.log(error);
     throw 'Unknown error occurred. Check logs !';

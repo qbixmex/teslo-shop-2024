@@ -1,12 +1,12 @@
 "use client";
 
-import { Product } from "@/interfaces";
+import { ProductSeed } from "@/interfaces";
 import Image from "next/image";
 import { QuantitySelector } from "../product";
 import styles from "./cart-item.module.css";
 
 type Props = {
-  product: Product;
+  product: ProductSeed;
   checkout?: boolean;
 };
 

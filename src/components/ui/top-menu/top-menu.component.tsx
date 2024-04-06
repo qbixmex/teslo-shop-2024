@@ -23,17 +23,17 @@ const TopMenu: React.FC<Readonly<Props>> = () => {
       {/* Center Menu */}
       <section className={styles.centerLinks}>
         <Link
-          href="/category/men"
+          href="/gender/men"
           className={`${true ? styles.linkActive : ''} ${styles.links}`}
         >Men</Link>
 
         <Link
-          href="/category/women"
+          href="/gender/women"
           className={`${false ? styles.linkActive : ''} ${styles.links}`}
         >Woman</Link>
 
         <Link
-          href="/category/kid"
+          href="/gender/kid"
           className={`${false ? styles.linkActive : ''} ${styles.links}`}
         >Kids</Link>
       </section>
