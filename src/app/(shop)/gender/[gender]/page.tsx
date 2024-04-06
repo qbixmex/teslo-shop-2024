@@ -4,6 +4,9 @@ import { Pagination, ProductGrid, Title } from '@/components';
 import { getPaginatedProductsWithImages } from '../../actions';
 import { Gender } from '@prisma/client';
 
+//* This re-validates the page every 24 hours
+export const revalidate = 86400;
+
 export const metadata: Metadata = {
   title: "Teslo Shop - Category",
   description: "Category Page",

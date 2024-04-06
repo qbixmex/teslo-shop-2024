@@ -12,6 +12,9 @@ export const metadata: Metadata = {
   robots: "noindex, nofollow",
 };
 
+//* This re-validates the page every 24 hours
+export const revalidate = 86400;
+
 type Props = {
   params: {
     slug: string;

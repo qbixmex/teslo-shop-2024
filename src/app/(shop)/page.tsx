@@ -4,6 +4,9 @@ import ProductGrid from '@/components/products/product-grid/product-grid.compone
 import { Pagination, Title } from '@/components';
 import { getPaginatedProductsWithImages } from './actions';
 
+//* This re-validates the page every 24 hours
+export const revalidate = 86400;
+
 type Props = {
   searchParams: {
     page?: string;
