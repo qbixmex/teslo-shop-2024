@@ -4,10 +4,16 @@ import Link from "next/link";
 import styles from "./top-menu.module.css";
 import { IoSearchOutline, IoCartOutline } from "react-icons/io5";
 import { useUIStore } from "@/store";
+import { usePathname } from "next/navigation";
+import clsx from "clsx";
 
 type Props = {};
 
 const TopMenu: React.FC<Readonly<Props>> = () => {
+
+  //* Only works on client components
+  const pathname = usePathname();
+
   const openSideMenu = useUIStore((store) => store.openSideMenu);
 
   return (
@@ -24,17 +30,17 @@ const TopMenu: React.FC<Readonly<Props>> = () => {
       <section className={styles.centerLinks}>
         <Link
           href="/gender/men"
-          className={`${true ? styles.linkActive : ''} ${styles.links}`}
+          className={ clsx(styles.links, { [styles.linkActive]: pathname === "/gender/men" }) }
         >Men</Link>
 
         <Link
           href="/gender/women"
-          className={`${false ? styles.linkActive : ''} ${styles.links}`}
+          className={ clsx(styles.links, { [styles.linkActive]: pathname === "/gender/women" }) }
         >Woman</Link>
 
         <Link
           href="/gender/kid"
-          className={`${false ? styles.linkActive : ''} ${styles.links}`}
+          className={ clsx(styles.links, { [styles.linkActive]: pathname === "/gender/kid" }) }
         >Kids</Link>
       </section>
 
