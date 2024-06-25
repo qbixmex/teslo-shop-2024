@@ -1,11 +1,6 @@
 import type { Metadata } from "next";
 import { Footer, Sidebar, TopMenu } from "@/components";
 
-export const metadata: Metadata = {
-  title: "Teslo Shop",
-  description: "Shop products from Teslo Shop",
-};
-
 type Props = { children: React.ReactNode; }
 
 const ShopLayout: React.FC<Readonly<Props>> = ({ children }) => {

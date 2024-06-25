@@ -1,0 +1,7 @@
+.heading {
+  @apply antialiased text-stone-600 font-bold text-xl mb-3;
+}
+
+.addToCart {
+  @apply w-full md:w-fit bg-sky-700 hover:bg-sky-600 active:text-stone-700 active:bg-sky-100 text-white rounded-lg px-5 py-2 transition-colors;
+}

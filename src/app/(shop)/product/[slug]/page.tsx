@@ -5,37 +5,8 @@ import { notFound } from 'next/navigation';
 import { getProductsBySlug } from '@/actions';
 import { QuantitySelector, SizeSelector, SlideShow, SlideShowMobile } from '@/components';
 import { StockLabel } from '@/components/stock-label';
+import AddToCart from './ui/add-to-cart';
 import styles from './page.module.css';
-
-export const generateMetadata = async (
-  { params }: Props,
-  parent: ResolvingMetadata
-): Promise<Metadata>  => {
-  // read route params
-  const slug = params.slug;
- 
-  // fetch data
-  const product = await getProductsBySlug(slug);
- 
-  // optionally access and extend (rather than replace) parent metadata
-  // const previousImages = (await parent).openGraph?.images || []
- 
-  return {
-    title: product?.title ?? 'Product not found',
-    description: product?.description ?? 'No description available',
-    // social media
-    openGraph: {
-      title: product?.title ?? 'Product not found',
-      description: product?.description ?? 'No description available',
-      // images: ['https://example.com/image-1.jpg', 'https://example.com/image-2.jpg'],
-      images: [`/products/${product?.images[1]}`],
-    },
-
-  }
-};
-
-//* This re-validates the page every 7 days
-export const revalidate = 604800;
 
 type Props = {
   params: {
@@ -43,9 +14,35 @@ type Props = {
   };
 };
 
-const ProductPage: FC<Props> = async ({ params: { slug } }) => {
+export const generateMetadata = async ({ params }: Props): Promise<Metadata>  => {
+  // read route params
+  const slug = params.slug;
 
+  // fetch data
   const product = await getProductsBySlug(slug);
+ 
+  const metaTitle = (product?.title ?? '');
+  const metaDescription = product?.description ?? '';
+
+  return {
+    title: metaTitle,
+    description: metaDescription,
+    // social media
+    openGraph: {
+      title: metaTitle,
+      description: metaDescription,
+      // images: ['https://example.com/image-1.jpg', 'https://example.com/image-2.jpg'],
+      images: [`/products/${product?.images[1]}`],
+    },
+  }
+};
+
+//* This re-validates the page every 7 days
+export const revalidate = 604800;
+
+const ProductPage: FC<Props> = async ({ params }) => {
+
+  const product = await getProductsBySlug(params.slug);
 
   if (!product) {
     notFound();
@@ -95,24 +92,9 @@ const ProductPage: FC<Props> = async ({ params: { slug } }) => {
           </section>
         </section>
 
-        <SizeSelector
-          sizeSelected={product?.sizes[0]}
-          availableSizes={product?.sizes}
-        />
+        {/* Client Component */}
+        <AddToCart sizes={product.sizes} />
 
-        {/* Quantity */}
-        <section>
-          <h2 className={styles.heading}>Quantity</h2>
-
-          {/* Quantity Selector */}
-          <QuantitySelector />
-
-          <section>
-            <button className={styles.addToCart}>
-              Add to Cart
-            </button>
-          </section>
-        </section>
       </section>
 
       {/* Description */}

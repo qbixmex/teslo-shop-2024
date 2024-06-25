@@ -4,10 +4,18 @@ import { montserrat_alternates, open_sans } from "@/config/fonts";
 
 export const metadata: Metadata = {
   title: {
-    template: "%s - TESLO | SHOP",
-    default: "HOME - TESLO | SHOP",
+    template: '%s - TESLO | SHOP',
+    absolute: 'TESLO | SHOP',
+    default: 'TESLO | SHOP',
   },
   description: "Shopping for Teslo products",
+  generator: 'Next JS',
+  applicationName: 'Teslo Shop',
+  referrer: 'origin-when-cross-origin',
+  keywords: ['Next.js', 'React', 'TypeScript'],
+  authors: [{ name: 'James Stewart' }],
+  creator: 'Daniel González',
+  publisher: 'John Doe',
 };
 
 type Props = { children: React.ReactNode; }
