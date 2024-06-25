@@ -19,7 +19,11 @@
 }
 
 .price {
-  @apply font-bold text-xl text-green-600 mb-3;
+  @apply font-bold text-xl text-stone-600 mb-3;
+}
+
+.priceNumber {
+  @apply text-green-600;
 }
 
 .colorSection {

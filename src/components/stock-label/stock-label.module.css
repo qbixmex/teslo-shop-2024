@@ -1,0 +1,7 @@
+.stock {
+  @apply font-bold text-xl text-stone-600 mb-3;
+}
+
+.stockQty {
+  @apply text-blue-700;
+}

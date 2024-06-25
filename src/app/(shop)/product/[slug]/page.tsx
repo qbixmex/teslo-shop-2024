@@ -5,6 +5,7 @@ import { notFound } from 'next/navigation';
 import { getProductsBySlug } from '@/actions';
 import styles from './page.module.css';
 import { QuantitySelector, SizeSelector, SlideShow, SlideShowMobile } from '@/components';
+import { StockLabel } from '@/components/stock-label';
 
 export const metadata: Metadata = {
   title: "Teslo Shop - Product #",
@@ -24,8 +25,6 @@ type Props = {
 const ProductPage: FC<Props> = async ({ params: { slug } }) => {
 
   const product = await getProductsBySlug(slug);
-
-  console.log(product);
 
   if (!product) {
     notFound();
@@ -55,9 +54,15 @@ const ProductPage: FC<Props> = async ({ params: { slug } }) => {
           {product?.title}
         </h1>
 
+        {/* Stock */}
+        <StockLabel productId={product.id} />
+
         {/* Price */}
         <p className={styles.price}>
-          $ {product?.price?.toFixed(2) ?? 0.00}
+          <span>Price:</span>&nbsp;
+          <span className={styles.priceNumber}>
+            $ {product?.price?.toFixed(2) ?? 0.00
+          }</span>
         </p>
 
         {/* Color */}
