@@ -3,7 +3,7 @@
 }
 
 .content {
-  @apply bg-stone-100 p-5 rounded w-[320px] mx-auto sm:w-[512px];
+  @apply bg-stone-100 p-5 rounded w-[90%] mx-auto sm:w-[512px];
 }
 
 .heading {

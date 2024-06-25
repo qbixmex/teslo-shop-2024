@@ -36,10 +36,9 @@ const Sidebar = () => {
         </>
       )}
 
-      <nav className={clsx(
-        styles.nav,
-        { [styles.closedMenu]: !isSideMenuOpen }
-      )}>
+      <nav className={clsx(styles.nav,{
+        [styles.closedMenu]: !isSideMenuOpen
+      })}>
         <IoClose className={styles.closeIcon} onClick={closeSideMenu} />
 
         <section className={styles.searchWrapper}>
@@ -110,19 +109,19 @@ const Sidebar = () => {
         {/* Line Separator */}
         <div className={styles.separator} />
 
-        {/* TODO: Show / Hide if user is authenticated */}
-        {true ? (
-            <Link href="#" className={styles.link} onClick={closeSideMenu}>
-              <IoLogOut className={styles.linkIcon} />
-              <span className={styles.linkText}>Log-Out</span>
-            </Link>
-          ) : (
-            <Link href="#" className={styles.link} onClick={closeSideMenu}>
-              <IoLogIn className={styles.linkIcon} />
-              <span className={styles.linkText}>Log-In</span>
-            </Link>
+        {true && (
+          <Link href="#" className={styles.link} onClick={closeSideMenu}>
+            <IoLogOut className={styles.linkIcon} />
+            <span className={styles.linkText}>Log-Out</span>
+          </Link>
         )}
-        {/* TODO END */}
+
+        {true && (
+          <Link href="#" className={styles.link} onClick={closeSideMenu}>
+            <IoLogIn className={styles.linkIcon} />
+            <span className={styles.linkText}>Log-In</span>
+          </Link>
+        )}
       </nav>
     </section>
   );
