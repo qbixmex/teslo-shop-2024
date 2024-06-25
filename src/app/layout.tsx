@@ -3,7 +3,10 @@ import "./globals.css";
 import { montserrat_alternates, open_sans } from "@/config/fonts";
 
 export const metadata: Metadata = {
-  title: "Teslo Shop",
+  title: {
+    template: "%s - TESLO | SHOP",
+    default: "HOME - TESLO | SHOP",
+  },
   description: "Shopping for Teslo products",
 };
 

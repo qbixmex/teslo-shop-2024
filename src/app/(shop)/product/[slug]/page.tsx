@@ -1,16 +1,37 @@
 import { FC } from 'react';
 
-import { Metadata } from 'next';
+import { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getProductsBySlug } from '@/actions';
-import styles from './page.module.css';
 import { QuantitySelector, SizeSelector, SlideShow, SlideShowMobile } from '@/components';
 import { StockLabel } from '@/components/stock-label';
+import styles from './page.module.css';
 
-export const metadata: Metadata = {
-  title: "Teslo Shop - Product #",
-  description: "Product Page",
-  robots: "noindex, nofollow",
+export const generateMetadata = async (
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata>  => {
+  // read route params
+  const slug = params.slug;
+ 
+  // fetch data
+  const product = await getProductsBySlug(slug);
+ 
+  // optionally access and extend (rather than replace) parent metadata
+  // const previousImages = (await parent).openGraph?.images || []
+ 
+  return {
+    title: product?.title ?? 'Product not found',
+    description: product?.description ?? 'No description available',
+    // social media
+    openGraph: {
+      title: product?.title ?? 'Product not found',
+      description: product?.description ?? 'No description available',
+      // images: ['https://example.com/image-1.jpg', 'https://example.com/image-2.jpg'],
+      images: [`/products/${product?.images[1]}`],
+    },
+
+  }
 };
 
 //* This re-validates the page every 7 days
