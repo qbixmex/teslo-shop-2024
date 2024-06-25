@@ -5,6 +5,8 @@ import { persist } from 'zustand/middleware';
 type State = {
   cart: CartProduct[];
   addProduct: (product: CartProduct) => void,
+  getTotalItems: () => number,
+  getTotalPrice: () => number,
   // updateProductQuantity
   // removeProduct
 };
@@ -15,6 +17,7 @@ export const useCartStore = create<State>()(
       cart: [],
 
       // Methods
+
       addProduct: (product) => {
         const { cart } = get();
 
@@ -44,6 +47,18 @@ export const useCartStore = create<State>()(
         });
 
         set({ cart: updatedCartProducts });
+      },
+      getTotalItems: () => {
+        const { cart } = get();
+
+        const cartTotalQuantity = cart.reduce((totalQuantity, product) => {
+          return totalQuantity + product.quantity;
+        }, 0);
+
+        return cartTotalQuantity;
+      },
+      getTotalPrice: () => {
+        return 0.0;
       },
     }),
     {

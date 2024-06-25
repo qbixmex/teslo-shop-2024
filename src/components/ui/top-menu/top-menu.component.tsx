@@ -1,15 +1,22 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import styles from "./top-menu.module.css";
 import { IoSearchOutline, IoCartOutline } from "react-icons/io5";
-import { useUIStore } from "@/store";
+import { useCartStore, useUIStore } from "@/store";
 import { usePathname } from "next/navigation";
 import clsx from "clsx";
 
 type Props = {};
 
 const TopMenu: React.FC<Readonly<Props>> = () => {
+
+  const [componentLoaded, setComponentLoaded] = useState(false)
+
+  useEffect(() => setComponentLoaded(true), []);
+  
+  const totalItemsInCart = useCartStore(state => state.getTotalItems());
 
   //* Only works on client components
   const pathname = usePathname();
@@ -53,15 +60,14 @@ const TopMenu: React.FC<Readonly<Props>> = () => {
           <IoSearchOutline className="size-5" />
         </Link>
 
-        <Link
-          href="/cart"
-          className={""}
-        >
-          <div className={styles.boxChip}>
-            <span className={styles.chip}>5</span>
-            <IoCartOutline className="size-5" />
-          </div>
-        </Link>
+        {(componentLoaded && totalItemsInCart > 0) && (
+          <Link href="/cart">
+            <div className={styles.boxChip}>
+              <span className={styles.chip}>{totalItemsInCart}</span>
+              <IoCartOutline className="size-5" />
+            </div>
+          </Link>
+        )}
 
         {/* Menu Button */}
         <button

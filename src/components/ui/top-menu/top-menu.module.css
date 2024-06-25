@@ -23,7 +23,7 @@
 }
 
 .chip {
-  @apply absolute grid place-content-center bg-blue-600 size-4 -top-2 -right-2 text-xs text-white rounded-full;
+  @apply absolute grid place-content-center bg-blue-600 size-5 -top-3 -right-3 text-xs text-white rounded-full;
 }
 
 .icons {
