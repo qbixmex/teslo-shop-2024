@@ -15,6 +15,11 @@ export const useCartStore = create<State>()(
     // Methods
     addProduct: (product) => {
       const { cart } = get();
+
+      console.log("================== CART ==================");
+      console.log(cart);
+      console.log("==========================================");
+
       // 1. Check if product is already in cart with selected size.
       const productInCart = cart.some(
         (item) => ((item.id === product.id) && (item.size === product.size))

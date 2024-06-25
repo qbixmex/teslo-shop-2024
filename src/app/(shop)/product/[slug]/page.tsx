@@ -2,11 +2,12 @@ import { FC } from 'react';
 
 import { Metadata, ResolvingMetadata } from 'next';
 import { notFound } from 'next/navigation';
-import { getProductsBySlug } from '@/actions';
+import { getProductBySlug } from '@/actions';
 import { QuantitySelector, SizeSelector, SlideShow, SlideShowMobile } from '@/components';
 import { StockLabel } from '@/components/stock-label';
 import AddToCart from './ui/add-to-cart';
 import styles from './page.module.css';
+import { Product } from '@/interfaces';
 
 type Props = {
   params: {
@@ -19,7 +20,7 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata>  =>
   const slug = params.slug;
 
   // fetch data
-  const product = await getProductsBySlug(slug);
+  const product = await getProductBySlug(slug);
  
   const metaTitle = (product?.title ?? '');
   const metaDescription = product?.description ?? '';
@@ -42,7 +43,7 @@ export const revalidate = 604800;
 
 const ProductPage: FC<Props> = async ({ params }) => {
 
-  const product = await getProductsBySlug(params.slug);
+  const product = await getProductBySlug(params.slug);
 
   if (!product) {
     notFound();
@@ -93,7 +94,7 @@ const ProductPage: FC<Props> = async ({ params }) => {
         </section>
 
         {/* Client Component */}
-        <AddToCart sizes={product.sizes} />
+        <AddToCart product={product} />
 
       </section>
 
