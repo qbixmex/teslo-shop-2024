@@ -12,6 +12,15 @@ type Props = {
 const AddToCart: FC<Props> = ({ sizes }) => {
 
   const [ size, setSize ] = useState<Size|undefined>();
+  const [ quantity, setQuantity ] = useState<number>(1);
+
+  const addToCart = () => {
+    if (!size) return;
+    console.log("============ CART ============");
+    console.log("Size:", size);
+    console.log("Quantity:", quantity);
+    console.log("==============================");
+  };
 
   return (
     <>
@@ -26,9 +35,15 @@ const AddToCart: FC<Props> = ({ sizes }) => {
         <h2 className={styles.heading}>Quantity</h2>
 
         {/* Quantity Selector */}
-        <QuantitySelector />
+        <QuantitySelector
+          quantity={quantity}
+          onQuantityChange={setQuantity}
+        />
 
-        <button className={styles.addToCart}>
+        <button
+          className={styles.addToCart}
+          onClick={addToCart}
+        >
           Add to Cart
         </button>
       </section>
