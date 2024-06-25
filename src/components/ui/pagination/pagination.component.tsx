@@ -25,8 +25,6 @@ const Pagination: React.FC<Readonly<Props>> = ({ totalPages }) => {
 
   const allPages = generatePaginationNumbers(currentPage, totalPages);
 
-  console.log(allPages);
-
   const createPageUrl = (pageNumber: number | string) => {
     const params = new URLSearchParams(searchParams);
 

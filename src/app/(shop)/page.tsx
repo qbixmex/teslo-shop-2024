@@ -2,7 +2,7 @@ import { FC } from 'react';
 import { redirect } from 'next/navigation';
 import ProductGrid from '@/components/products/product-grid/product-grid.component';
 import { Pagination, Title } from '@/components';
-import { getPaginatedProductsWithImages } from './actions';
+import { getPaginatedProductsWithImages } from '../../actions';
 
 //* This re-validates the page every 24 hours
 export const revalidate = 86400;

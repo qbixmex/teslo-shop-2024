@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { redirect } from 'next/navigation';
 import { Pagination, ProductGrid, Title } from '@/components';
-import { getPaginatedProductsWithImages } from '../../actions';
+import { getPaginatedProductsWithImages } from '@/actions';
 import { Gender } from '@prisma/client';
 
 //* This re-validates the page every 24 hours

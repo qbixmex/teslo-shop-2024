@@ -1,8 +1,8 @@
 import { FC } from 'react';
 
 import { Metadata } from 'next';
-import { initialData } from '@/seed/seed';
 import { notFound } from 'next/navigation';
+import { getProductsBySlug } from '@/actions';
 import styles from './page.module.css';
 import { QuantitySelector, SizeSelector, SlideShow, SlideShowMobile } from '@/components';
 
@@ -12,8 +12,8 @@ export const metadata: Metadata = {
   robots: "noindex, nofollow",
 };
 
-//* This re-validates the page every 24 hours
-export const revalidate = 86400;
+//* This re-validates the page every 7 days
+export const revalidate = 604800;
 
 type Props = {
   params: {
@@ -21,10 +21,11 @@ type Props = {
   };
 };
 
-const ProductPage: FC<Props> = ({ params: { slug } }) => {
+const ProductPage: FC<Props> = async ({ params: { slug } }) => {
 
-  const seedProducts = initialData.products;
-  const product = seedProducts.find(product => product.slug === slug);
+  const product = await getProductsBySlug(slug);
+
+  console.log(product);
 
   if (!product) {
     notFound();
@@ -56,7 +57,7 @@ const ProductPage: FC<Props> = ({ params: { slug } }) => {
 
         {/* Price */}
         <p className={styles.price}>
-          $ {product?.price.toFixed(2)}
+          $ {product?.price?.toFixed(2) ?? 0.00}
         </p>
 
         {/* Color */}

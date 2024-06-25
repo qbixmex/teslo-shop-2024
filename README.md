@@ -72,3 +72,11 @@ npx prisma migrate dev --name init
 ```bash
 npm run seed
 ```
+
+## Prisma Studio
+
+**You can manipulate your database in the browser**
+
+```bash
+npx prisma studio
+```
