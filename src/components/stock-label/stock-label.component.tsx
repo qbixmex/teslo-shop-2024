@@ -24,13 +24,23 @@ const StockLabel: FC<Props> = ({ productId }) => {
   }, []);
 
   return (
-    <p className={styles.stock}>
-      <span>In Stock:</span>&nbsp;
-      <span className={styles.stockQty}>
-        { isLoading ? "Loading ..." : inStock }
-      </span>
-    </p>
+    <>
+      {isLoading ? (
+        <p className={styles.stockSkeleton}>
+          <span className={styles.stockSkeletonLabel}>In Stock:</span>&nbsp;
+          <span className={styles.stockSkeletonQty}>&nbsp;</span>
+        </p>
+      ): (
+        <p className={styles.stock}>
+          <span>In Stock:</span>&nbsp;
+          <span className={styles.stockQty}>
+            {inStock}
+          </span>
+        </p>
+      )}
+    </>
   );
+
 };
 
 export default StockLabel;

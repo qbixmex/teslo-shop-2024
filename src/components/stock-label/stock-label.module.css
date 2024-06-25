@@ -5,3 +5,15 @@
 .stockQty {
   @apply text-blue-700;
 }
+
+.stockSkeleton {
+  @apply flex mb-3 w-full;
+}
+
+.stockSkeletonLabel {
+  @apply text-xl font-bold text-stone-600;
+}
+
+.stockSkeletonQty {
+  @apply w-20 bg-stone-400 rounded animate-pulse;
+}
