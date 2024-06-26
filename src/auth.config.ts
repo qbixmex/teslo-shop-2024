@@ -21,12 +21,15 @@ export const authConfig: NextAuthConfig = {
           return null;
         }
 
+        console.log("============== Parsed Credentials ==============");
+        console.log("Parsed Credentials:", parsedCredentials.success);
+
         const { email, password } = parsedCredentials.data;
 
-        console.log("=============CREDENTIALS=============");
+        console.log("============= CREDENTIALS =============");
         console.log("EMAIL:", email);
         console.log("PASSWORD:", password);
-        console.log("=====================================");
+        console.log("=======================================");
 
         // 1. Search email.
         // 2. Compare passwords.
@@ -35,7 +38,7 @@ export const authConfig: NextAuthConfig = {
         return null;
       },
     }),
-  ]
+  ],
 };
 
 export const { signIn, signOut, auth } = NextAuth(authConfig);

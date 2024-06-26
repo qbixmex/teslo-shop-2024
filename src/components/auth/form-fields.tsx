@@ -20,22 +20,27 @@ const FormFields: FC<Readonly<Props>> = ({ register = false }) => {
     return setIsVisible(prev => ({
       ...prev,
       password: (field === 'password') && !prev.password,
-      passwordConfirmation: (field === 'passwordConfirmation') && !prev.passwordConfirmation }));
+      passwordConfirmation: (field === 'passwordConfirmation') && !prev.passwordConfirmation
+    }));
   };
 
   return (
     <>
-      <section className={styles.group}>
-        <label className={styles.label} htmlFor="name">Full Name:</label>
-        <input
-          id="name"
-          type="text"
-          name="name"
-          required
-          className={styles.field}
-          autoComplete="off"
-        />
-      </section>
+      {register && (
+        <section className={styles.group}>
+          <label className={styles.label} htmlFor="name">Full Name:</label>
+          <input
+            id="name"
+            type="text"
+            name="name"
+            required
+            className={styles.field}
+            autoComplete="off"
+            value="Daniel González"
+          />
+        </section>
+      )}
+
       <section className={styles.group}>
         <label className={styles.label} htmlFor="email">Email:</label>
         <input
@@ -45,8 +50,10 @@ const FormFields: FC<Readonly<Props>> = ({ register = false }) => {
           required
           className={styles.field}
           autoComplete="off"
+          value="daniel@gmail.com"
         />
       </section>
+
       <section className={styles.group}>
         <label htmlFor="password" className={styles.label}>
           password
@@ -58,6 +65,7 @@ const FormFields: FC<Readonly<Props>> = ({ register = false }) => {
           required
           className={styles.field}
           autoComplete="off"
+          value="123456"
         />
         {
           (isVisible.password)
@@ -65,6 +73,7 @@ const FormFields: FC<Readonly<Props>> = ({ register = false }) => {
             : <IoEyeOff onClick={() => handleVisibly('password')} className={styles.fieldIcon} />
         }
       </section>
+
       {(register) && (
         <section className={styles.group}>
           <label className={styles.label} htmlFor="passwordConfirmation">
@@ -76,6 +85,7 @@ const FormFields: FC<Readonly<Props>> = ({ register = false }) => {
             name="passwordConfirmation"
             className={styles.field}
             required
+            value="123456"
           />
           {(isVisible.passwordConfirmation)
             ? (
