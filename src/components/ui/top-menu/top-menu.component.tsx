@@ -63,7 +63,9 @@ const TopMenu: React.FC<Readonly<Props>> = () => {
         <Link href="/cart">
           <div className={styles.boxChip}>
             {(componentLoaded && totalItemsInCart > 0) && (
-              <span className={styles.chip}>{totalItemsInCart}</span>
+              <span className={`${styles.chip} fade-in`}>
+                {totalItemsInCart}
+              </span>
             )}
             <IoCartOutline className="size-5" />
           </div>
