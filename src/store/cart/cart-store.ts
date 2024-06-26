@@ -1,13 +1,12 @@
-import crypto from 'crypto';
-import type { CartProduct } from '@/interfaces';
+import type { CartProduct, OrderSummary } from '@/interfaces';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 
 type State = {
   cart: CartProduct[];
   addProduct: (product: CartProduct) => void,
+  getSummaryInformation: (tax_rate?: number) => OrderSummary,
   getTotalItems: () => number,
-  getTotalPrice: () => number,
   updateProductQuantity: (product: CartProduct, quantity: number) => void,
   removeProduct: (orderId: string) => void,
 };
@@ -45,6 +44,29 @@ export const useCartStore = create<State>()(
 
         set({ cart: updatedCartProducts });
       },
+
+      getSummaryInformation: (tax_rate = 15) => {
+        const { cart } = get();
+
+        const itemsInCart = cart.reduce((totalQuantity, product) => {
+          return totalQuantity + product.quantity;
+        }, 0);
+
+        const subTotal = cart.reduce((subTotal, product) => {
+          return (product.price * product.quantity) + subTotal;
+        }, 0);
+
+        const tax = (subTotal * tax_rate) / 100;
+        const total = subTotal + tax;
+
+        return {
+          itemsInCart,
+          subTotal,
+          tax,
+          total,
+        };
+      },
+
       getTotalItems: () => {
         const { cart } = get();
 
@@ -54,9 +76,7 @@ export const useCartStore = create<State>()(
 
         return cartTotalQuantity;
       },
-      getTotalPrice: () => {
-        return 0.0;
-      },
+
       updateProductQuantity: (product, quantity) => {
         const { cart } = get();
         
@@ -69,6 +89,7 @@ export const useCartStore = create<State>()(
 
         set({ cart: updatedCartProducts });
       },
+
       removeProduct: (orderId) => {
         const { cart } = get();
         const updatedCartProducts = cart.filter((item) => item.orderId !== orderId);

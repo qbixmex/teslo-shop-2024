@@ -1,0 +1,23 @@
+.summaryTable {
+  @apply w-full mb-5;
+}
+
+.summaryTableHeader {
+  @apply p-2 text-stone-600 text-left text-base font-semibold;
+}
+
+.summaryTableData {
+  @apply text-left p-2;
+}
+
+.summaryAmount {
+  @apply text-blue-600 font-bold;
+}
+
+.summaryTotal {
+  @apply text-green-600 font-bold text-xl;
+}
+
+.summaryExtraInfo {
+  @apply ml-3 text-stone-500 text-sm;
+}

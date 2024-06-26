@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { Title } from '@/components';
-import styles from './page.module.css';
+import styles from "./page.module.css";
 import ProductsInCart from './ui/products-in-cart';
+import OrderSummary from './ui/order-summary';
 
 const CartPage = () => {
   return (
@@ -25,45 +26,16 @@ const CartPage = () => {
         <section className={styles.summary}>
           <h2 className={styles.summaryHeading}>Order Summary</h2>
 
-          <table className={styles.summaryTable}>
-            <tbody>
-              <tr className={styles.summaryRow}>
-                <th className={styles.summaryTableHeader}>Quantity:</th>
-                <td className={styles.summaryTableData}>
-                  <span className={styles.summaryAmount}>3</span>
-                  <span className={styles.summaryExtraInfo}>items</span>
-                </td>
-              </tr>
-              <tr className={styles.summaryRow}>
-                <th className={styles.summaryTableHeader}>Subtotal:</th>
-                <td className={styles.summaryTableData}>
-                  <span className={styles.summaryAmount}>$ 195.00</span>
-                </td>
-              </tr>
-              <tr className={styles.summaryRow}>
-                <th className={styles.summaryTableHeader}>Tax:</th>
-                <td className={styles.summaryTableData}>
-                  <span className={styles.summaryAmount}>$ 27.30</span>
-                  <span className={styles.summaryExtraInfo}>(14%)</span>
-                </td>
-              </tr>
-              <tr>
-                <th className={styles.summaryTableHeader}>Total:</th>
-                <td className={styles.summaryTableData}>
-                  <span className={styles.summaryTotal}>$ 222.30</span>
-                  <span className={styles.summaryExtraInfo}>CAD</span>
-                </td>
-              </tr>
-            </tbody>
-          </table>
+          <OrderSummary />
 
           <Link
             href="/checkout/address"
             className={styles.summaryCheckoutBtn}
           >checkout</Link>
         </section>
+
       </section>
-      </section>
+    </section>
   );
 };
 
