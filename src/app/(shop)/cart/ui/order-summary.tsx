@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import styles from "./order-summary.module.css";
 import { useCartStore } from "@/store";
+import { currencyFormat } from "@/utils";
 
 const TAX_RATE = 15;
 
@@ -35,7 +36,7 @@ const OrderSummary = () => {
           <th className={styles.summaryTableHeader}>Subtotal:</th>
           <td className={styles.summaryTableData}>
             <span className={styles.summaryAmount}>
-              $ {subTotal.toFixed(2)}
+              {currencyFormat(subTotal)}
             </span>
           </td>
         </tr>
@@ -43,7 +44,7 @@ const OrderSummary = () => {
           <th className={styles.summaryTableHeader}>Tax:</th>
           <td className={styles.summaryTableData}>
             <span className={styles.summaryAmount}>
-              $ {tax.toFixed(2)}
+              {currencyFormat(tax)}
             </span>
             <span className={styles.summaryExtraInfo}>({TAX_RATE}%)</span>
           </td>
@@ -52,7 +53,7 @@ const OrderSummary = () => {
           <th className={styles.summaryTableHeader}>Total:</th>
           <td className={styles.summaryTableData}>
             <span className={styles.summaryTotal}>
-              $ {total.toFixed(2)}
+              {currencyFormat(total)}
             </span>
             <span className={styles.summaryExtraInfo}>CAD</span>
           </td>
