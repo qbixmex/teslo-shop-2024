@@ -6,6 +6,7 @@ import Image from "next/image";
 import { QuantitySelector } from "../product";
 import styles from "./cart-item.module.css";
 import Link from "next/link";
+import { useCartStore } from "@/store";
 
 type Props = {
   product: CartProduct;
@@ -13,23 +14,27 @@ type Props = {
 };
 
 const CartItem: FC<Readonly<Props>> = ({ product, checkout = false }) => {
+  const updateProductQuantity = useCartStore(state => state.updateProductQuantity);
 
   return (
     <section className={styles.container}>
-      <Link
-        href={`/product/${product.slug}`}
-        className="hover:border border-blue-900 rounded-md"
-        title={`View ${product.title} details`}
-      >
-        <Image
-          src={`/products/${product.image}`}
-          width={200}
-          height={200}
-          alt={product.title}
-          className={styles.image}
-        />
-      </Link>
-      <section>
+      <section className="w-[200px] flex-none">
+        <Link
+          href={`/product/${product.slug}`}
+          className="hover:border border-blue-900 rounded-md"
+          title={`View ${product.title} details`}
+        >
+          <Image
+            src={`/products/${product.image}`}
+            width={200}
+            height={200}
+            alt={product.title}
+            className={styles.image}
+          />
+        </Link>
+      </section>
+
+      <section className="w-auto">
         <h2 className={styles.title}>
           <Link
             href={`/product/${product.slug}`}
@@ -39,20 +44,27 @@ const CartItem: FC<Readonly<Props>> = ({ product, checkout = false }) => {
             {product.title}
           </Link>
         </h2>
+
         {
           (checkout)
-            ? <div className={styles.quantity}>3 items</div>
+            ? <div className={styles.quantity}>0 items</div>
             : (
               <QuantitySelector
-                onQuantityChange={ value => console.log(value)}
-                quantity={3}
+                quantity={product.quantity}
+                onQuantityChange={qty => updateProductQuantity(product, qty)}
               />
             )
         }
+
+        <div className={styles.sizeContainer}>
+          <span className={styles.sizeLabel}>Selected Size:</span>
+          <span className={styles.sizeValue}>{product.size}</span>
+        </div>
+
         <div className={styles.priceContainer}>
           <span className={styles.priceLabel}>Subtotal:</span>
           <span className={styles.priceValue}>
-            $ {(product.price ?? 0 * 3).toFixed(2)}
+            $ {((product.price ?? 0) * (product.quantity)).toFixed(2)}
           </span>
         </div>
         { !checkout && (<button className={styles.btn}>remove</button>) }

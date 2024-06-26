@@ -7,7 +7,7 @@ type State = {
   addProduct: (product: CartProduct) => void,
   getTotalItems: () => number,
   getTotalPrice: () => number,
-  // updateProductQuantity
+  updateProductQuantity: (product: CartProduct, quantity: number) => void,
   // removeProduct
 };
 
@@ -20,10 +20,6 @@ export const useCartStore = create<State>()(
 
       addProduct: (product) => {
         const { cart } = get();
-
-        console.log("================== CART ==================");
-        console.log(cart);
-        console.log("==========================================");
 
         // 1. Check if product is already in cart with selected size.
         const productInCart = cart.some(
@@ -59,6 +55,18 @@ export const useCartStore = create<State>()(
       },
       getTotalPrice: () => {
         return 0.0;
+      },
+      updateProductQuantity: (product, quantity) => {
+        const { cart } = get();
+        
+        const updatedCartProducts = cart.map((item) => {
+          if ((item.id === product.id) && (item.size === product.size)) {
+            return { ...item, quantity };
+          }
+          return item;
+        });
+
+        set({ cart: updatedCartProducts });
       },
     }),
     {

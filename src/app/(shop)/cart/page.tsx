@@ -20,7 +20,7 @@ const CartPage = () => {
       <section className={styles.mainContainer}>
         {/* Cart */}
         <ProductsInCart />
-        
+
         {/* Checkout */}
         <section className={styles.summary}>
           <h2 className={styles.summaryHeading}>Order Summary</h2>

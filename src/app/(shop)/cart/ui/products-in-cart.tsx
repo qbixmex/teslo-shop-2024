@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./products-in-cart.module.css";
 import { CartItem } from "@/components";
 import { useCartStore } from "@/store";
