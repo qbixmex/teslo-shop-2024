@@ -1,22 +1,9 @@
-import { redirect } from 'next/navigation';
 import Link from 'next/link';
-import { CartItem, Title } from '@/components';
+import { Title } from '@/components';
 import styles from './page.module.css';
-import { initialData } from '@/seed/seed';
-import { ProductSeed } from '@/interfaces';
-
-const productsInCart: ProductSeed[] = [
-  initialData.products[25],
-  initialData.products[35],
-  initialData.products[40],
-];
+import ProductsInCart from './ui/products-in-cart';
 
 const CartPage = () => {
-
-  if (productsInCart.length === 0) {
-    redirect('/empty');
-  }
-
   return (
     <section className={styles.container}>
       <section className={styles.header}>
@@ -32,11 +19,7 @@ const CartPage = () => {
 
       <section className={styles.mainContainer}>
         {/* Cart */}
-        <section className={styles.cart}>
-          {productsInCart.map(product => (
-            <CartItem key={product.slug} product={product} />
-          ))}
-        </section>
+        <ProductsInCart />
         
         {/* Checkout */}
         <section className={styles.summary}>

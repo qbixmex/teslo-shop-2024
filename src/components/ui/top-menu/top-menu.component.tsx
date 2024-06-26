@@ -60,14 +60,14 @@ const TopMenu: React.FC<Readonly<Props>> = () => {
           <IoSearchOutline className="size-5" />
         </Link>
 
-        {(componentLoaded && totalItemsInCart > 0) && (
-          <Link href="/cart">
-            <div className={styles.boxChip}>
+        <Link href="/cart">
+          <div className={styles.boxChip}>
+            {(componentLoaded && totalItemsInCart > 0) && (
               <span className={styles.chip}>{totalItemsInCart}</span>
-              <IoCartOutline className="size-5" />
-            </div>
-          </Link>
-        )}
+            )}
+            <IoCartOutline className="size-5" />
+          </div>
+        </Link>
 
         {/* Menu Button */}
         <button

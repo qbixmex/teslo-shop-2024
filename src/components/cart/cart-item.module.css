@@ -1,5 +1,5 @@
 .container {
-  @apply flex gap-5;
+  @apply flex gap-5 mb-5;
 }
 
 .image {
