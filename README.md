@@ -80,3 +80,18 @@ npm run seed
 ```bash
 npx prisma studio
 ```
+
+## NEXT AUTH
+
+### Generate random Secret Key
+
+```bash
+openssl rand -base64 32
+# output example: YSQ8Ui4wi0bRF26uB4W ...
+```
+
+**then past the generated code in ```.env```**
+
+```ini
+AUTH_SECRET="YSQ8Ui4wi0bRF26uB4W ..."
+```
