@@ -26,6 +26,7 @@ export interface ProductLight {
 
 export interface CartProduct {
   id: string;
+  orderId: string;
   slug: string;
   title: string;
   price: number;

@@ -15,6 +15,7 @@ type Props = {
 
 const CartItem: FC<Readonly<Props>> = ({ product, checkout = false }) => {
   const updateProductQuantity = useCartStore(state => state.updateProductQuantity);
+  const removeProductFromCart = useCartStore(state => state.removeProduct);
 
   return (
     <section className={styles.container}>
@@ -67,7 +68,12 @@ const CartItem: FC<Readonly<Props>> = ({ product, checkout = false }) => {
             $ {((product.price ?? 0) * (product.quantity)).toFixed(2)}
           </span>
         </div>
-        { !checkout && (<button className={styles.btn}>remove</button>) }
+        { !checkout && (
+          <button
+            className={styles.btn}
+            onClick={() => removeProductFromCart(product.orderId)}
+          >remove</button>
+        )}
       </section>
     </section>
   );

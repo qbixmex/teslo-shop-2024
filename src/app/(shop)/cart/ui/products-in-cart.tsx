@@ -33,7 +33,7 @@ const ProductsInCart = () => {
     <section className={styles.itemsCart}>
       {productsInCart.map(product => (
         <CartItem
-          key={`${product.slug}-${product.quantity}`}
+          key={product.orderId}
           product={product}
         />
       ))}

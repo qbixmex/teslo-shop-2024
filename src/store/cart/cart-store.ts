@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import type { CartProduct } from '@/interfaces';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
@@ -8,7 +9,7 @@ type State = {
   getTotalItems: () => number,
   getTotalPrice: () => number,
   updateProductQuantity: (product: CartProduct, quantity: number) => void,
-  // removeProduct
+  removeProduct: (orderId: string) => void,
 };
 
 export const useCartStore = create<State>()(
@@ -66,6 +67,11 @@ export const useCartStore = create<State>()(
           return item;
         });
 
+        set({ cart: updatedCartProducts });
+      },
+      removeProduct: (orderId) => {
+        const { cart } = get();
+        const updatedCartProducts = cart.filter((item) => item.orderId !== orderId);
         set({ cart: updatedCartProducts });
       },
     }),

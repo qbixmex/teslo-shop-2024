@@ -25,6 +25,7 @@ const AddToCart: FC<Props> = ({ product }) => {
 
     const cartProduct: CartProduct = {
       id: product.id,
+      orderId: crypto.randomUUID(),
       slug: product.slug,
       title: product.title,
       price: product.price ?? 0.00,
