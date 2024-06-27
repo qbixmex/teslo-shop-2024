@@ -1,0 +1,23 @@
+.group {
+  @apply relative flex flex-col mb-5 text-stone-600;
+}
+
+.label {
+  @apply text-base font-semibold mb-2;
+}
+
+.field {
+  @apply border border-stone-200 rounded-md px-3 py-2 focus-visible:outline-1 focus-visible:outline-blue-500/50;
+}
+
+.errorField {
+  @apply border-red-500 bg-red-100;
+}
+
+.errorMessage {
+  @apply mt-2 ml-3 font-semibold italic text-red-500;
+}
+
+.fieldIcon {
+  @apply absolute bottom-2 right-3 size-6 text-stone-500 cursor-pointer;
+}
