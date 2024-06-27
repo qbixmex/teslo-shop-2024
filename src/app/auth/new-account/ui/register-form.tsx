@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { IoEye, IoEyeOff } from 'react-icons/io5';
-import styles from '../../auth.module.css';
-import formFields from "@/app/auth/form-fields.module.css";
-import { Alert } from "@/components";
 import { SubmitHandler, useForm } from "react-hook-form";
 import clsx from "clsx";
+import { IoEye, IoEyeOff } from 'react-icons/io5';
+import { Alert } from "@/components";
+import { registerUser } from "@/actions";
+import styles from '../../auth.module.css';
+import formFields from "@/app/auth/form-fields.module.css";
 
 type FormInputs = {
   name: string;
@@ -28,6 +29,7 @@ const RegisterForm = () => {
     formState: { errors }
   } = useForm<FormInputs>();
   const [ isVisible, setIsVisible ] = useState(PASSWORDS_VISIBILITY);
+  const [ errorMessage, setErrorMessage ] = useState("");
 
   const handleVisibly = (field: 'password' | 'passwordConfirmation') => {
     return setIsVisible(prev => ({
@@ -37,15 +39,23 @@ const RegisterForm = () => {
     }));
   };
 
-  const onSubmit: SubmitHandler<FormInputs> = (data) => {
-    const { name, email, password } = data;
-    console.table({ name, email, password })
+  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    setErrorMessage('');
+
+    const response = await registerUser(data);
+
+    if (!response.ok) {
+      setErrorMessage(response.message);
+      return;
+    }
+
+    console.log(response);
   };
 
   return (
     <>
-      {false && (
-        <Alert type="error" withIcon>Invalid Credentials</Alert>
+      {errorMessage && (
+        <Alert type="error" withIcon>{errorMessage}</Alert>
       )}
 
       <form onSubmit={handleSubmit(onSubmit)}>
