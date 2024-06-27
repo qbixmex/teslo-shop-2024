@@ -1,26 +1,45 @@
 'use client';
 
-import { FormFields } from "@/components";
+import { Alert, FormFields } from "@/components";
 import styles from "../../auth.module.css";
-import { useFormState } from "react-dom";
+import { useFormState, useFormStatus } from "react-dom";
 import { authenticate } from "@/actions";
+import clsx from "clsx";
 
 const LoginForm = () => {
 
   const [state, dispatch] = useFormState(authenticate, undefined);
 
   return (
-    <form action={dispatch}>
+    <>
+      
+      {state === "Credentials Sign in failed !" && (
+        <Alert type="error" withIcon>Invalid Credentials</Alert>
+      )}
 
-      <FormFields />
+      <form action={dispatch}>
 
-      <section>
-        <button
-          type="submit"
-          className={`btn-primary ${styles['btn--extras']}`}
-        >Login</button>
-      </section>
-    </form>
+        <FormFields />
+
+        <LoginButton />
+        
+      </form>
+    </>
+  );
+};
+
+const LoginButton = () => {
+  const { pending } = useFormStatus();
+  return (
+    <section>
+      <button
+        type="submit"
+        className={clsx(`btn-primary ${styles.btnExtras}`, {
+          [`btn-disabled`]: pending,
+        })}
+        disabled={pending}
+      >{pending ? 'Checking ...' : 'Login'}</button>
+    </section>
   );
 };
 

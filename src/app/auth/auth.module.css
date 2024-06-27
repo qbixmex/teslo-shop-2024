@@ -10,7 +10,7 @@
   @apply text-stone-700 text-2xl mb-5;
 }
 
-.btn--extras {
+.btnExtras {
   @apply w-full mt-2;
 }
 
