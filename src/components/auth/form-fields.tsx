@@ -65,6 +65,7 @@ const FormFields: FC<Readonly<Props>> = ({ register = false }) => {
           required
           className={styles.field}
           autoComplete="off"
+          defaultValue="123456"
         />
         {
           (isVisible.password)

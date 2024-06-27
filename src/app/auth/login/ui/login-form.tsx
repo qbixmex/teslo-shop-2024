@@ -6,17 +6,15 @@ import { useFormState, useFormStatus } from "react-dom";
 import { authenticate } from "@/actions";
 import clsx from "clsx";
 import { useEffect } from "react";
-import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
 
-  const router = useRouter();
   const [state, dispatch] = useFormState(authenticate, undefined);
 
 
   useEffect(() => {
     if (state === "Signin Successful") {
-      router.replace('/profile');
+      window.location.replace('/');
     }
   }, [state]);
 

@@ -20,6 +20,8 @@ const Sidebar = () => {
 
   const { data: session } = useSession();
   const isAuthenticated = !!session?.user;
+  const isUser = session?.user.role === 'user';
+  const isAdmin = session?.user.role === 'admin';
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -59,27 +61,28 @@ const Sidebar = () => {
           <IoSearch className={styles.searchIcon} />
         </section>
 
+        {isAuthenticated && (
+          <>
+            <section className={styles.linksWrapper}>
+              <Link href="/profile" className={styles.link} onClick={closeSideMenu}>
+                <IoPerson className={styles.linkIcon} />
+                <span className={styles.linkText}>Profile</span>
+              </Link>
+
+              {isUser && (
+                <Link href="#" className={styles.link} onClick={closeSideMenu}>
+                  <IoList className={styles.linkIcon} />
+                  <span className={styles.linkText}>My Orders</span>
+                </Link>
+              )}
+            </section>
+
+            {/* Line Separator */}
+            <div className={styles.separator} />
+          </>
+        )}
+
         <section className={styles.linksWrapper}>
-          <Link href="/profile" className={styles.link} onClick={closeSideMenu}>
-            <IoPerson className={styles.linkIcon} />
-            <span className={styles.linkText}>Profile</span>
-          </Link>
-
-          <Link href="#" className={styles.link} onClick={closeSideMenu}>
-            <IoTicket className={styles.linkIcon} />
-            <span className={styles.linkText}>Orders</span>
-          </Link>
-        </section>
-
-        {/* Line Separator */}
-        <div className={styles.separator} />
-
-        <section className={styles.linksWrapper}>
-          <Link href="/products" className={styles.link} onClick={closeSideMenu}>
-            <IoShirt className={styles.linkIcon} />
-            <span className={styles.linkText}>Products</span>
-          </Link>
-
           <Link href="/category/men" className={styles.link} onClick={closeSideMenu}>
             <IoMan className={styles.linkIcon} />
             <span className={styles.linkText}>Men</span>
@@ -99,21 +102,29 @@ const Sidebar = () => {
             <IoPeople className={styles.linkIcon} />
             <span className={styles.linkText}>For Everyone</span>
           </Link>
-
         </section>
 
-        {/* Line Separator */}
-        <div className={styles.separator} />
+        {isAdmin && (
+          <>
+            {/* Line Separator */}
+            <div className={styles.separator} />
 
-        <Link href="#" className={styles.link} onClick={closeSideMenu}>
-          <IoList className={styles.linkIcon} />
-          <span className={styles.linkText}>Orders</span>
-        </Link>
+            <Link href="/products" className={styles.link} onClick={closeSideMenu}>
+              <IoShirt className={styles.linkIcon} />
+              <span className={styles.linkText}>Products</span>
+            </Link>
 
-        <Link href="#" className={styles.link} onClick={closeSideMenu}>
-          <IoPeople className={styles.linkIcon} />
-          <span className={styles.linkText}>Users</span>
-        </Link>
+            <Link href="#" className={styles.link} onClick={closeSideMenu}>
+              <IoList className={styles.linkIcon} />
+              <span className={styles.linkText}>Clients Orders</span>
+            </Link>
+
+            <Link href="#" className={styles.link} onClick={closeSideMenu}>
+              <IoPeople className={styles.linkIcon} />
+              <span className={styles.linkText}>Users</span>
+            </Link>
+          </>
+        )}
 
         {/* Line Separator */}
         <div className={styles.separator} />
