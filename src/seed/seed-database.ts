@@ -1,16 +1,12 @@
-import { prisma } from "../lib";
+import prisma from "../lib/prisma";
 import { initialData } from "./seed";
-
-(async () => {
-  await main();
-})();
+import 'dotenv/config';
 
 async function main() {
 
-  if (process.env.NODE_ENV === 'production') return;
-
   console.log('Clearing data 🧹');
 
+  await prisma.user.deleteMany();
   await prisma.productImage.deleteMany();
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
@@ -19,7 +15,9 @@ async function main() {
 
   console.log('Seed started 🚀');
 
-  const { categories, products } = initialData;
+  const { categories, products, users } = initialData;
+
+  await prisma.user.createMany({ data: users });
 
   const categoriesData = categories.map(
     (categoryName) => ({ name: categoryName })
@@ -67,3 +65,8 @@ async function main() {
 
   console.log('Seed executed 🎉');
 }
+
+(() => {
+  if ( process.env.NODE_ENV === 'production' ) return;
+  main();
+})();
