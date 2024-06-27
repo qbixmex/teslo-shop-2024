@@ -1,17 +1,26 @@
 "use client";
 
 import { useEffect } from 'react';
-import { IoClose, IoList, IoLogIn, IoLogOut, IoMan, IoPeople, IoPerson, IoSearch, IoShirt, IoTicket, IoWoman } from 'react-icons/io5';
+import {
+  IoClose, IoList, IoLogIn, IoLogOut,
+  IoMan, IoPeople, IoPerson, IoSearch,
+  IoShirt, IoTicket, IoWoman,
+} from 'react-icons/io5';
 import { FaChildren } from "react-icons/fa6";
-import styles from './sidebar.module.css';
+import { useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { useUIStore } from '@/store';
-import clsx from 'clsx';
 import { logout } from '@/actions';
+import clsx from 'clsx';
+import styles from './sidebar.module.css';
 
 const Sidebar = () => {
   const isSideMenuOpen = useUIStore((store) => store.isSideMenuOpen);
   const closeSideMenu = useUIStore((store) => store.closeSideMenu);
+
+  const { data: session } = useSession();
+
+  console.log("Session:", session?.user);
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
