@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import clsx from "clsx";
 import { IoEye, IoEyeOff } from 'react-icons/io5';
 import { Alert } from "@/components";
-import { registerUser } from "@/actions";
+import { login, registerUser } from "@/actions";
 import styles from '../../auth.module.css';
 import formFields from "@/app/auth/form-fields.module.css";
 
@@ -49,7 +49,9 @@ const RegisterForm = () => {
       return;
     }
 
-    console.log(response);
+    await login(data.email.toLowerCase(), data.password);
+
+    window.location.replace('/');
   };
 
   return (
