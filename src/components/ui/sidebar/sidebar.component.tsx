@@ -7,6 +7,7 @@ import styles from './sidebar.module.css';
 import Link from 'next/link';
 import { useUIStore } from '@/store';
 import clsx from 'clsx';
+import { logout } from '@/actions';
 
 const Sidebar = () => {
   const isSideMenuOpen = useUIStore((store) => store.isSideMenuOpen);
@@ -110,10 +111,16 @@ const Sidebar = () => {
         <div className={styles.separator} />
 
         {true && (
-          <Link href="#" className={styles.link} onClick={closeSideMenu}>
+          <button
+            className={styles.button}
+            onClick={() => {
+              logout();
+              closeSideMenu();
+            }}
+          >
             <IoLogOut className={styles.linkIcon} />
             <span className={styles.linkText}>Log-Out</span>
-          </Link>
+          </button>
         )}
 
         {true && (
