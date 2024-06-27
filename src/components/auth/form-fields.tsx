@@ -50,7 +50,7 @@ const FormFields: FC<Readonly<Props>> = ({ register = false }) => {
           required
           className={styles.field}
           autoComplete="off"
-          value="daniel@gmail.com"
+          defaultValue="daniel@gmail.com"
         />
       </section>
 
@@ -65,7 +65,6 @@ const FormFields: FC<Readonly<Props>> = ({ register = false }) => {
           required
           className={styles.field}
           autoComplete="off"
-          value="123456"
         />
         {
           (isVisible.password)

@@ -1,6 +1,7 @@
 'use server';
 
 import { signIn } from "@/auth.config";
+import { AuthError } from 'next-auth';
 
 const authenticate = async (
   prevState: string | undefined,
@@ -10,13 +11,21 @@ const authenticate = async (
     await signIn('credentials', {
       ...Object.fromEntries(formData),
       redirect: false,
-      redirectTo: '/',
     });
+
+    return 'Signin Successful';
   } catch (error) {
-    // if ((error as Error).message.includes('CredentialsSignin')) {
-      console.error(error);
-      return 'Credentials Sign in failed !';
-    // }
+    if (error instanceof AuthError) {
+      switch (error.type) {
+        case 'CredentialsSignin':
+        case 'CallbackRouteError':
+          return 'Credentials Sign in failed !';
+        default:
+          return 'Something went wrong.';
+      }
+    }
+
+    return 'Unknown error occurred !';
   }
 };
 
