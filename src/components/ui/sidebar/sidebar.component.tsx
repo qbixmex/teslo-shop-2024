@@ -19,8 +19,7 @@ const Sidebar = () => {
   const closeSideMenu = useUIStore((store) => store.closeSideMenu);
 
   const { data: session } = useSession();
-
-  console.log("Session:", session?.user);
+  const isAuthenticated = !!session?.user;
 
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
@@ -119,7 +118,7 @@ const Sidebar = () => {
         {/* Line Separator */}
         <div className={styles.separator} />
 
-        {true && (
+        {isAuthenticated && (
           <button
             className={styles.button}
             onClick={() => {
@@ -132,7 +131,7 @@ const Sidebar = () => {
           </button>
         )}
 
-        {true && (
+        {!isAuthenticated && (
           <Link href="/auth/login" className={styles.link} onClick={closeSideMenu}>
             <IoLogIn className={styles.linkIcon} />
             <span className={styles.linkText}>Log-In</span>
