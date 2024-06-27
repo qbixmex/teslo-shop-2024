@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import styles from "./layout.module.css";
+import { auth } from "@/auth.config";
+import { redirect } from "next/navigation";
 
 export const metadata: Metadata = {
   title: "Auth",
@@ -7,9 +9,16 @@ export const metadata: Metadata = {
   robots: "noindex, nofollow",
 };
 
-type Props = { children: React.ReactNode; }
+type Props = { children: React.ReactNode; };
 
-const AuthLayout: React.FC<Readonly<Props>> = ({ children }) => {
+const AuthLayout: React.FC<Readonly<Props>> = async ({ children }) => {
+
+  const session = await auth();
+
+  if (session?.user) {
+    redirect('/');
+  }
+
   return (
     <main className={styles.main}>
       {children}

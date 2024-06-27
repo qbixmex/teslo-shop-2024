@@ -51,7 +51,7 @@ const Sidebar = () => {
         </section>
 
         <section className={styles.linksWrapper}>
-          <Link href="#" className={styles.link} onClick={closeSideMenu}>
+          <Link href="/profile" className={styles.link} onClick={closeSideMenu}>
             <IoPerson className={styles.linkIcon} />
             <span className={styles.linkText}>Profile</span>
           </Link>
@@ -117,7 +117,7 @@ const Sidebar = () => {
         )}
 
         {true && (
-          <Link href="#" className={styles.link} onClick={closeSideMenu}>
+          <Link href="/auth/login" className={styles.link} onClick={closeSideMenu}>
             <IoLogIn className={styles.linkIcon} />
             <span className={styles.linkText}>Log-In</span>
           </Link>
