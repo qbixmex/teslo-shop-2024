@@ -7,9 +7,6 @@ const authenticate = async (
   formData: FormData,
 ) => {
   try {
-    console.log("================ FORM DATA ================");
-    console.log("FORM DATA:", Object.fromEntries(formData))
-
     await signIn('credentials', {
       ...Object.fromEntries(formData),
       redirect: false,

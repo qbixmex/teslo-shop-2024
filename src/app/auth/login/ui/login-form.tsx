@@ -9,10 +9,6 @@ const LoginForm = () => {
 
   const [state, dispatch] = useFormState(authenticate, undefined);
 
-  console.log("============== STATE ==============");
-  console.log("STATE:", state);
-  console.log("===================================");
-
   return (
     <form action={dispatch}>
 
