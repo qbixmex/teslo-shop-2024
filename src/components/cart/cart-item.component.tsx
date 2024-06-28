@@ -48,8 +48,11 @@ const CartItem: FC<Readonly<Props>> = ({ product, checkout = false }) => {
 
         {
           (checkout)
-            ? <div className={styles.quantity}>0 items</div>
-            : (
+            ? (
+              <div className={styles.quantity}>
+                {product.quantity} item{ product.quantity > 1 ? 's' : '' }
+              </div>
+            ) : (
               <QuantitySelector
                 quantity={product.quantity}
                 onQuantityChange={qty => updateProductQuantity(product, qty)}

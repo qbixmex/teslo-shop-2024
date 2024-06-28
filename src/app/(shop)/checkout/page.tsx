@@ -3,6 +3,7 @@ import styles from './page.module.css';
 import { initialData } from '@/seed/seed';
 import Link from 'next/link';
 import { CartItem, Title } from '@/components';
+import { CartProduct } from '@/interfaces';
 
 export const metadata: Metadata = {
   title: "Teslo Shop - Verify Order",
@@ -10,10 +11,37 @@ export const metadata: Metadata = {
   robots: "noindex, nofollow",
 };
 
-const productsInCart = [
-  initialData.products[25],
-  initialData.products[35],
-  initialData.products[40],
+const productsInCart: CartProduct[] = [
+  {
+    id: "d1a7a451-0026-458d-b3aa-d2431962add7",
+    orderId: "be49b6c1-ab8a-4caa-aa66-e8763c19d224",
+    image: '7654420-00-A_0_2000.jpg',
+    price: 60,
+    size: 'M',
+    slug: "cybertruck_graffiti_hoodie",
+    title: "Cybertruck Graffiti Hoodie",
+    quantity: 2,
+  },
+  {
+    id: "5efa0078-8b16-4f3f-8fa2-3bf9a5014763",
+    orderId: "e062d870-9af7-412f-9352-f1b4e933866b",
+    image: '1740260-00-A_0_2000.jpg',
+    price: 110,
+    slug: 'women-s-raven-slouchy-crew-sweatshirt',
+    size: 'L',
+    title: "Women's Raven Slouchy Crew Sweatshirt",
+    quantity: 1,
+  },
+  {
+    id: "24c0e576-5a29-44d3-9fb1-1ee65029de33",
+    orderId: "8b5f7c2d-458d-48fd-bc21-f56f7243a663",
+    image: '8765090-00-A_0_2000.jpg',
+    price: 35,
+    size: 'M',
+    slug: "women_t_logo_short_sleeve_scoop_neck_tee",
+    title: "Women's T Logo Short Sleeve Scoop Neck Tee",
+    quantity: 3,
+  },
 ];
 
 const CheckoutPage = () => {

@@ -4,6 +4,8 @@ import { z } from 'zod';
 import bcrypt from 'bcryptjs';
 import { prisma } from './lib';
 
+// const urls
+
 export const authConfig: NextAuthConfig = {
   pages: {
     signIn: '/auth/login',
@@ -45,6 +47,20 @@ export const authConfig: NextAuthConfig = {
     }),
   ],
   callbacks: {
+    authorized({ auth, request: { nextUrl } }) {
+      const isLoggedIn = !!auth?.user;
+      const isAdmin = auth?.user.role === 'admin';
+
+      if (nextUrl.pathname.startsWith('/orders')) {
+        return (isLoggedIn && isAdmin) ? true : false;
+      }
+
+      if (nextUrl.pathname.startsWith('/profile')) {
+        return (isLoggedIn) ? true : false;
+      }
+
+      return true;
+    },
     jwt({ token, user }) {
       
       if ( user ) {
