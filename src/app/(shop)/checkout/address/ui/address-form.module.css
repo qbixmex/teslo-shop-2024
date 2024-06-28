@@ -1,0 +1,51 @@
+.label {
+  @apply font-bold mb-2;
+}
+
+.fieldsContainer {
+  @apply grid grid-cols-1 lg:grid-cols-2 gap-x-5 bg-stone-100 p-5 rounded;
+}
+
+.fieldsColumn {
+  @apply col-span-1;
+}
+
+.field {
+  @apply px-3 py-2 border rounded-md bg-gray-200 text-gray-700 focus:outline-none;
+}
+
+.checkContainer {
+  @apply inline-flex items-center;
+}
+
+.checkboxContainer {
+  @apply inline-flex items-center mt-10;
+}
+
+.checkboxLabel {
+  @apply relative flex cursor-pointer items-center rounded-full p-3;
+}
+
+.checkboxInput {
+  @apply border-gray-500 before:content-[''] relative h-[22px] w-[22px] cursor-pointer appearance-none rounded-md border transition-all before:absolute before:top-2/4 before:left-2/4 before:block before:h-12 before:w-12 before:-translate-y-2/4 before:-translate-x-2/4 before:rounded-full before:bg-blue-500 before:opacity-0 before:transition-opacity checked:border-blue-500 checked:bg-blue-500 checked:before:bg-blue-500 hover:before:opacity-10;
+}
+
+.checkContainer {
+  @apply pointer-events-none absolute top-2/4 left-2/4 -translate-y-2/4 -translate-x-2/4 text-white opacity-0 transition-opacity;
+}
+
+.checkIcon {
+  @apply w-[12px] h-[12px];
+}
+
+.checkboxMessage {
+  @apply text-sm font-thin text-gray-600 italic;
+}
+
+.nextBTNContainer {
+  @apply lg:flex lg:justify-end;
+}
+
+.nextBTN {
+  @apply block my-10 bg-blue-600 hover:bg-blue-500 rounded text-white w-full py-2 text-center transition-colors lg:w-[100px];
+}
