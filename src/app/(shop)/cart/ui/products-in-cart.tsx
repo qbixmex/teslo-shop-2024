@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import styles from "./products-in-cart.module.css";
 import { CartItem } from "@/components";
 import { useCartStore } from "@/store";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 import ProductCartSkeleton from "./products-in-cart-skeleton";
 
 const ProductsInCart = () => {
@@ -12,12 +12,13 @@ const ProductsInCart = () => {
   const router = useRouter();
   const productsInCart = useCartStore(state => state.cart);
   const [componentLoaded, setComponentLoaded] = useState(false);
-
-  useEffect(() => setComponentLoaded(true), []);
-
-  if (productsInCart.length === 0) {
-    router.replace('/empty');
-  }
+  
+  useEffect(() => {
+    if (productsInCart.length === 0) {
+      router.replace('/empty');
+    }
+    setComponentLoaded(true)
+  }, [productsInCart, router]);
 
   if (!componentLoaded) {
     return (

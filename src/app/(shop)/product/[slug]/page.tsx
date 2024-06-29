@@ -1,9 +1,9 @@
 import { FC } from 'react';
 
-import { Metadata, ResolvingMetadata } from 'next';
+import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getProductBySlug } from '@/actions';
-import { QuantitySelector, SizeSelector, SlideShow, SlideShowMobile } from '@/components';
+import { SlideShow, SlideShowMobile } from '@/components';
 import { StockLabel } from '@/components/stock-label';
 import AddToCart from './ui/add-to-cart';
 import styles from './page.module.css';
@@ -29,12 +29,12 @@ export const generateMetadata = async ({ params }: Props): Promise<Metadata>  =>
     title: metaTitle,
     description: metaDescription,
     // social media
-    openGraph: {
-      title: metaTitle,
-      description: metaDescription,
-      // images: ['https://example.com/image-1.jpg', 'https://example.com/image-2.jpg'],
-      images: [`/products/${product?.images[1]}`],
-    },
+    // openGraph: {
+    //   title: metaTitle,
+    //   description: metaDescription,
+    //   // images: ['https://example.com/image-1.jpg', 'https://example.com/image-2.jpg'],
+    //   images: [`/products/${product?.images[1]}`],
+    // },
   }
 };
 

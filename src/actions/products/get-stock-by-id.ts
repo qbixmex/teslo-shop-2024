@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 
-export const GetStockById = async (id: string): Promise<number> => {
+const getStockById = async (id: string): Promise<number> => {
   try {
     const product = await prisma.product.findFirst({
       where: { id },
@@ -15,3 +15,5 @@ export const GetStockById = async (id: string): Promise<number> => {
     return 0;
   }
 };
+
+export default getStockById;

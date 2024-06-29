@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import { Title } from '@/components';
-import styles from "./page.module.css";
 import ProductsInCart from './ui/products-in-cart';
 import OrderSummary from './ui/order-summary';
+import styles from "./page.module.css";
 
 const CartPage = () => {
   return (
@@ -12,10 +12,7 @@ const CartPage = () => {
 
         <span className={styles.headerMessage}>Add more items</span>
 
-        <Link
-          href="/"
-          className="underline"
-        >Continue Buying</Link>
+        <Link href="/" className="underline">Continue Buying</Link>
       </section>
 
       <section className={styles.mainContainer}>

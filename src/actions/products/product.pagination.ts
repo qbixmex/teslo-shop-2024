@@ -9,7 +9,7 @@ type PaginationOptions = {
   gender?: Gender;
 };
 
-export const getPaginatedProductsWithImages = async ({
+const getPaginatedProductsWithImages = async ({
   page = 1,
   limit = 12,
   gender,
@@ -60,3 +60,5 @@ export const getPaginatedProductsWithImages = async ({
     throw 'Unknown error occurred. Check logs !';
   }
 };
+
+export default getPaginatedProductsWithImages;
