@@ -7,6 +7,8 @@ import { QuantitySelector } from "../product";
 import styles from "./cart-item.module.css";
 import Link from "next/link";
 import { useCartStore } from "@/store";
+import { currencyFormat } from "@/utils";
+import { FaTrash } from "react-icons/fa";
 
 type Props = {
   product: CartProduct;
@@ -60,23 +62,37 @@ const CartItem: FC<Readonly<Props>> = ({ product, checkout = false }) => {
             )
         }
 
-        <div className={styles.sizeContainer}>
-          <span className={styles.sizeLabel}>Selected Size:</span>
-          <span className={styles.sizeValue}>{product.size}</span>
-        </div>
+        <section className="grid grid-cols-2 gap-5">
+          <div>
+            <div className={styles.sizeContainer}>
+              <span className={styles.sizeLabel}>Selected Size:</span>
+              <span className={styles.sizeValue}>{product.size}</span>
+            </div>
 
-        <div className={styles.priceContainer}>
-          <span className={styles.priceLabel}>Subtotal:</span>
-          <span className={styles.priceValue}>
-            $ {((product.price ?? 0) * (product.quantity)).toFixed(2)}
-          </span>
-        </div>
-        { !checkout && (
-          <button
-            className={styles.btn}
-            onClick={() => removeProductFromCart(product.orderId)}
-          >remove</button>
-        )}
+            <div className={styles.sizeContainer}>
+              <span className={styles.unitPriceLabel}>Unit Price:</span>
+              <span className={styles.unitPriceValue}>{currencyFormat(product.price)}</span>
+            </div>
+
+            <div className={styles.priceContainer}>
+              <span className={styles.priceLabel}>Subtotal:</span>
+              <span className={styles.priceValue}>
+                {currencyFormat((product.price ?? 0) * (product.quantity))}
+              </span>
+            </div>
+          </div>
+          <div className="flex justify-end items-end">
+            {!checkout && (
+              <button
+                className={styles.btn}
+                onClick={() => removeProductFromCart(product.orderId)}
+              >
+                <FaTrash />
+              </button>
+            )}
+          </div>
+        </section>
+
       </section>
     </section>
   );

@@ -1,0 +1,39 @@
+.container {
+  @apply flex gap-5 animate-pulse mb-5;
+}
+
+.itemsCart {
+  @apply lg:col-span-2;
+}
+
+.itemsSkeleton {
+  @apply lg:col-span-2;
+}
+
+.productImageSkeleton {
+  @apply w-full min-w-[200px] max-w-[200px] h-[200px] rounded bg-stone-400;
+}
+
+.productTitleSkeleton {
+  @apply w-full max-w-[400px] h-[25px] bg-stone-400 mb-5 rounded
+}
+
+.quantityContainerSkeleton {
+  @apply flex gap-x-10 mb-5;
+}
+
+.quantityBtnSkeleton {
+  @apply w-[30px] h-[30px] bg-stone-400 rounded-full;
+}
+
+.quantityNumberSkeleton {
+  @apply w-[30px] h-[30px] bg-stone-400 rounded-md;
+}
+
+.subtotalSkeleton {
+  @apply w-1/2 h-[25px] bg-stone-400 rounded mb-5;
+}
+
+.btnSkeleton {
+  @apply w-[100px] h-[40px] bg-stone-400 rounded-md;
+}
