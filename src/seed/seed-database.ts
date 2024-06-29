@@ -6,6 +6,7 @@ async function main() {
 
   console.log('Clearing data 🧹');
 
+  await prisma.userAddress.deleteMany();
   await prisma.user.deleteMany();
   await prisma.country.deleteMany();
   await prisma.productImage.deleteMany();

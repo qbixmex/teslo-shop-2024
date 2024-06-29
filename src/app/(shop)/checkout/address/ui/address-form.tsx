@@ -2,14 +2,15 @@
 
 import { FC, useEffect, useState } from 'react';
 import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { FaCheck } from 'react-icons/fa';
-import styles from './address-form.module.css';
-import { Alert } from '@/components';
 import clsx from 'clsx';
-import type { Country } from '@/interfaces';
+import { FaCheck } from 'react-icons/fa';
+import { Alert } from '@/components';
+import type { Address, Country } from '@/interfaces';
 import { useAddressStore } from '@/store';
 import { deleteUserAddress, setUserAddress } from '@/actions';
+import styles from './address-form.module.css';
 
 type FormInputs = {
   firstName: string;
@@ -25,10 +26,15 @@ type FormInputs = {
 
 type Props = {
   countries: Country[];
+  userStoreAddress?: Partial<Address>;
 };
 
-const AddressForm: FC<Props> = ({ countries }) => {
+const AddressForm: FC<Props> = ({
+  countries,
+  userStoreAddress = {},
+}) => {
 
+  const router = useRouter();
   const {
     register,
     handleSubmit,
@@ -36,7 +42,8 @@ const AddressForm: FC<Props> = ({ countries }) => {
     formState: { errors },
   } = useForm<FormInputs>({
     defaultValues: {
-      // TODO: Add default values
+      ...userStoreAddress,
+      rememberAddress: false,
     },
   });
 
@@ -47,7 +54,9 @@ const AddressForm: FC<Props> = ({ countries }) => {
    const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    reset(addressStore);
+    if (addressStore.remember !== false) {
+      reset(addressStore);
+    }
   }, [addressStore, reset]);
 
   const onSubmit: SubmitHandler<FormInputs> = async (formData) => {
@@ -58,16 +67,16 @@ const AddressForm: FC<Props> = ({ countries }) => {
     const { rememberAddress, ...addressWithoutRememberAddress } = formData;
 
     if (rememberAddress) {
-      const response = await setUserAddress(addressWithoutRememberAddress, session!.user.id);
+      const response = await setUserAddress(addressWithoutRememberAddress, session?.user.id as string);
       if (!response.ok) {
         setErrorMessage(response.message);
         return;
       }
+    } else {
+      await deleteUserAddress(session?.user.id as string);
     }
 
-    if (!rememberAddress) {
-      await deleteUserAddress(session!.user.id);
-    }    
+    router.push('/checkout');
 
   };
 
