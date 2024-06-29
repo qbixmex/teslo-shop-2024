@@ -64,6 +64,8 @@ model Product {
   category   Category @relation(fields: [categoryId], references: [id])
   categoryId String   @map("category_id")
 
+  OrderItem OrderItem[]
+
   // Timestamps
   createdAt    DateTime       @default(now()) @map("created_at")
   updatedAt    DateTime       @updatedAt @map("updated_at")
@@ -100,12 +102,15 @@ model User {
 
   // Relationship
   address UserAddress?
+  order Order[]
 }
 
 model Country {
   id String @id
   name String @unique
   UserAddress UserAddress[]
+
+  OrderAddress OrderAddress[]
 }
 
 model UserAddress {
@@ -124,4 +129,58 @@ model UserAddress {
 
   user User @relation(fields: [userId], references: [id])
   userId String @unique @map("user_id")
+}
+
+model Order {
+  id String @id @default(uuid())
+  itemsInOrder Int
+  subtotal Float
+  tax Float
+  total Float
+  isPaid Boolean @default(false) @map("is_paid")
+  paidAt DateTime? @map("paid_at")
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  // Relationships
+
+  user User @relation(fields: [userId], references: [id])
+  userId String @map("user_id")
+
+  OrderItem OrderItem[]
+  OrderAddress OrderAddress?
+}
+
+model OrderItem {
+  id String @id @default(uuid())
+  quantity Int
+  price Float
+  size Size
+
+  // Relationships
+
+  order Order @relation(fields: [orderId], references: [id])
+  orderId String @map("order_id")
+
+  product Product @relation(fields: [productId], references: [id])
+  productId String @map("product_id")
+}
+
+model OrderAddress {
+  id String @id @default(uuid())
+  firstName String
+  lastName String
+  address String
+  address2 String?
+  postalCode String
+  phone String
+  city String
+
+  // Relationship
+  country Country @relation(fields: [countryId], references: [id])
+  countryId String @map("country_id")
+
+  order Order @relation(fields: [orderId], references: [id])
+  orderId String @unique @map("order_id")
 }
