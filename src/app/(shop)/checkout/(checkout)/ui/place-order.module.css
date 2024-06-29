@@ -65,3 +65,7 @@
 .summaryCheckoutBtn {
   @apply bg-blue-600 hover:bg-blue-500 active:bg-green-200 px-4 py-2 text-white rounded block w-full mt-5 text-center transition-colors;
 }
+
+.summaryCheckoutBtnDisabled {
+  @apply bg-stone-300 hover:bg-stone-300 cursor-not-allowed;
+}

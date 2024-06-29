@@ -62,9 +62,9 @@ const AddressForm: FC<Props> = ({
   const onSubmit: SubmitHandler<FormInputs> = async (formData) => {
     setErrorMessage('');
 
-    setAddress(formData);
-
     const { rememberAddress, ...addressWithoutRememberAddress } = formData;
+    
+    setAddress(addressWithoutRememberAddress);
 
     if (rememberAddress) {
       const response = await setUserAddress(addressWithoutRememberAddress, session?.user.id as string);

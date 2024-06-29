@@ -4,17 +4,41 @@ import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import styles from './place-order.module.css';
 import { useAddressStore, useCartStore } from '@/store';
-import { currencyFormat } from '@/utils';
+import { currencyFormat, sleep } from '@/utils';
+import clsx from 'clsx';
+import { Alert } from '@/components';
 
 const PlaceOrder = () => {
 
   const [ componentLoaded, setComponentLoaded ] = useState(false);
+  const [ isPlacingOrder, setIsPlacingOrder ] = useState(false);
+  const [ error, setError ] = useState('');
   const address = useAddressStore(state => state.address);
   const summary = useCartStore(state => state.getSummaryInformation());
+  const cart = useCartStore(state => state.cart);
 
   useEffect(() => {
     setComponentLoaded(true);
   }, []);
+
+  const onPlaceOrder = async () => {
+    setIsPlacingOrder(true);
+
+    const productsToOrder = cart.map(item => ({
+      productId: item.id,
+      quantity: item.quantity,
+      size: item.size,
+    }));
+
+    console.log("ADDRESS:", address);
+    console.log("PRODUCTS:", productsToOrder);
+    
+    // TODO: Server action to place order
+
+    // setError('Could not place your order !');
+
+    setIsPlacingOrder(false);
+  };
 
   if (!componentLoaded) {
     return <div className="text-center text-2xl text-stone-700 font-semibold italic">Loading...</div>;
@@ -99,11 +123,19 @@ const PlaceOrder = () => {
         When you click &quot;checkout&quot;, you agree to our <Link href="/terms" className="underline">terms of service</Link> and <Link href="/privacy" className="underline">privacy policy</Link>.
       </p>
 
+      {error && (
+        <Alert type="error" withIcon className="mt-5">{error}</Alert>
+      )}
+
       <button
         // TODO: navigate to -> /orders/123
         type='submit'
-        className={styles.summaryCheckoutBtn}
-      >Place Order</button>
+        disabled={isPlacingOrder}
+        className={clsx(styles.summaryCheckoutBtn, {
+          [styles.summaryCheckoutBtnDisabled]: isPlacingOrder
+        })}
+        onClick={onPlaceOrder}
+      >{ isPlacingOrder ? 'Placing Order ...' : 'Place Order' }</button>
     </section>
   );
 };

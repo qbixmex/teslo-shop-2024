@@ -8,16 +8,22 @@ type Props = {
   type?: 'primary' | 'secondary' | 'info' | 'warning' | 'success' | 'error';
   withIcon?: boolean;
   iconPosition?: 'left' | 'right';
+  className?: string;
 };
 
 const Alert: FC<Props> = ({
   children,
   type = 'info',
   withIcon = false,
-  iconPosition = 'left'
+  iconPosition = 'left',
+  className,
 }) => {
   return (
-    <div className={clsx("flex flex-row items-center justify-center gap-2 text-white py-4 mb-5 rounded", {
+    <div className={clsx(
+      [
+        className,
+        "flex flex-row items-center justify-center gap-2 text-white py-4 mb-5 rounded"
+      ], {
       "flex-row-reverse": iconPosition === "right",
       "bg-blue-500": type === "primary",
       "bg-sky-500": type === "info",
