@@ -1,12 +1,13 @@
 'use client';
 
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FaCheck } from 'react-icons/fa';
 import styles from './address-form.module.css';
 import { Alert } from '@/components';
 import clsx from 'clsx';
 import type { Country } from '@/interfaces';
+import { useAddressStore } from '@/store';
 
 type FormInputs = {
   firstName: string;
@@ -29,17 +30,29 @@ const AddressForm: FC<Props> = ({ countries }) => {
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    reset,
+    formState: { errors },
   } = useForm<FormInputs>({
     defaultValues: {
       // TODO: Add default values
     },
   });
 
+  const setAddress = useAddressStore(state => state.setAddress);
+  const addressStore = useAddressStore(state => state.address);
+
   const [errorMessage, setErrorMessage] = useState('');
+
+  useEffect(() => {
+    if (addressStore.address !== '') {
+      reset(addressStore);
+    }
+  }, []);
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     setErrorMessage('');
+
+    setAddress(data);
 
     console.table(data);
 
