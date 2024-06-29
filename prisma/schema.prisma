@@ -117,7 +117,6 @@ model UserAddress {
   postalCode String
   phone String
   city String
-  remember Boolean
 
   // Relationship
   country Country @relation(fields: [countryId], references: [id])

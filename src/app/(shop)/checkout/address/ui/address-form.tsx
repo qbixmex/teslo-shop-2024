@@ -8,6 +8,8 @@ import { Alert } from '@/components';
 import clsx from 'clsx';
 import type { Country } from '@/interfaces';
 import { useAddressStore } from '@/store';
+import { setUserAddress } from '@/actions';
+import { useSession } from 'next-auth/react';
 
 type FormInputs = {
   firstName: string;
@@ -38,31 +40,35 @@ const AddressForm: FC<Props> = ({ countries }) => {
     },
   });
 
+  const { data: session } = useSession({ required: true });
   const setAddress = useAddressStore(state => state.setAddress);
   const addressStore = useAddressStore(state => state.address);
 
-  const [errorMessage, setErrorMessage] = useState('');
+   const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (addressStore.address !== '') {
-      reset(addressStore);
-    }
-  }, []);
+    reset(addressStore);
+  }, [addressStore, reset]);
 
-  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+  const onSubmit: SubmitHandler<FormInputs> = async (formData) => {
     setErrorMessage('');
 
-    setAddress(data);
+    setAddress(formData);
 
-    console.table(data);
+    const { rememberAddress, ...addressWithoutRememberAddress } = formData;
 
-    // SERVER ACTION
-    // const response = await saveAddress(data);
+    if (rememberAddress) {
+      const response = await setUserAddress(addressWithoutRememberAddress, session?.user.id as string);
+      if (!response.ok) {
+        setErrorMessage(response.message);
+        return;
+      }
+    }
+    
+    if (!rememberAddress) {
+      // TODO: SERVER ACTION DELETE ADDRESS
+    }    
 
-    // if (!response.ok) {
-    //   setErrorMessage(response.message);
-    //   return;
-    // }
   };
 
   return (

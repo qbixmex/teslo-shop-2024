@@ -36,7 +36,6 @@ const createOrderReplaceAddress = async (address: Address, userId: string) => {
       phone: address.phone,
       city: address.city,
       countryId: address.country,
-      remember: address.remember ?? false,
       userId,
     };
 
