@@ -47,7 +47,8 @@ const Sidebar = () => {
         </>
       )}
 
-      <nav className={clsx(styles.nav,{
+      <nav className={clsx(styles.nav, {
+        [styles.shadow]: isSideMenuOpen,
         [styles.closedMenu]: !isSideMenuOpen
       })}>
         <IoClose className={styles.closeIcon} onClick={closeSideMenu} />

@@ -11,7 +11,11 @@
 }
 
 .nav {
-  @apply fixed p-5 right-0 top-0 z-30 w-[400px] min-h-screen bg-stone-100 shadow-[-10px_0px_20px_5px_rgba(0,0,0,0.4)] transform transition-all duration-300;
+  @apply fixed p-5 right-0 top-0 z-30 w-[400px] min-h-screen bg-stone-100 transform transition-all duration-300;
+}
+
+.shadow {
+  @apply shadow-[-10px_0px_20px_5px_rgba(0,0,0,0.4)];
 }
 
 .closeIcon {
