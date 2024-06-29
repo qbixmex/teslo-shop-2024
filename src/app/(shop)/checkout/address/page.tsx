@@ -2,6 +2,7 @@ import { Title } from '@/components';
 import { Metadata } from 'next';
 import AddressForm from './ui/address-form';
 import styles from './page.module.css';
+import { getCountries } from '@/actions';
 
 export const metadata: Metadata = {
   title: "Teslo Shop - Address",
@@ -9,12 +10,15 @@ export const metadata: Metadata = {
   robots: "noindex, nofollow",
 };
 
-const AddressPage = () => {
+const AddressPage = async () => {
+
+  const countries = await getCountries();
+
   return (
     <section className={styles.container}>
       <section className={styles.subContainer}>
         <Title title="Address" subtitle="Delivery Address" />
-        <AddressForm />
+        <AddressForm countries={countries} />
       </section>
     </section>
   );

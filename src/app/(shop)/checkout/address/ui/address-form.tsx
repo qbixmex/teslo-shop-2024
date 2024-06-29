@@ -1,11 +1,12 @@
 'use client';
 
-import { useState } from 'react';
+import { FC, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FaCheck } from 'react-icons/fa';
 import styles from './address-form.module.css';
 import { Alert } from '@/components';
 import clsx from 'clsx';
+import type { Country } from '@/interfaces';
 
 type FormInputs = {
   firstName: string;
@@ -19,7 +20,11 @@ type FormInputs = {
   rememberAddress: boolean;
 };
 
-const AddressForm = () => {
+type Props = {
+  countries: Country[];
+};
+
+const AddressForm: FC<Props> = ({ countries }) => {
 
   const {
     register,
@@ -248,9 +253,19 @@ const AddressForm = () => {
                 })}
               >
                 <option value="select" disabled>Select an option</option>
-                <option value="canada">Canada</option>
-                <option value="usa">USA</option>
-                <option value="mexico">Mexico</option>
+
+                { countries.length > 0 && countries.map(({ id, name }) => (
+                  <option key={id} value={id}>{name}</option>
+                ))}
+
+                { countries.length === 0 && (
+                  <>
+                    <option value="CA">Canada</option>
+                    <option value="US">USA</option>
+                    <option value="MX">Mexico</option>
+                  </>
+                )}
+
               </select>
               {errors.country && (
                 <p className={styles.errorMessage}>
