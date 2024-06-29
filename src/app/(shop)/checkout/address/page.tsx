@@ -14,9 +14,7 @@ const AddressPage = () => {
     <section className={styles.container}>
       <section className={styles.subContainer}>
         <Title title="Address" subtitle="Delivery Address" />
-
         <AddressForm />
-
       </section>
     </section>
   );

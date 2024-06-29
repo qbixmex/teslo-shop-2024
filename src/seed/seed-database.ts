@@ -7,6 +7,7 @@ async function main() {
   console.log('Clearing data 🧹');
 
   await prisma.user.deleteMany();
+  await prisma.country.deleteMany();
   await prisma.productImage.deleteMany();
   await prisma.product.deleteMany();
   await prisma.category.deleteMany();
@@ -15,9 +16,15 @@ async function main() {
 
   console.log('Seed started 🚀');
 
-  const { categories, products, users } = initialData;
+  const { categories, products, users, countries } = initialData;
 
   await prisma.user.createMany({ data: users });
+
+  console.log('Users Inserted 👍');
+
+  await prisma.country.createMany({ data: countries });
+
+  console.log('Countries Inserted 👍');
 
   const categoriesData = categories.map(
     (categoryName) => ({ name: categoryName })

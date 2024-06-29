@@ -24,10 +24,7 @@ const AddressForm = () => {
   const {
     register,
     handleSubmit,
-    formState: {
-      errors,
-      isValid,
-    }
+    formState: { errors }
   } = useForm<FormInputs>({
     defaultValues: {
       // TODO: Add default values
@@ -67,7 +64,6 @@ const AddressForm = () => {
                 type="text"
                 autoComplete="off"
                 autoFocus
-                placeholder="Homer"
                 className={clsx(styles.field, {
                   [styles.fieldError]: errors.firstName
                 })}
@@ -93,7 +89,6 @@ const AddressForm = () => {
                 id="lastName"
                 type="text"
                 autoComplete="off"
-                placeholder="Simpson"
                 className={clsx(styles.field, {
                   [styles.fieldError]: errors.lastName
                 })}
@@ -119,7 +114,6 @@ const AddressForm = () => {
                 id="address"
                 type="text"
                 autoComplete="off"
-                placeholder="742 Evergreen Terrace"
                 className={clsx(styles.field, {
                   [styles.fieldError]: errors.address
                 })}
@@ -145,7 +139,6 @@ const AddressForm = () => {
                 id="address_2"
                 type="text"
                 autoComplete="off"
-                placeholder="Apt 1234"
                 className={clsx(styles.field, {
                   [styles.fieldError]: errors.address2
                 })}
@@ -172,7 +165,6 @@ const AddressForm = () => {
                 id="postalCode"
                 type="text"
                 autoComplete="off"
-                placeholder="A5CC2E"
                 className={clsx(styles.field, {
                   [styles.fieldError]: errors.postalCode
                 })}
@@ -198,7 +190,6 @@ const AddressForm = () => {
                 id="phone"
                 type="tel"
                 autoComplete="off"
-                placeholder="2224445555"
                 className={clsx(styles.field, {
                   [styles.fieldError]: errors.phone
                 })}
@@ -224,7 +215,6 @@ const AddressForm = () => {
                 id="city"
                 type="text"
                 autoComplete="off"
-                placeholder="Springfield"
                 className={clsx(styles.field, {
                   [styles.fieldError]: errors.city
                 })}
@@ -289,9 +279,10 @@ const AddressForm = () => {
         <div className={styles.nextBTNContainer}>
           <button
             type="submit"
-            disabled={!isValid}
-            className={clsx(styles.nextBTN, {
-              [styles.nextBTNDisabled]: !isValid
+            disabled={false}
+            className={clsx({
+              [styles.nextBTN]: true,
+              [styles.nextBTNDisabled]: false
             })}
           >Next</button>
         </div>
