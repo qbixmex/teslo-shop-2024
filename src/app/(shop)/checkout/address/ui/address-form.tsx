@@ -1,6 +1,7 @@
 'use client';
 
 import { FC, useEffect, useState } from 'react';
+import { useSession } from 'next-auth/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { FaCheck } from 'react-icons/fa';
 import styles from './address-form.module.css';
@@ -8,8 +9,7 @@ import { Alert } from '@/components';
 import clsx from 'clsx';
 import type { Country } from '@/interfaces';
 import { useAddressStore } from '@/store';
-import { setUserAddress } from '@/actions';
-import { useSession } from 'next-auth/react';
+import { deleteUserAddress, setUserAddress } from '@/actions';
 
 type FormInputs = {
   firstName: string;
@@ -58,15 +58,15 @@ const AddressForm: FC<Props> = ({ countries }) => {
     const { rememberAddress, ...addressWithoutRememberAddress } = formData;
 
     if (rememberAddress) {
-      const response = await setUserAddress(addressWithoutRememberAddress, session?.user.id as string);
+      const response = await setUserAddress(addressWithoutRememberAddress, session!.user.id);
       if (!response.ok) {
         setErrorMessage(response.message);
         return;
       }
     }
-    
+
     if (!rememberAddress) {
-      // TODO: SERVER ACTION DELETE ADDRESS
+      await deleteUserAddress(session!.user.id);
     }    
 
   };
