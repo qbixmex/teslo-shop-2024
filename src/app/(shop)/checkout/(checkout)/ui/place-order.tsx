@@ -7,6 +7,7 @@ import { useAddressStore, useCartStore } from '@/store';
 import { currencyFormat, sleep } from '@/utils';
 import clsx from 'clsx';
 import { Alert } from '@/components';
+import { placeOrder } from '@/actions';
 
 const PlaceOrder = () => {
 
@@ -30,10 +31,10 @@ const PlaceOrder = () => {
       size: item.size,
     }));
 
-    console.log("ADDRESS:", address);
-    console.log("PRODUCTS:", productsToOrder);
-    
-    // TODO: Server action to place order
+    // Server Action
+    const response = await placeOrder(productsToOrder, address);
+
+    console.log("RESPONSE:", response);
 
     // setError('Could not place your order !');
 
