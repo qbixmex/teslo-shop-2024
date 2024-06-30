@@ -11,27 +11,31 @@ type State = {
     phone: string;
     city: string;
     country: string;
-    remember?: boolean;
+    rememberAddress?: boolean;
   },
   setAddress: (address: State['address']) => void;
+  clearAddress: () => void;
+};
+
+const INITIAL_STATE = {
+  firstName: '',
+  lastName: '',
+  address: '',
+  address2: undefined,
+  postalCode: '',
+  phone: '',
+  city: '',
+  country: '',
+  rememberAddress: false,
 };
 
 export const useAddressStore = create<State>()(
   persist(
     (set) => ({
-      address: {
-        firstName: '',
-        lastName: '',
-        address: '',
-        address2: undefined,
-        postalCode: '',
-        phone: '',
-        city: '',
-        country: '',
-        remember: false,
-      },
+      address: INITIAL_STATE,
       setAddress: (address) => set({ address }),
+      clearAddress: () => set({ address: INITIAL_STATE }),
     }),
-    { name: 'address-storage' }
+    { name: 'address-storage' },
   )
 );

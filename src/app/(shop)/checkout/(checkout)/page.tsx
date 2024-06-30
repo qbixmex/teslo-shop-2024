@@ -1,9 +1,7 @@
 import { Metadata } from 'next';
 import styles from './page.module.css';
-import { initialData } from '@/seed/seed';
 import Link from 'next/link';
-import { CartItem, Title } from '@/components';
-import { CartProduct } from '@/interfaces';
+import { Title } from '@/components';
 import ProductsInCart from './ui/products-in-cart';
 import PlaceOrder from './ui/place-order';
 

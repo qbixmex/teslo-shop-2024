@@ -41,10 +41,10 @@ const AddressForm: FC<Props> = ({
     reset,
     formState: { errors },
   } = useForm<FormInputs>({
-    defaultValues: {
+    defaultValues: userStoreAddress.address ? {
       ...userStoreAddress,
-      rememberAddress: false,
-    },
+      rememberAddress: true,
+    } : {},
   });
 
   const { data: session } = useSession({ required: true });
@@ -54,7 +54,7 @@ const AddressForm: FC<Props> = ({
    const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
-    if (addressStore.remember !== false) {
+    if (addressStore.rememberAddress) {
       reset(addressStore);
     }
   }, [addressStore, reset]);
@@ -64,7 +64,7 @@ const AddressForm: FC<Props> = ({
 
     const { rememberAddress, ...addressWithoutRememberAddress } = formData;
     
-    setAddress(addressWithoutRememberAddress);
+    setAddress(formData);
 
     if (rememberAddress) {
       const response = await setUserAddress(addressWithoutRememberAddress, session?.user.id as string);

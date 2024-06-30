@@ -9,6 +9,7 @@ type State = {
   getTotalItems: () => number,
   updateProductQuantity: (product: CartProduct, quantity: number) => void,
   removeProduct: (orderId: string) => void,
+  clearCart: () => void,
 };
 
 export const useCartStore = create<State>()(
@@ -94,6 +95,10 @@ export const useCartStore = create<State>()(
         const { cart } = get();
         const updatedCartProducts = cart.filter((item) => item.orderId !== orderId);
         set({ cart: updatedCartProducts });
+      },
+
+      clearCart: () => {
+        set({ cart: [] })
       },
     }),
     {

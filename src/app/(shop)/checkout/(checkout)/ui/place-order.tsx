@@ -8,15 +8,19 @@ import { currencyFormat, sleep } from '@/utils';
 import clsx from 'clsx';
 import { Alert } from '@/components';
 import { placeOrder } from '@/actions';
+import { useRouter } from 'next/navigation';
 
 const PlaceOrder = () => {
 
+  const router = useRouter();
   const [ componentLoaded, setComponentLoaded ] = useState(false);
   const [ isPlacingOrder, setIsPlacingOrder ] = useState(false);
   const [ error, setError ] = useState('');
   const address = useAddressStore(state => state.address);
   const summary = useCartStore(state => state.getSummaryInformation());
   const cart = useCartStore(state => state.cart);
+  const clearAddress = useAddressStore(state => state.clearAddress);
+  const clearCart = useCartStore(state => state.clearCart);
 
   useEffect(() => {
     setComponentLoaded(true);
@@ -35,13 +39,15 @@ const PlaceOrder = () => {
     // Server Action
     const response = await placeOrder(productsToOrder, address);
 
-    console.log("RESPONSE:", response);
-
     if (!response.ok) {
       setError(response.message);
+      setIsPlacingOrder(false);
+      return;
     }
 
-    setIsPlacingOrder(false);
+    clearAddress();
+    clearCart();
+    router.replace(`/orders/${response.order.id}`);
   };
 
   if (!componentLoaded) {
@@ -132,7 +138,6 @@ const PlaceOrder = () => {
       )}
 
       <button
-        // TODO: navigate to -> /orders/123
         type='submit'
         disabled={isPlacingOrder}
         className={clsx(styles.summaryCheckoutBtn, {
