@@ -22,7 +22,7 @@ const Alert: FC<Props> = ({
     <div className={clsx(
       [
         className,
-        "flex flex-row items-center justify-center gap-2 text-white py-4 mb-5 rounded"
+        "flex flex-row items-center justify-center gap-2 text-white p-4 mb-5 rounded"
       ], {
       "flex-row-reverse": iconPosition === "right",
       "bg-blue-500": type === "primary",

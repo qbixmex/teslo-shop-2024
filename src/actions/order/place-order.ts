@@ -15,7 +15,6 @@ const placeOrder = async (
   address: Address
 ): Promise<any> => {
   const session = await auth();
-  const authUser = session?.user;
   const userId = session?.user.id;
 
   if (!userId) {
@@ -63,8 +62,44 @@ const placeOrder = async (
 
   try {
 
-    const prismaTransaction = prisma.$transaction(async (transaction) => {
-      // TODO: 1. Update product stock.
+    const prismaTransaction = await prisma.$transaction(async (transaction) => {
+
+      // 1. Update product stock.
+      const updatedProductsPromises = productsToBuy.map((product) => {
+
+        // Get the total quantity of each product
+        // where the product id is equal to the current product id.
+        // This is because we can have 2 or more products with the same id but different sizes.
+        const productQuantity = productOrders.filter((item) => {
+          return item.productId === product.id;
+        }).reduce((accumulateAmount, currentProduct) => {
+          return currentProduct.quantity + accumulateAmount;
+        }, 0);
+
+        if (productQuantity === 0) {
+          throw new Error(`Product "${product.id}" quantity is not set !`);
+        }
+
+        return transaction.product.update({
+          where: { id: product.id },
+          data: {
+            // inStock: (product.inStock ?? 0) - productQuantity, // This is wrong.
+            inStock: {
+              decrement: productQuantity,
+            }
+          }
+        });
+
+      });
+
+      const updatedProducts = await Promise.all(updatedProductsPromises);
+
+      // Check if we have inStock negative values.
+      updatedProducts.forEach((product) => {
+        if ((product.inStock ?? 0) < 0) {
+          throw new Error(`Product "${product.title}" is out of stock !`);
+        }
+      });
 
       // 2. Create order. (details)
       const orderPlaced = await transaction.order.create({
@@ -87,7 +122,7 @@ const placeOrder = async (
         }
       });
 
-      // TODO: 3. Create order address.
+      // 3. Create order address.
       const orderAddress = await transaction.orderAddress.create({
         data: {
           firstName: address.firstName,
@@ -103,7 +138,7 @@ const placeOrder = async (
       });
 
       return {
-        updatedProducts: [],
+        updatedProducts,
         order: orderPlaced,
         orderAddress,
       };
@@ -112,13 +147,21 @@ const placeOrder = async (
     return {
       ok: true,
       message: 'Order placed successfully !',
+      order: prismaTransaction.order,
+      prismaTransaction
     };
 
   } catch (error) {
-
+    console.log(error);
+    if (error instanceof Error) {
+      return {
+        ok: false,
+        message: error.message,
+      };
+    }
     return {
       ok: false,
-      message: 'Something went wrong !'
+      message: 'Unexpected error occurred, check logs !',
     };
   }
 };

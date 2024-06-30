@@ -24,6 +24,7 @@ const PlaceOrder = () => {
 
   const onPlaceOrder = async () => {
     setIsPlacingOrder(true);
+    setError('');
 
     const productsToOrder = cart.map(item => ({
       productId: item.id,
@@ -36,7 +37,9 @@ const PlaceOrder = () => {
 
     console.log("RESPONSE:", response);
 
-    // setError('Could not place your order !');
+    if (!response.ok) {
+      setError(response.message);
+    }
 
     setIsPlacingOrder(false);
   };
@@ -125,7 +128,7 @@ const PlaceOrder = () => {
       </p>
 
       {error && (
-        <Alert type="error" withIcon className="mt-5">{error}</Alert>
+        <Alert type="error" className="mt-5">{error}</Alert>
       )}
 
       <button
