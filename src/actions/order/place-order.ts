@@ -60,22 +60,53 @@ const placeOrder = async (
     return totals;
   }, { subtotal: 0, tax: 0, total: 0 });
 
-  console.log({ subtotal, tax, total });
+  try {
 
-  return {
-    ok: true,
-    message: 'Order placed successfully 👍'
-  };
+    const prismaTransaction = prisma.$transaction(async (transaction) => {
+      // TODO: 1. Update product stock.
 
-  // try {
-  // } catch (error) {
-  //   console.log(error);
+      // 2. Create order. (details)
+      const orderPlaced = await transaction.order.create({
+        data: {
+          userId,
+          itemsInOrder,
+          subtotal,
+          tax,
+          total,
+          OrderItem: {
+            createMany: {
+              data: productOrders.map(productOrder => ({
+                quantity: productOrder.quantity,
+                size: productOrder.size,
+                productId: productOrder.productId,
+                price: productsToBuy.find(item => item.id === productOrder.productId)?.price ?? 0,
+              })),
+            }
+          }
+        }
+      });
 
-  //   return {
-  //     ok: false,
-  //     message: 'Something went wrong !'
-  //   };
-  // }
+      // TODO: 3. Create order address.
+
+      return {
+        order: orderPlaced,
+        updatedProducts: [],
+        orderAddress: {},
+      };
+    });
+
+    return {
+      ok: true,
+      message: 'Order placed successfully !',
+    };
+
+  } catch (error) {
+
+    return {
+      ok: false,
+      message: 'Something went wrong !'
+    };
+  }
 };
 
 export default placeOrder;
