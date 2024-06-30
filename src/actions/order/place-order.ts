@@ -15,6 +15,7 @@ const placeOrder = async (
   address: Address
 ): Promise<any> => {
   const session = await auth();
+  const authUser = session?.user;
   const userId = session?.user.id;
 
   if (!userId) {
@@ -87,11 +88,24 @@ const placeOrder = async (
       });
 
       // TODO: 3. Create order address.
+      const orderAddress = await transaction.orderAddress.create({
+        data: {
+          firstName: address.firstName,
+          lastName: address.lastName,
+          address: address.address,
+          address2: address.address2,
+          postalCode: address.postalCode,
+          phone: address.phone,
+          city: address.city,
+          countryId: address.country,
+          orderId: orderPlaced.id,
+        }
+      });
 
       return {
-        order: orderPlaced,
         updatedProducts: [],
-        orderAddress: {},
+        order: orderPlaced,
+        orderAddress,
       };
     });
 
