@@ -29,7 +29,7 @@ const placeOrder = async (
   // Get products data from database based on productOrder products ids.
   // Remember we can can 2 or more products with the same id but different sizes.
 
-  const products = await prisma.product.findMany({
+  const productsToBuy = await prisma.product.findMany({
     where: {
       id: {
         in: productIds,
@@ -42,7 +42,25 @@ const placeOrder = async (
     return amount + item.quantity;
   }, 0);
 
-  console.log({ itemsInOrder });
+  const { subtotal, tax, total } = productOrders.reduce((totals, item) => {
+    const productQuantity = item.quantity;
+    const product = productsToBuy.find(product => product.id === item.productId);
+
+    if (!product) {
+      throw new Error(`Product "${item.productId}" does not exist !`);
+    }
+
+    const productPrice = product.price ?? 0;
+    const subtotal = productPrice * productQuantity
+
+    totals.subtotal += subtotal;
+    totals.tax += subtotal * 0.15;
+    totals.total += subtotal * 1.15;
+
+    return totals;
+  }, { subtotal: 0, tax: 0, total: 0 });
+
+  console.log({ subtotal, tax, total });
 
   return {
     ok: true,
