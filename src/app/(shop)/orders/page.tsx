@@ -1,8 +1,10 @@
-import { IoCardOutline } from 'react-icons/io5';
-import styles from './page.module.css';
 import { Metadata } from 'next';
 import Link from 'next/link';
+import { redirect } from 'next/navigation';
+import { auth } from '@/auth.config';
+import { getOrdersByUser } from '@/actions';
 import { PaymentStatus, Title } from '@/components';
+import styles from './page.module.css';
 
 export const metadata: Metadata = {
   title: "Teslo Shop - Orders",
@@ -10,7 +12,16 @@ export const metadata: Metadata = {
   robots: "noindex, nofollow",
 };
 
-const OrdersPage = () => {
+const OrdersPage = async () => {
+
+  const session = await auth();
+
+  const { ok, orders = [] } = await getOrdersByUser(session?.user.id as string);
+
+  if (!ok) {
+    redirect('/auth/login');
+  };
+
   return (
     <>
       <Title title="Orders" />
@@ -21,32 +32,31 @@ const OrdersPage = () => {
             <tr>
               <th scope="col">#ID</th>
               <th scope="col">Full Name</th>
+              <th scope="col">Address</th>
+              <th scope="col">Country</th>
+              <th scope="col">City</th>
               <th scope="col">Status</th>
               <th scope="col">Actions</th>
             </tr>
           </thead>
           <tbody>
-            <tr className={styles.tableBodyRow}>
-              <td className={styles.tableBodyColID}>1</td>
-              <td className={styles.tableBodyCol}>Bart Simpson</td>
-              <td className={styles.tableBodyColStatus}>
-                <PaymentStatus isPaid={true} />
-              </td>
-              <td className={styles.tableBodyColLink}>
-                <Link href="/orders/123">show</Link>
-              </td>
-            </tr>
-
-            <tr className={styles.tableBodyRow}>
-              <td className={styles.tableBodyColID}>2</td>
-              <td className={styles.tableBodyCol}>Lisa Simpson</td>
-              <td className={styles.tableBodyColStatus}>
-                <PaymentStatus isPaid={false} />
-              </td>
-              <td className={styles.tableBodyColLink}>
-                <Link href="/orders/123">show</Link>
-              </td>
-            </tr>
+            {orders.map(order => (
+              <tr key={order.id} className={styles.tableBodyRow}>
+                <td className={styles.tableBodyColID}>...{ order.id.slice(-4) }</td>
+                <td className={styles.tableBodyCol}>
+                  {order.OrderAddress?.firstName} {order.OrderAddress?.lastName}
+                </td>
+                <td className={styles.tableBodyCol}>{order.OrderAddress?.address}</td>
+                <td className={styles.tableBodyCol}>{order.OrderAddress?.country.name}</td>
+                <td className={styles.tableBodyCol}>{order.OrderAddress?.city}</td>
+                <td className={styles.tableBodyColStatus}>
+                  <PaymentStatus isPaid={order.isPaid} />
+                </td>
+                <td className={styles.tableBodyColLink}>
+                  <Link href={`/orders/${order.id}`}>show</Link>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </section>

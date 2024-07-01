@@ -70,8 +70,8 @@ const Sidebar = () => {
                 <span className={styles.linkText}>Profile</span>
               </Link>
 
-              {isUser && (
-                <Link href="#" className={styles.link} onClick={closeSideMenu}>
+              {(isAdmin || isUser) && (
+                <Link href="/orders" className={styles.link} onClick={closeSideMenu}>
                   <IoList className={styles.linkIcon} />
                   <span className={styles.linkText}>My Orders</span>
                 </Link>
@@ -115,7 +115,7 @@ const Sidebar = () => {
               <span className={styles.linkText}>Products</span>
             </Link>
 
-            <Link href="#" className={styles.link} onClick={closeSideMenu}>
+            <Link href="/orders" className={styles.link} onClick={closeSideMenu}>
               <IoList className={styles.linkIcon} />
               <span className={styles.linkText}>Clients Orders</span>
             </Link>
