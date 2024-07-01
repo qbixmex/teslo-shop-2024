@@ -13,7 +13,7 @@ interface ProductToOrder {
 const placeOrder = async (
   productOrders: ProductToOrder[],
   address: Address
-): Promise<any> => {
+) => {
   const session = await auth();
   const userId = session?.user.id;
 

@@ -33,6 +33,7 @@ const CartItem: FC<Readonly<Props>> = ({ product, checkout = false }) => {
             height={200}
             alt={product.title}
             className={styles.image}
+            priority
           />
         </Link>
       </section>

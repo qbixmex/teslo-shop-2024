@@ -47,7 +47,7 @@ const PlaceOrder = () => {
 
     clearAddress();
     clearCart();
-    router.replace(`/orders/${response.order.id}`);
+    router.replace(`/orders/${response.order?.id}`);
   };
 
   if (!componentLoaded) {
