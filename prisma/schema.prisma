@@ -140,6 +140,8 @@ model Order {
   isPaid Boolean @default(false) @map("is_paid")
   paidAt DateTime? @map("paid_at")
 
+  transactionId String? @map("transaction_id")
+
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
