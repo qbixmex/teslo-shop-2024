@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { auth } from '@/auth.config';
 import { getOrdersByUser } from '@/actions';
 import { PaymentStatus, Title } from '@/components';
+import { FaRobot } from 'react-icons/fa6';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
@@ -26,7 +27,16 @@ const OrdersPage = async () => {
     <>
       <Title title="Orders" />
 
-      <section className={styles.container}>
+      {orders.length === 0 && (
+        <div className='min-h-[500px] flex flex-col justify-center items-center'>
+          <h1 className="text-2xl lg:text-5xl font-black text-orange-600">There&apos;s no orders created yet !</h1>
+          <FaRobot className="my-10 size-[200px] lg:size-[250px] text-orange-400" />
+          <Link href="/" className="btn-primary">back</Link>
+        </div>
+      )}
+
+      {orders.length > 0 && (
+        <section className={styles.container}>
         <table className={styles.table}>
           <thead className={styles.tableHead}>
             <tr>
@@ -60,6 +70,7 @@ const OrdersPage = async () => {
           </tbody>
         </table>
       </section>
+    )}
     </>
   );
 };
