@@ -37,7 +37,7 @@ const HomePage: FC<Props> = async ({ searchParams }) => {
   return (
     <>
       <Title
-        title="Store"
+        title="Teslo Shop Store"
         subtitle="All products"
         className="mb-2"
       />
