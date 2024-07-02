@@ -1,0 +1,7 @@
+.skeletonContainer {
+  @apply flex flex-col gap-y-2;
+}
+
+.skeleton {
+  @apply bg-gray-300 w-full h-10 rounded animate-[pulse_1s_ease-in-out_infinite];
+}
