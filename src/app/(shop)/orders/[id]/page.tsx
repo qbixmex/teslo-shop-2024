@@ -4,6 +4,7 @@ import { getOrderById } from '@/actions';
 import { redirect } from 'next/navigation';
 import { CartItem, PaymentInfo, PaypalButton, Title } from '@/components';
 import { currencyFormat } from '@/utils/currencyFormat';
+import { auth } from '@/auth.config';
 import styles from './order.module.css'
 
 export const metadata: Metadata = {
@@ -17,6 +18,12 @@ type Props = {
 };
 
 const OrderPage: FC<Readonly<Props>> = async ({ params: { id } }) => {
+  const session = await auth();
+
+  if (!session) {
+    redirect('/auth/login');
+  }
+
   const { order } = await getOrderById( id );
   
   if (!order) {
@@ -120,9 +127,11 @@ const OrderPage: FC<Readonly<Props>> = async ({ params: { id } }) => {
           {order.isPaid ? (
             <PaymentInfo isPaid={order.isPaid} />
           ) : (
-            <PaypalButton options={{ orderId: order.id, amount: order.total }} />
+            // Only show the Paypal button if the user is the owner of the order
+            (session.user.id === order.userId) && (
+              <PaypalButton options={{ orderId: order.id, amount: order.total }} />
+            )
           )}
-
         </section>
       </section>
     </section>

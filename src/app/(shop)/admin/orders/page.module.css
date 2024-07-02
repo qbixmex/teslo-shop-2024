@@ -1,0 +1,55 @@
+.container {
+  @apply mb-10;
+}
+
+.table {
+  @apply min-w-full rounded overflow-hidden;
+}
+
+.tableHead {
+  @apply bg-stone-300 border-b;
+}
+
+.tableHead th {
+  @apply text-sm font-semibold text-gray-700 px-6 py-4 text-left;
+}
+
+.tableBodyRow {
+  @apply bg-white border-b transition duration-300 ease-in-out hover:bg-gray-100;
+}
+
+.tableBodyColID {
+  @apply w-[100px] px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900;
+}
+
+.tableBodyCol {
+  @apply text-sm text-gray-900 font-light px-6 py-4 whitespace-nowrap;
+}
+
+.tableBodyColStatus {
+  @apply flex items-center text-sm  text-gray-900 font-light px-6 py-4 whitespace-nowrap;
+}
+
+.tableBodyColLink {
+  @apply text-sm font-semibold px-6 text-blue-700;
+}
+
+.tableBodyColLink a:hover {
+  @apply text-blue-500;
+}
+
+.emptyContainer {
+  @apply min-h-[500px] flex flex-col justify-center items-center;
+}
+
+.emptyHeading {
+  @apply text-2xl lg:text-5xl font-black text-stone-600;
+}
+
+.emptySvgIcon {
+  @apply my-10 size-[200px] lg:size-[250px] text-stone-400;
+}
+
+.emptyBackBtn {
+  @apply px-10 py-2 bg-stone-400 hover:bg-stone-500 rounded-md transition-colors text-white;
+}

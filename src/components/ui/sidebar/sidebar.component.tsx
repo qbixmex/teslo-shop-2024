@@ -115,9 +115,9 @@ const Sidebar = () => {
               <span className={styles.linkText}>Products</span>
             </Link>
 
-            <Link href="/orders" className={styles.link} onClick={closeSideMenu}>
+            <Link href="/admin/orders" className={styles.link} onClick={closeSideMenu}>
               <IoList className={styles.linkIcon} />
-              <span className={styles.linkText}>Clients Orders</span>
+              <span className={styles.linkText}>Manage Orders</span>
             </Link>
 
             <Link href="#" className={styles.link} onClick={closeSideMenu}>
