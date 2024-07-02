@@ -3,6 +3,7 @@
 import { FC } from 'react';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
 import type { CreateOrderData, CreateOrderActions } from '@paypal/paypal-js';
+import { setTransactionId } from '@/actions';
 import styles from './paypal.button.module.css';
 
 type Props = {
@@ -14,8 +15,6 @@ type Props = {
 };
 
 const PaypalButton: FC<Props> = ({ options }) => {
-
-  console.log({options})
 
   const { orderId, amount, layout = 'vertical' } = options;
 
@@ -49,7 +48,14 @@ const PaypalButton: FC<Props> = ({ options }) => {
       intent: 'CAPTURE',
     });
 
-    console.log({ transactionId });
+    // console.log({ transactionId });
+
+    // Add transactionId to the order to the database.
+    const { ok, message } = await setTransactionId(orderId, transactionId);
+
+    if (!ok) {
+      console.log(`Message: ${message}`);
+    }
 
     return transactionId;
   };
