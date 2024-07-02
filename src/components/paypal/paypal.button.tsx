@@ -2,8 +2,10 @@
 
 import { FC } from 'react';
 import { PayPalButtons, usePayPalScriptReducer } from '@paypal/react-paypal-js';
-import type { CreateOrderData, CreateOrderActions } from '@paypal/paypal-js';
-import { setTransactionId } from '@/actions';
+import type {
+  CreateOrderData, CreateOrderActions, OnApproveData, OnApproveActions,
+} from '@paypal/paypal-js';
+import { paypalCheckPayment, setTransactionId } from '@/actions';
 import styles from './paypal.button.module.css';
 
 type Props = {
@@ -60,11 +62,21 @@ const PaypalButton: FC<Props> = ({ options }) => {
     return transactionId;
   };
 
+  const onApprove = async (
+    data: OnApproveData,
+    actions: OnApproveActions
+  ): Promise<void> => {
+    console.log('============ onApprove ============');
+    const details = await actions.order?.capture();
+    if (!details?.id) return;
+    await paypalCheckPayment(details.id);
+  };
+
   return (
     <PayPalButtons
       style={{ layout }}
       createOrder={onCreateOrder}
-      // onApprove={}
+      onApprove={onApprove}
     />
   );
 };
