@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { montserrat_alternates, open_sans } from "@/config/fonts";
-import { Provider } from "@/components";
+import { Providers } from "@/components";
 
 export const metadata: Metadata = {
   title: {
@@ -25,9 +25,9 @@ const RootLayout: React.FC<Readonly<Props>> = ({ children }) => {
   return (
     <html className={`${montserrat_alternates.variable} ${open_sans.variable}`}>
       <body className="bg-stone-200">
-        <Provider>
+        <Providers>
           {children}
-        </Provider>
+        </Providers>
       </body>
     </html>
   );

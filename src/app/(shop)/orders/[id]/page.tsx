@@ -2,12 +2,12 @@ import { FC } from 'react';
 import { Metadata } from 'next';
 import { getOrderById } from '@/actions';
 import { redirect } from 'next/navigation';
-import { CartItem, PaymentInfo, Title } from '@/components';
-import styles from './order.module.css'
+import { CartItem, PaymentInfo, PaypalButton, Title } from '@/components';
 import { currencyFormat } from '@/utils/currencyFormat';
+import styles from './order.module.css'
 
 export const metadata: Metadata = {
-  title: "Teslo Shop - Order #",
+  title: "Teslo Shop - Order Details",
   description: "Order Page",
   robots: "noindex, nofollow",
 };
@@ -117,7 +117,7 @@ const OrderPage: FC<Readonly<Props>> = async ({ params: { id } }) => {
             </tbody>
           </table>
 
-          <PaymentInfo isPaid={order.isPaid} />
+          <PaypalButton />
         </section>
       </section>
     </section>
