@@ -40,7 +40,7 @@ const PaypalButton: FC<Props> = ({ options }) => {
     const transactionId = await actions.order.create({
       purchase_units: [
         {
-          // invoice_id: orderId,
+          invoice_id: orderId,
           amount: {
             value: `${roundedAmount}`,
             currency_code: 'USD',
@@ -49,8 +49,6 @@ const PaypalButton: FC<Props> = ({ options }) => {
       ],
       intent: 'CAPTURE',
     });
-
-    // console.log({ transactionId });
 
     // Add transactionId to the order to the database.
     const { ok, message } = await setTransactionId(orderId, transactionId);
@@ -66,7 +64,6 @@ const PaypalButton: FC<Props> = ({ options }) => {
     data: OnApproveData,
     actions: OnApproveActions
   ): Promise<void> => {
-    console.log('============ onApprove ============');
     const details = await actions.order?.capture();
     if (!details?.id) return;
     await paypalCheckPayment(details.id);

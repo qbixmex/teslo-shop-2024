@@ -2,6 +2,8 @@
 
 import { PaypalOAuthResponse, PayPalOrderStatusResponse } from "@/interfaces";
 import { prisma } from "@/lib";
+import { ok } from "assert";
+import { revalidatePath } from "next/cache";
 
 const paypalCheckPayment = async ( paypalTransactionId: string ) => {
   const authToken = await getPayPalBearerToken();
@@ -23,8 +25,8 @@ const paypalCheckPayment = async ( paypalTransactionId: string ) => {
   }
 
   const { status, purchase_units } = orderStatus;
-  // TODO: Invoice ID
-  // const {  } = purchase_units[0]; 
+  // Destructure Invoice ID
+  const { invoice_id: orderId } = purchase_units[0];
 
   if (status !== "COMPLETED") {
     return {
@@ -36,19 +38,24 @@ const paypalCheckPayment = async ( paypalTransactionId: string ) => {
   try {
     // Update database with the payment status.
     await prisma.order.update({
-      where: { id: '9873240a-ff1a-47a0-9a40-ef3822b2698d' },
+      where: { id: orderId },
       data: {
         isPaid: true,
         paidAt: new Date(),
       },
     });
 
-    // TODO: Path Revalidate
+    revalidatePath(`orders/${orderId}`);
+
+    return {
+      ok: true,
+      message: "Payment is completed 🛒🛍️👍",
+    };
   } catch (error) {
     console.error(error);
     return {
       ok: false,
-      message: "Failed to update database with payment status !",
+      message: "Failed to update database with payment status ❌👎 !",
     }
   }
 

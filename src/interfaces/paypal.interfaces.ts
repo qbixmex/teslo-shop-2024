@@ -61,6 +61,7 @@ export interface PurchaseUnit {
   shipping:        Shipping;
   payments:        Payments;
   risk_assessment: RiskAssessment;
+  invoice_id:      string;
 }
 
 export interface Amount {
