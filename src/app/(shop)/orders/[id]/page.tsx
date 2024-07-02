@@ -117,7 +117,10 @@ const OrderPage: FC<Readonly<Props>> = async ({ params: { id } }) => {
             </tbody>
           </table>
 
-          <PaypalButton />
+          <PaypalButton options={{
+            orderId: order.id,
+            amount: order.total,
+          }} />
         </section>
       </section>
     </section>
