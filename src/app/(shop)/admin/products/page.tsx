@@ -7,7 +7,7 @@ import { FaRobot } from "react-icons/fa6";
 import { Pagination, Title } from "@/components";
 import { auth } from "@/auth.config";
 import { getPaginatedProductsWithImages } from "@/actions";
-import { FaInfo, FaPencilAlt, FaTrash } from "react-icons/fa";
+import { FaPencilAlt, FaTrash } from "react-icons/fa";
 import { currencyFormat } from "@/utils";
 import styles from "./page.module.css";
 
@@ -55,7 +55,7 @@ const ProductsPage: FC<Props> = async ({ searchParams }) => {
             <thead className={styles.tableHead}>
               <tr>
                 <th style={{ width: 50 }}>Image</th>
-                <th style={{ width: 400 }}>Title</th>
+                <th>Title</th>
                 <th style={{ width: 50 }}>Category</th>
                 <th style={{ width: 50 }}>Gender</th>
                 <th style={{ width: 50 }}>Stock</th>
@@ -93,26 +93,20 @@ const ProductsPage: FC<Props> = async ({ searchParams }) => {
                     <td className={styles.tableBodyColPrice}>{ currencyFormat(product.price) }</td>
                     <td className={styles.tableBodyColActions}>
                       <Link
-                        className={clsx([styles.iconButtons, styles.iconInfo])}
-                        href={`/product/${123}`}
-                        title="View Product Details"
-                      >
-                        <FaInfo size={16} />
-                      </Link>
-                      <Link
                         className={clsx([styles.iconButtons, styles.iconEdit])}
-                        href={`/product/${123}`}
+                        href={`/admin/products/${product.slug}`}
                         title="Edit Product Details"
                       >
                         <FaPencilAlt size={16} />
                       </Link>
-                      <Link
+                      {/* TODO Move this to Client Component */}
+                      <button
                         className={clsx([styles.iconButtons, styles.iconRemove])}
-                        href={`/product/${123}`}
                         title="Delete Product"
                       >
                         <FaTrash size={16} />
-                      </Link>
+                      </button>
+                      {/* ================================== */}
                     </td>
                   </tr>
                 ))

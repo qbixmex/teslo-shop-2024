@@ -55,6 +55,7 @@ const getPaginatedProductsWithImages = async ({
         gender: product.gender,
         price: product.price ?? 0,
         stock: product.inStock ?? 0,
+        images: product.ProductImage.map(image => image.url),
         image: product.ProductImage[0].url,
         category: product.category.name,
       })),

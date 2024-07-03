@@ -7,7 +7,6 @@ const ProfilePage = async () => {
   const session = await auth();
 
   if (!session?.user) {
-    // TODO: redirect to login page
     // redirect('/auth/login?redirectTo=/profile')
     redirect('/');
   }

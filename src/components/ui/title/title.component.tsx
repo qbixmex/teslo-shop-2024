@@ -9,7 +9,7 @@ type Props = {
 const Title: React.FC<Readonly<Props>> = ({ title, subtitle, className }) => {
 
   return (
-    <hgroup>
+    <hgroup className={className}>
       <h1 className={styles.title}>{ title }</h1>
       {
         subtitle && (
