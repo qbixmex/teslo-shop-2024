@@ -120,7 +120,7 @@ const Sidebar = () => {
               <span className={styles.linkText}>Manage Orders</span>
             </Link>
 
-            <Link href="#" className={styles.link} onClick={closeSideMenu}>
+            <Link href="/admin/users" className={styles.link} onClick={closeSideMenu}>
               <IoPeople className={styles.linkIcon} />
               <span className={styles.linkText}>Users</span>
             </Link>

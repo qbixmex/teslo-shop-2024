@@ -1,0 +1,1 @@
+export { default as getPaginatedUsers } from './get-paginated-users';

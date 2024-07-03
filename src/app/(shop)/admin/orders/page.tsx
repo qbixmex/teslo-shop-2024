@@ -21,7 +21,7 @@ const OrdersPage = async () => {
   }
 
   return (
-    <div className="min-h-[calc(100vh-236px)]">
+    <div className={styles.mainContainer}>
       <Title title={`Manage Orders`} className="mb-2" />
 
       {orders?.length === 0 && (
