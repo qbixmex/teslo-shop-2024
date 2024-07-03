@@ -26,6 +26,11 @@ const getPaginatedProductsWithImages = async ({
       // For example if (page === 3): 3 - 1 = 2 * 12 = 24
       skip: (page - 1) * limit,
       include: {
+        category: {
+          select: {
+            name: true,
+          }
+        },
         ProductImage: {
           take: 2,
           select: { url: true },
@@ -47,8 +52,11 @@ const getPaginatedProductsWithImages = async ({
         id: product.id,
         title: product.title,
         slug: product.slug,
+        gender: product.gender,
         price: product.price ?? 0,
-        images: product.ProductImage.map(image => image.url),
+        stock: product.inStock ?? 0,
+        image: product.ProductImage[0].url,
+        category: product.category.name,
       })),
     };
 

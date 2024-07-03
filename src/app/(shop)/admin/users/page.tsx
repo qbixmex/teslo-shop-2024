@@ -16,7 +16,7 @@ const UsersPage = async () => {
 
   return (
     <div className={styles.mainContainer}>
-      <Title title={`Manage Users`} className="mb-2" />
+      <Title title="Manage Users" className="mb-2" />
 
       {(users.length === 0) && (
         <div className={styles.emptyContainer}>

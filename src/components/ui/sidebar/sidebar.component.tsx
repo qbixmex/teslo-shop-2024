@@ -110,7 +110,7 @@ const Sidebar = () => {
             {/* Line Separator */}
             <div className={styles.separator} />
 
-            <Link href="/products" className={styles.link} onClick={closeSideMenu}>
+            <Link href="/admin/products" className={styles.link} onClick={closeSideMenu}>
               <IoShirt className={styles.linkIcon} />
               <span className={styles.linkText}>Products</span>
             </Link>

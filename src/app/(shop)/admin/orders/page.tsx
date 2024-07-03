@@ -22,7 +22,7 @@ const OrdersPage = async () => {
 
   return (
     <div className={styles.mainContainer}>
-      <Title title={`Manage Orders`} className="mb-2" />
+      <Title title="Manage Orders" className="mb-2" />
 
       {orders?.length === 0 && (
         <div className={styles.emptyContainer}>
