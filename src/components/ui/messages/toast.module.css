@@ -1,0 +1,39 @@
+.base {
+  @apply absolute w-[300px] top-5 right-5 text-white text-center font-bold p-5 rounded-lg;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    right: -50%;
+    opacity: 0;
+  }
+  to {
+    right: 20px;
+    opacity: 1;
+  }
+}
+
+.primary {
+  @apply bg-blue-600;
+}
+
+.secondary {
+  @apply bg-gray-500;
+}
+
+.info {
+  @apply bg-sky-500;
+}
+
+.warning {
+  @apply bg-orange-500;
+}
+
+.error {
+  @apply bg-red-600;
+}
+
+.success {
+  @apply bg-green-600;
+}
