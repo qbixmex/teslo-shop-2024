@@ -51,7 +51,7 @@ const AddressForm: FC<Props> = ({
   const setAddress = useAddressStore(state => state.setAddress);
   const addressStore = useAddressStore(state => state.address);
 
-   const [errorMessage, setErrorMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (addressStore.rememberAddress) {

@@ -9,6 +9,7 @@ export interface Product {
   slug: string;
   tags: string[];
   type?: Type;
+  categoryId: string;
   gender: TCategory;
   createdAt: Date;
   updatedAt: Date;
