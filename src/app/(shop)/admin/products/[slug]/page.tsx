@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { Title } from "@/components";
-import { Product } from "@/interfaces";
-import { getProductBySlug } from "@/actions";
+import { getCategories, getProductBySlug } from "@/actions";
 import { redirect } from "next/navigation";
 import ProductForm from "./ui/product-form";
 
@@ -13,7 +12,10 @@ const ProductPage: FC<Props> = async ({ params }) => {
 
   const { slug } = params;
 
-  const product = await getProductBySlug(slug);
+  const [product, categories] = await Promise.all([
+    getProductBySlug(slug),
+    getCategories(),
+  ]);
 
   if (!product) {
     redirect('/admin/products');
@@ -26,7 +28,10 @@ const ProductPage: FC<Props> = async ({ params }) => {
         className="text-blue-500"
       />
 
-      <ProductForm product={product} />
+      <ProductForm
+        product={product}
+        categories={categories}
+      />
     </section>
   );
 

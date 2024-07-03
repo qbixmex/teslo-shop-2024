@@ -1,7 +1,7 @@
 'use client';
 
 import { FC } from "react";
-import { Product } from "@/interfaces";
+import { Category, Product } from "@/interfaces";
 import styles from "./product-form.module.css";
 import clsx from 'clsx';
 
@@ -9,9 +9,10 @@ const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
 type Props = {
   product: Product;
+  categories: Category[];
 };
 
-const ProductForm: FC<Props> = ({ product }) => {
+const ProductForm: FC<Props> = ({ product, categories }) => {
   return (
     <form>
       <div className={styles.mainContainer}>
@@ -84,10 +85,9 @@ const ProductForm: FC<Props> = ({ product }) => {
               defaultValue="select"
             >
               <option value="select" disabled>Select a Category</option>
-              {/* TODO: Iterate Categories from DB */}
-              <option value="pants">Pants</option>
-              <option value="t-shirts">T-Shirts</option>
-              <option value="shoes">Shoes</option>
+              {categories.map((category) =>(
+                <option key={category.id} value={category.id}>{category.name}</option>
+              ))}
             </select>
           </div>
         </div>

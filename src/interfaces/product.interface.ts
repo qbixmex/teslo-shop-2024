@@ -9,7 +9,7 @@ export interface Product {
   slug: string;
   tags: string[];
   type?: Type;
-  gender: Category;
+  gender: TCategory;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -44,6 +44,6 @@ export interface OrderSummary {
 
 export type Role = 'admin' | 'user';
 
-export type Category = 'men'|'women'|'kid'|'unisex';
+export type TCategory = 'men'|'women'|'kid'|'unisex';
 export type Size = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
 export type Type = 'shirts'|'pants'|'hoodies'|'hats';
