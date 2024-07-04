@@ -37,7 +37,10 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
   const {
     handleSubmit,
     register,
-    formState: { isValid, errors },
+    formState: { errors },
+    getValues,
+    setValue,
+    watch,
     reset,
   } = useForm<FormInputs>({
     defaultValues: {
@@ -53,13 +56,21 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
     }
   });
 
+  // Reload the form when the product sizes changes
+  watch('sizes');
+
+  const onSizeChanged = (size: string) => {
+    const sizes = new Set(getValues('sizes'));
+    (sizes.has(size)) ? sizes.delete(size) : sizes.add(size);
+    setValue('sizes', Array.from(sizes));
+  };
+
   const onSubmit: SubmitHandler<FormInputs> = async (formData) => {
     setErrorMessage('');
 
-    // const { rememberAddress, ...addressWithoutRememberAddress } = formData;
-    
+    console.log(formData)
 
-    router.push('/checkout');
+    // TODO: router.push('/admin/products');
 
   };
   
@@ -241,20 +252,28 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
               )}
             </div>
           </div>
+
           {/* SIZES and IMAGES */}
           <div className={styles.sizesAndImages}>
+
             {/* SIZES */}
             <div className={styles.sizesGroup}>
               <label className={styles.formLabel}>Size</label>
               <div className={styles.formSizes}>
                 {
                   sizes.map(size => (
-                    <div key={size} className={clsx(styles.formSize, {
-                      [styles.formSelectedSize]: false, // TODO: Change Dynamically
-                    })}>{size}</div>
+                    <button
+                      key={size}
+                      type="button"
+                      className={clsx(styles.formSize, {
+                        [styles.formSelectedSize]: getValues('sizes').includes(size),
+                      })}
+                      onClick={() => onSizeChanged(size)}
+                    >{size}</button>
                   ))
                 }
               </div>
+
               {/* IMAGES */}
               <div className="flex flex-col mb-2">
                 <label className={styles.formLabel} htmlFor="images">Images</label>
