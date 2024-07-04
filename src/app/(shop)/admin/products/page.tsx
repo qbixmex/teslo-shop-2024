@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import Image from "next/image";
 import clsx from "clsx";
 import { FaRobot } from "react-icons/fa6";
-import { Pagination, Title } from "@/components";
+import { Pagination, ImagePlaceholderIcon, Title } from "@/components";
 import { auth } from "@/auth.config";
 import { getPaginatedProductsWithImages } from "@/actions";
 import { FaPencilAlt, FaTrash } from "react-icons/fa";
@@ -27,8 +27,8 @@ const ProductsPage: FC<Props> = async ({ searchParams }) => {
 
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
   const {
-    products,
     totalPages,
+    products,
     // currentPage,
   } = await getPaginatedProductsWithImages({ page });
 
@@ -73,13 +73,16 @@ const ProductsPage: FC<Props> = async ({ searchParams }) => {
                   <tr key={product.id} className={styles.tableBodyRow}>
                     <td className={styles.tableBodyColImage}>
                       <Link href={`/product/${product.slug}`}>
+                        {!product.image && (
+                          <ImagePlaceholderIcon size={80} className="text-neutral-500/50" />
+                        )}
                         {product.image && (
                           <Image
-                            width={50}
-                            height={50}
+                            width={80}
+                            height={80}
                             alt={product.title}
                             src={`/products/${product.image}`}
-                            className="w-[50px] h-[50px] object-cover rounded"
+                            className="w-[80px] h-[80px] object-cover rounded"
                           />
                         )}
                       </Link>

@@ -1,4 +1,5 @@
 export * from './footer';
+export * from './icons';
 export * from './messages';
 export * from './not-found';
 export * from './pagination';

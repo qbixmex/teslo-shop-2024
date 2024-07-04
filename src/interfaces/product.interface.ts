@@ -28,7 +28,7 @@ export interface ProductLight {
   title: string;
   slug: string;
   price: number;
-  images: string[];
+  images: ProductImage[];
 }
 
 export interface CartProduct {

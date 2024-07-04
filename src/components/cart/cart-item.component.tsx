@@ -9,6 +9,7 @@ import Link from "next/link";
 import { useCartStore } from "@/store";
 import { currencyFormat } from "@/utils";
 import { FaTrash } from "react-icons/fa";
+import { ImagePlaceholderIcon } from "../ui";
 
 type Props = {
   product: CartProduct;
@@ -27,14 +28,23 @@ const CartItem: FC<Readonly<Props>> = ({ product, checkout = false }) => {
           className="hover:border border-blue-900 rounded-md"
           title={`View ${product.title} details`}
         >
-          <Image
-            src={`/products/${product.image}`}
-            width={200}
-            height={200}
-            alt={product.title}
-            className={styles.image}
-            priority
-          />
+          {product.image === '' && (
+            <div className="bg-white rounded-lg">
+              <ImagePlaceholderIcon size={200} className="w-full p-4 text-neutral-500/50 object-cover" />
+            </div>
+          )}
+
+          {product.image !== '' && (
+            <Image
+              src={`/products/${product.image}`}
+              width={200}
+              height={200}
+              alt={product.title}
+              className={styles.image}
+              priority
+            />
+          )}
+
         </Link>
       </section>
 

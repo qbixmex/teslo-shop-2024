@@ -5,11 +5,14 @@ import { ProductLight } from '@/interfaces';
 import Image from "next/image";
 import styles from './product-grid-item.module.css';
 import Link from 'next/link';
+import { ImagePlaceholderIcon } from '@/components';
 
 type Props = { product: ProductLight };
 
+
 const ProductGridItem: FC<Props> = ({ product }) => {
-  const [ displayImage, setDisplayImage ] = useState(product.images[0]);
+  const INITIAL_IMAGE = product.images.length !== 0 ? product.images[0] : null;
+  const [ displayImage, setDisplayImage ] = useState(INITIAL_IMAGE);
 
   return (
     <section className={`${styles.card} fade-in`}>
@@ -18,15 +21,21 @@ const ProductGridItem: FC<Props> = ({ product }) => {
         href={`/product/${product.slug}`}
         title={`View "${product.title}" details`}
       >
-        <Image
-          src={`/products/${displayImage}`}
-          alt={product.title}
-          width={500}
-          height={500}
-          priority={true}
-          onMouseEnter={() => setDisplayImage(product.images[1])}
-          onMouseLeave={() => setDisplayImage(product.images[0])}
-        />
+        {!displayImage && (
+          <ImagePlaceholderIcon size={200} className="w-full h-[310px] p-5 text-neutral-500/50 bg-gray-50 object-cover" />
+        )}
+
+        {displayImage !== null && (
+          <Image
+            src={`/products/${displayImage.url}`}
+            alt={product.title}
+            width={500}
+            height={500}
+            priority={true}
+            onMouseEnter={() => setDisplayImage(product.images[1])}
+            onMouseLeave={() => setDisplayImage(product.images[0])}
+          />
+        )}
       </Link>
       <div className={styles.cardDetails}>
         <h3 className={styles.cardTitle}>

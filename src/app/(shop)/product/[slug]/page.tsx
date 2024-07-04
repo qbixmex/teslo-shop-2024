@@ -3,11 +3,10 @@ import { FC } from 'react';
 import { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getProductBySlug } from '@/actions';
-import { SlideShow, SlideShowMobile } from '@/components';
+import { ImagePlaceholderIcon, SlideShow, SlideShowMobile } from '@/components';
 import { StockLabel } from '@/components/stock-label';
 import AddToCart from './ui/add-to-cart';
 import styles from './page.module.css';
-import { Product } from '@/interfaces';
 
 type Props = {
   params: {
@@ -52,18 +51,27 @@ const ProductPage: FC<Props> = async ({ params }) => {
   return (
     <section className={styles.container}>
       <section className={styles.sliceShow}>
-        {/* Slideshow Mobile */}
-        <SlideShowMobile
-          images={product.images}
-          productTitle={product.title}
-          className="block md:hidden"
-        />
-        {/* Slideshow Desktop */}
-        <SlideShow
-          images={product.images}
-          productTitle={product.title}
-          className="hidden md:block"
-        />
+
+        {product.images.length === 0 && (
+          <div className="bg-gray-50 rounded-lg">
+            <ImagePlaceholderIcon size={400} className="w-full text-neutral-500/50" />
+          </div>
+        )}
+
+        {product.images.length > 0 && (
+          <>
+            <SlideShowMobile
+              images={product.images}
+              productTitle={product.title}
+              className="block md:hidden"
+            />
+            <SlideShow
+              images={product.images}
+              productTitle={product.title}
+              className="hidden md:block"
+            />
+          </>
+        )}
       </section>
 
       {/* Details */}

@@ -49,23 +49,28 @@ const getPaginatedProductsWithImages = async ({
 
     const totalPages = Math.ceil(totalProductsCount / limit);
 
-    return {
-      currentPage: page,
-      totalPages,
-      products: products.map(product => ({
+    const productsOutput = products.map((product) => {
+      return {
         id: product.id,
         title: product.title,
         slug: product.slug,
         gender: product.gender,
         price: product.price ?? 0,
         stock: product.inStock ?? 0,
-        images: product.ProductImage.map(image => image.url),
-        image: product.ProductImage[0].url,
+        images: product.ProductImage,
+        image: product.ProductImage.length > 0 ? product.ProductImage[0].url : '',
         category: product.category.name,
-      })),
+      };
+    });
+
+    return {
+      currentPage: page,
+      totalPages,
+      products: productsOutput,
     };
 
   } catch (error) {
+    console.log(error);
     if (error instanceof Error) {
       throw new Error("Products cannot loaded !");
     }
