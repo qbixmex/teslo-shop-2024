@@ -83,11 +83,11 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
     formData.append('tags', productToSave.tags);
     formData.append('gender', productToSave.gender);
     formData.append('categoryId', productToSave.categoryId);
-    formData.append('size', productToSave.sizes.join(', '));
+    formData.append('sizes', productToSave.sizes.join(','));
 
     const response = await updateProduct(product.id, formData);
 
-    console.log(response);
+    console.log("response", response);
 
     // TODO: router.push('/admin/products');
 

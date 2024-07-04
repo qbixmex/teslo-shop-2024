@@ -2,8 +2,9 @@
 
 import prisma from "@/lib/prisma";
 import { z } from "zod";
-import { Product } from "@/interfaces";
 import { Gender } from "@/enums/gender.enums";
+import { slugFormat } from "@/utils";
+import { Size } from "@prisma/client";
 
 const productSchema = z.object({
   title: z.string().min(8).max(255),
@@ -18,7 +19,7 @@ const productSchema = z.object({
     .min(1)
     .transform((value) => Number(value.toFixed(0))),
   categoryId: z.string().uuid(),
-  size: z.coerce
+  sizes: z.coerce
     .string()
     .transform((value) => value.trim().split(",")),
   tags: z.string(),
@@ -37,27 +38,45 @@ const updateProduct = async ( id: string, formData: FormData ) => {
     }
   }
 
-  console.log(productParsed.data);
+  const productToUpdate = productParsed.data;
+  productToUpdate.slug = slugFormat(productToUpdate.slug);
 
   try {
-    // const product = await prisma.product.findFirst({
-    //   where: { id },
-    //   data: {...formData},
-    // });
+    const prismaTransaction = await prisma.$transaction(async (transaction) => {
+      const updatedProduct = await prisma.product.update({
+        where: { id },
+        data: {
+          title: productToUpdate.title,
+          slug: productToUpdate.slug,
+          description: productToUpdate.description,
+          price: productToUpdate.price,
+          inStock: productToUpdate.inStock,
+          categoryId: productToUpdate.categoryId,
+          sizes: {
+            set: productToUpdate.sizes as Size[],
+          },
+          tags: {
+            set: productToUpdate.tags
+              .split(",")
+              .map(tag => tag.trim().toLowerCase()),
+          },
+          gender: productToUpdate.gender,
+        },
+      });
+    });
 
-    // if (!product) return null;
-
+    // TODO: revalidatePath()
 
     return {
       ok: true,
       message: 'Product updated successfully',
-      formData,
-      // product,
-    };
-
+    }
   } catch (error) {
-    console.log(error);
-    throw new Error("Product cannot be fetched !");
+    console.error(error);
+    return {
+      ok: false,
+      message: 'Error updating product',
+    }
   }
 };
 
