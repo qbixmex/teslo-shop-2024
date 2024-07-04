@@ -2,19 +2,19 @@
 'use client';
 
 import { FC, useState } from "react";
-import { Category, Product } from "@/interfaces";
+import { Category, Product, ProductImage } from "@/interfaces";
 import styles from "./product-form.module.css";
 import clsx from 'clsx';
 import { SubmitHandler, useForm } from "react-hook-form";
-import { useRouter } from "next/navigation";
+// import { useRouter } from "next/navigation";
 import { Alert } from "@/components";
 import { FaTrash } from 'react-icons/fa';
-import { updateProduct } from "@/actions";
+import { createProduct, updateProduct } from "@/actions";
 
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
 type Props = {
-  product: Product;
+  product: Partial<Product> & { productImage?: ProductImage[] };
   categories: Category[];
 };
 
@@ -33,7 +33,7 @@ type FormInputs = {
 
 const ProductForm: FC<Props> = ({ product, categories }) => {
 
-  const router = useRouter();
+  // const router = useRouter();
   const [errorMessage, setErrorMessage] = useState('');
 
   const {
@@ -46,15 +46,15 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
     reset,
   } = useForm<FormInputs>({
     defaultValues: {
-      title: product.title,
-      slug: product.slug,
-      description: product.description,
-      price: Number(product.price) ?? 0,
-      inStock: product.inStock ?? 0,
-      tags: product.tags.join(', '),
-      gender: product.gender,
-      categoryId: product.categoryId,
-      sizes: product.sizes ?? [],
+      title: product.title ?? 'Workout Running Shirt',
+      slug: product.slug ?? 'workout-running-shirt',
+      description: product.description ?? "Whether you're lifting weights at the gym, running down the track or exercising at home, you can count on our quick-drying tee-shirts to keep you cool, dry and comfy the entire time. Premium soft fabric with excellent moisture wicking ability keep you dry and comfort during training so you can focus on other more important things.",
+      price: product.price ?? 37.35,
+      inStock: product.inStock ?? 20,
+      tags: product.tags?.join(', ') ?? 'workout, running, shirt',
+      gender: product.gender ?? 'men',
+      categoryId: product.categoryId ?? categories[3].id,
+      sizes: product.sizes ?? ['XS', 'S', 'M', 'L', 'XL'],
       // TODO: images TODO
     }
   });
@@ -85,9 +85,20 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
     formData.append('categoryId', productToSave.categoryId);
     formData.append('sizes', productToSave.sizes.join(','));
 
-    const response = await updateProduct(product.id, formData);
+    let response: {
+      ok: boolean;
+      message: string;
+    } = { ok: false, message: 'No action has been called !' };
 
-    console.log("response", response);
+    if (product.id) {
+      response = await updateProduct(product?.id as string, formData);
+    }
+    
+    if (product.id === undefined) {
+      response = await createProduct(formData);
+    }
+    
+    console.log("RESPONSE:", response);
 
     // TODO: router.push('/admin/products');
 
@@ -182,6 +193,7 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
               <input
                 id="price"
                 type="number"
+                step="0.01"
                 autoComplete="off"
                 className={clsx(styles.formInput, {
                   [styles.fieldError]: errors.price
@@ -332,19 +344,19 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
                 />
               </div>
 
-              {product.images.length !== 0 && (
+              {(product.images && (product.images.length !== 0)) && (
                 <>
                   <h2 className="text-2xl text-gray-700 mb-2">Loaded Images</h2>
                   <div className={clsx(`grid grid-cols-2 md:grid-cols-3 gap-3`, {
-                    'lg:grid-cols-2': product.images.length === 2,
-                    'lg:grid-cols-4': product.images.length === 4,
+                    'lg:grid-cols-2': product?.images?.length === 2,
+                    'lg:grid-cols-4': product?.images?.length === 4,
                   })}>
-                    { product.images.map((image) => (
+                    { product?.images?.map((image) => (
                       <div key={image.id} className="flex flex-col gap-4 relative">
                         <img
                           
                           className={clsx(`w-full max-w-200px md:max-w-[180px] shadow-md p-1 border-2 border-white bg-white rounded`, {
-                            'lg:max-w-[400px]': product.images.length === 2,
+                            'lg:max-w-[400px]': product?.images?.length === 2,
                           })}
                           src={`/products/${image.url}`}
                           alt={product.title}

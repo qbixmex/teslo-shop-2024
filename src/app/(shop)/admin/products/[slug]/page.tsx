@@ -17,19 +17,23 @@ const ProductPage: FC<Props> = async ({ params }) => {
     getCategories(),
   ]);
 
-  if (!product) {
+  if (!product && slug !== 'new') {
     redirect('/admin/products');
   }
 
   return (
     <section className="min-h-[calc(100vh-200px)]">
       <Title
-        title={`Edit Product "${product.title}"`}
+        title={
+          (slug === 'new')
+          ? 'Create product'
+          : `Edit Product "${product?.title}"`
+        }
         className="text-blue-500"
       />
 
       <ProductForm
-        product={product}
+        product={product ?? {}}
         categories={categories}
       />
     </section>

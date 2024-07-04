@@ -1,30 +1,10 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { z } from "zod";
-import { Gender } from "@/enums/gender.enums";
-import { slugFormat } from "@/utils";
-import { Size } from "@prisma/client";
 
-const productSchema = z.object({
-  title: z.string().min(8).max(255),
-  slug: z.string().min(8).max(255),
-  description: z.string().min(8),
-  price: z.coerce
-    .number()
-    .min(1)
-    .transform((value) => Number(value.toFixed(2))),
-  inStock: z.coerce
-    .number()
-    .min(1)
-    .transform((value) => Number(value.toFixed(0))),
-  categoryId: z.string().uuid(),
-  sizes: z.coerce
-    .string()
-    .transform((value) => value.trim().split(",")),
-  tags: z.string(),
-  gender: z.nativeEnum(Gender)
-});
+import { slugFormat } from "@/utils";
+import productSchema from "./product.schema";
+import { Size } from "@prisma/client";
 
 const updateProduct = async ( id: string, formData: FormData ) => {
 

@@ -12,6 +12,7 @@ const getProductBySlug = async ( slug: string ): Promise<Product | null> => {
           select: {
             id: true,
             url: true,
+            productId: true,
           }
         }
       }

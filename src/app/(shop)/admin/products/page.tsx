@@ -26,7 +26,11 @@ const ProductsPage: FC<Props> = async ({ searchParams }) => {
   }
 
   const page = searchParams.page ? parseInt(searchParams.page) : 1;
-  const { products, currentPage, totalPages } = await getPaginatedProductsWithImages({ page });
+  const {
+    products,
+    totalPages,
+    // currentPage,
+  } = await getPaginatedProductsWithImages({ page });
 
   if (!products) {
     redirect('/');
@@ -69,13 +73,15 @@ const ProductsPage: FC<Props> = async ({ searchParams }) => {
                   <tr key={product.id} className={styles.tableBodyRow}>
                     <td className={styles.tableBodyColImage}>
                       <Link href={`/product/${product.slug}`}>
-                        <Image
-                          width={50}
-                          height={50}
-                          alt={product.title}
-                          src={`/products/${product.image}`}
-                          className="w-[50px] h-[50px] object-cover rounded"
-                        />
+                        {product.image && (
+                          <Image
+                            width={50}
+                            height={50}
+                            alt={product.title}
+                            src={`/products/${product.image}`}
+                            className="w-[50px] h-[50px] object-cover rounded"
+                          />
+                        )}
                       </Link>
                     </td>
                     <td className={styles.tableBodyColLink}>
