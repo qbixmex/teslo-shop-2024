@@ -47,6 +47,12 @@ export const authConfig: NextAuthConfig = {
     }),
   ],
   callbacks: {
+    redirect({ url, baseUrl }) {
+      if (!url.startsWith(baseUrl)) {
+        return baseUrl;
+      }
+      return url;
+    },
     authorized({ auth, request: { nextUrl } }) {
       const isLoggedIn = !!auth?.user;
       const isAdmin = auth?.user.role === 'admin';
