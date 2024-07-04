@@ -8,6 +8,7 @@ import clsx from 'clsx';
 import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Alert } from "@/components";
+import { FaTrash } from 'react-icons/fa';
 
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
@@ -269,14 +270,29 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
               {product.images.length !== 0 && (
                 <>
                   <h2 className="text-2xl text-gray-700 mb-2">Loaded Images</h2>
-                  <div className="flex gap-x-3">
+                  <div className={clsx(`grid grid-cols-2 md:grid-cols-3 gap-3`, {
+                    'lg:grid-cols-2': product.images.length === 2,
+                    'lg:grid-cols-4': product.images.length === 4,
+                  })}>
                     { product.images.map((image) => (
-                      <img
-                        key={image}
-                        className="w-[150px] rounded"
-                        src={`/products/${image}`}
-                        alt={product.title}
-                      />
+                      <div key={image.id} className="flex flex-col gap-4 relative">
+                        <img
+                          
+                          className={clsx(`w-full max-w-200px md:max-w-[180px] shadow-md p-1 border-2 border-white bg-white rounded`, {
+                            'lg:max-w-[400px]': product.images.length === 2,
+                          })}
+                          src={`/products/${image.url}`}
+                          alt={product.title}
+                        />
+                        <button
+                          type="button"
+                          className="absolute bottom-3 right-3 rounded-md p-3 bg-red-600 hover:bg-red-700 text-white text-sm place-self-end transition-colors"
+                          title="Delete Image"
+                          onClick={() => console.table({id: image.id, url: image.url})}
+                        >
+                          <FaTrash size={18} />
+                        </button>
+                      </div>
                     ))}
                   </div>
                 </>

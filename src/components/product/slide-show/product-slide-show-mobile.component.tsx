@@ -9,10 +9,11 @@ import 'swiper/css/pagination';
 import './swiper-styles.css';
 import { FreeMode, Navigation, Pagination } from "swiper/modules";
 import styles from "./product-slide-show.module.css";
+import { ProductImage } from "@/interfaces";
 import clsx from "clsx";
 
 type Props = {
-  images: string[];
+  images: ProductImage[];
   productTitle: string;
   className?: string;
 };
@@ -41,9 +42,9 @@ const SlideShowMobile: React.FC<Readonly<Props>> = ({
         modules={[ FreeMode, Navigation, Pagination ]}
       >
       {images.map(image => (
-        <SwiperSlide key={image}>
+        <SwiperSlide key={image.id}>
           <Image
-            src={`/products/${image}`}
+            src={`/products/${image.url}`}
             width={500}
             height={500}
             priority

@@ -9,7 +9,10 @@ const getProductBySlug = async ( slug: string ): Promise<Product | null> => {
       where: { slug },
       include: {
         ProductImage: {
-          select: { url: true }
+          select: {
+            id: true,
+            url: true,
+          }
         }
       }
     });
@@ -20,7 +23,7 @@ const getProductBySlug = async ( slug: string ): Promise<Product | null> => {
 
     return {
       ...productRest,
-      images: product.ProductImage.map(image => image.url),
+      images: product.ProductImage,
     };
 
   } catch (error) {

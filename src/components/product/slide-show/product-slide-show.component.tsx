@@ -12,9 +12,10 @@ import './swiper-styles.css';
 import { Autoplay, FreeMode, Navigation, Thumbs } from "swiper/modules";
 import styles from "./product-slide-show.module.css";
 import clsx from "clsx";
+import { ProductImage } from "@/interfaces";
 
 type Props = {
-  images: string[];
+  images: ProductImage[];
   productTitle: string;
   className?: string;
 };
@@ -48,9 +49,9 @@ const SlideShow: FC<Readonly<Props>> = ({
         className="mySwiper2"
       >
       {images.map(image => (
-        <SwiperSlide key={image}>
+        <SwiperSlide key={image.id}>
           <Image
-            src={`/products/${image}`}
+            src={`/products/${image.url}`}
             width={600}
             height={600}
             priority
@@ -71,9 +72,9 @@ const SlideShow: FC<Readonly<Props>> = ({
         className="mySwiper"
       >
         {images.map(image => (
-          <SwiperSlide key={image}>
+          <SwiperSlide key={image.id}>
             <Image
-              src={`/products/${image}`}
+              src={`/products/${image.url}`}
               width={300}
               height={300}
               priority
