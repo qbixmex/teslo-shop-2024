@@ -9,6 +9,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Alert } from "@/components";
 import { FaTrash } from 'react-icons/fa';
+import { updateProduct } from "@/actions";
 
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
@@ -22,6 +23,7 @@ type FormInputs = {
   slug: string;
   description: string;
   price: number;
+  inStock: number;
   tags: string;
   gender: 'men' | 'women' | 'kid' | 'unisex' | 'select_gender';
   categoryId: string;
@@ -48,6 +50,7 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
       slug: product.slug,
       description: product.description,
       price: Number(product.price) ?? 0,
+      inStock: product.inStock ?? 0,
       tags: product.tags.join(', '),
       gender: product.gender,
       categoryId: product.categoryId,
@@ -65,10 +68,26 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
     setValue('sizes', Array.from(sizes));
   };
 
-  const onSubmit: SubmitHandler<FormInputs> = async (formData) => {
+  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     setErrorMessage('');
 
-    console.log(formData)
+    const formData = new FormData();
+
+    const { ...productToSave } = data;
+
+    formData.append('title', productToSave.title);
+    formData.append('slug', productToSave.slug);
+    formData.append('description', productToSave.description);
+    formData.append('price', productToSave.price.toString());
+    formData.append('inStock', productToSave.inStock.toString());
+    formData.append('tags', productToSave.tags);
+    formData.append('gender', productToSave.gender);
+    formData.append('categoryId', productToSave.categoryId);
+    formData.append('size', productToSave.sizes.join(', '));
+
+    const response = await updateProduct(product.id, formData);
+
+    console.log(response);
 
     // TODO: router.push('/admin/products');
 
@@ -156,6 +175,7 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
                 </p>
               )}
             </div>
+
             {/* PRICE */}
             <div className={styles.inputGroup}>
               <label className={styles.formLabel} htmlFor="price">Price</label>
@@ -180,6 +200,32 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
                 </p>
               )}
             </div>
+
+            {/* In Stock */}
+            <div className={styles.inputGroup}>
+              <label className={styles.formLabel} htmlFor="in_stock">In Stock</label>
+              <input
+                id="in_stock"
+                type="number"
+                autoComplete="off"
+                className={clsx(styles.formInput, {
+                  [styles.fieldError]: errors.inStock
+                })}
+                {...register('inStock', {
+                  required: 'In Stock is required',
+                  min: {
+                    value: 1,
+                    message: 'In Stock must have at least 1 unit'
+                  }
+                })}
+              />
+              {errors.inStock && (
+                <p className={styles.errorMessage}>
+                  * {errors.inStock.message}
+                </p>
+              )}
+            </div>
+
             {/* TAGS */}
             <div className={styles.inputGroup}>
               <label className={styles.formLabel} htmlFor="tags">Tags</label>

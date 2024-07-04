@@ -15,7 +15,7 @@ export interface Product {
   tags: string[];
   type?: Type;
   categoryId: string;
-  gender: TCategory;
+  gender: Gender;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -50,6 +50,6 @@ export interface OrderSummary {
 
 export type Role = 'admin' | 'user';
 
-export type TCategory = 'men'|'women'|'kid'|'unisex';
+export type Gender = 'men'|'women'|'kid'|'unisex';
 export type Size = 'XS'|'S'|'M'|'L'|'XL'|'XXL'|'XXXL';
 export type Type = 'shirts'|'pants'|'hoodies'|'hats';

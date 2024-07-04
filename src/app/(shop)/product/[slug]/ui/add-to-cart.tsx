@@ -31,7 +31,7 @@ const AddToCart: FC<Props> = ({ product }) => {
       price: product.price ?? 0.00,
       quantity,
       size,
-      image: product.images[0],
+      image: product.images[0].url,
     };
 
     addProductToCart(cartProduct);

@@ -12,7 +12,7 @@ const ProductsInCart = () => {
   const router = useRouter();
   const productsInCart = useCartStore(state => state.cart);
   const [componentLoaded, setComponentLoaded] = useState(false);
-  
+
   useEffect(() => {
     if (productsInCart.length === 0) {
       router.replace('/empty');
