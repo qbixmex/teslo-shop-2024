@@ -1,13 +1,14 @@
 {
   "name": "teslo-shop",
-  "version": "12.0.0",
+  "version": "12.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run prisma:deploy && next build",
     "preview": "next start",
     "test": "vitest",
     "lint": "next lint",
+    "prisma:deploy": "npx prisma migrate deploy && prisma generate",
     "seed": "NODE_ENV=development ts-node ./src/seed/seed-database.ts"
   },
   "dependencies": {
