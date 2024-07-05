@@ -105,9 +105,9 @@ const ProductForm: FC<Props> = ({ product, categories, slug }) => {
       response = await createProduct(formData);
     }
 
-    // if (product.id) {
-    //   response = await updateProduct(product?.id as string, formData);
-    // }
+    if (product.id) {
+      response = await updateProduct(product?.id as string, formData);
+    }
 
     if (!response.ok) {
       setMessage({ type: 'error', text: response.message });

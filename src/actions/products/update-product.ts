@@ -2,7 +2,7 @@
 
 import prisma from "@/lib/prisma";
 
-import { slugFormat } from "@/utils";
+import { slugFormat, uploadImages } from "@/utils";
 import productSchema from "./product.schema";
 import { Size } from "@prisma/client";
 import { revalidatePath } from "next/cache";
@@ -42,6 +42,26 @@ const updateProduct = async (
           },
         },
       });
+
+      // If user selected images from form,
+      // then upload them to cloudinary storage.
+      if (formData.getAll('images')) {
+        // 1. Load Images to third-party storage.
+        const images = await uploadImages(formData.getAll('images') as File[]);
+
+        if (!images) {
+          throw 'Error uploading images to cloudinary';
+        }
+
+        // 2. Save Each Image URL to the database.
+        await prisma.productImage.createMany({
+          data: images.map(image => ({
+            url: image!.secureUrl,
+            publicId: image!.publicId,
+            productId: updatedProduct.id,
+          }))
+        });
+      }
 
       // Revalidate Paths
       revalidatePath('/products');
