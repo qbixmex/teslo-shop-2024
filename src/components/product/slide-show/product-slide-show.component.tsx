@@ -51,7 +51,10 @@ const SlideShow: FC<Readonly<Props>> = ({
       {images.map(image => (
         <SwiperSlide key={image.id}>
           <Image
-            src={`/products/${image.url}`}
+            src={image.url.startsWith('https')
+              ? image.url
+              : `/products/${image.url}`
+            }
             width={600}
             height={600}
             priority
@@ -74,7 +77,10 @@ const SlideShow: FC<Readonly<Props>> = ({
         {images.map(image => (
           <SwiperSlide key={image.id}>
             <Image
-              src={`/products/${image.url}`}
+              src={image.url.startsWith('https')
+                ? image.url
+                : `/products/${image.url}`
+              }
               width={300}
               height={300}
               priority

@@ -1,5 +1,5 @@
 "use server";
-import * as fs from "fs";
+import crypto from "node:crypto";
 
 import prisma from "@/lib/prisma";
 
@@ -45,10 +45,22 @@ const createProduct = async ( formData: FormData ): Promise<ProductResponse> => 
       if (formData.getAll('images')) {
         // 1. Load Images to third-party storage.
         const images = await uploadImages(formData.getAll('images') as File[]);
+
+        if (!images) {
+          throw 'Error uploading images to cloudinary';
+        }
         console.log(images);
+
+        // 2. Save Each Image URL to the database.
+        await prisma.productImage.createMany({
+          data: images.map(image => ({
+            url: image!.secureUrl,
+            publicId: image!.publicId,
+            productId: createdProduct.id,
+          }))
+        });
       }
       
-      // TODO: 2. Save Each Image URL to the database.
 
       return {
         ok: true,
@@ -84,12 +96,15 @@ const uploadImages = async (images: File[]): Promise<(CloudinaryResponse | null)
         const buffer = await image.arrayBuffer();
         const base64Image = Buffer.from(buffer).toString('base64');
 
-        const response = await cloudinary.uploader.upload(`data:image/jpeg;base64,${base64Image}`);
-
-        return {
-          publicId: response.public_id,
-          secureUrl: response.secure_url,
-        };
+        return cloudinary.uploader.upload(`data:image/jpeg;base64,${base64Image}`, {
+          folder: 'teslo-shop/products',
+          public_id: crypto.randomUUID(),
+        }).then(response => {
+          return {
+            publicId: response.public_id,
+            secureUrl: response.secure_url,
+          };
+        });
       } catch (error) {
         console.error(error);
         return null;

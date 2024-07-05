@@ -44,7 +44,10 @@ const SlideShowMobile: React.FC<Readonly<Props>> = ({
       {images.map(image => (
         <SwiperSlide key={image.id}>
           <Image
-            src={`/products/${image.url}`}
+            src={image.url.startsWith('https')
+              ? image.url
+              : `/products/${image.url}`
+            }
             width={500}
             height={500}
             priority

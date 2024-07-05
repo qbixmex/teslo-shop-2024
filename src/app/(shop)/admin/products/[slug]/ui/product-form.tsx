@@ -64,7 +64,6 @@ const ProductForm: FC<Props> = ({ product, categories, slug }) => {
       gender: product.gender ?? 'men',
       categoryId: product.categoryId ?? '',
       sizes: product.sizes ?? [],
-      images: undefined,
     }
   });
 
@@ -95,7 +94,7 @@ const ProductForm: FC<Props> = ({ product, categories, slug }) => {
     formData.append('sizes', productToSave.sizes.join(','));
 
     if (images) {
-      for (const i in images) {
+      for (let i = 0; i < images.length; i++) {
         formData.append('images', images[i]);
       }
     }
@@ -106,9 +105,9 @@ const ProductForm: FC<Props> = ({ product, categories, slug }) => {
       response = await createProduct(formData);
     }
 
-    if (product.id) {
-      response = await updateProduct(product?.id as string, formData);
-    }
+    // if (product.id) {
+    //   response = await updateProduct(product?.id as string, formData);
+    // }
 
     if (!response.ok) {
       setMessage({ type: 'error', text: response.message });
@@ -118,7 +117,7 @@ const ProductForm: FC<Props> = ({ product, categories, slug }) => {
     if (response.ok) {
       setMessage({ type: 'success', text: response.message });
       setTimeout(() => setMessage({ type: 'none', text: '' }), 3000);
-      // router.replace(`/product/${response.product?.slug}`);
+      router.replace(`/product/${response.product?.slug}`);
     }
   };
   
@@ -383,21 +382,25 @@ const ProductForm: FC<Props> = ({ product, categories, slug }) => {
                     { product?.images?.map((image) => (
                       <div key={image.id} className="flex flex-col gap-4 relative">
                         <img
-                          
                           className={clsx(`w-full max-w-200px md:max-w-[180px] shadow-md p-1 border-2 border-white bg-white rounded`, {
                             'lg:max-w-[400px]': product?.images?.length === 2,
                           })}
-                          src={`/products/${image.url}`}
+                          src={image.url.startsWith('https')
+                            ? image.url
+                            : `/products/${image.url}`
+                          }
                           alt={product.title}
                         />
-                        <button
-                          type="button"
-                          className="absolute bottom-3 right-3 rounded-md p-3 bg-red-600 hover:bg-red-700 text-white text-sm place-self-end transition-colors"
-                          title="Delete Image"
-                          onClick={() => console.table({id: image.id, url: image.url})}
-                        >
-                          <FaTrash size={18} />
-                        </button>
+                        {image.url.startsWith('https') && (
+                          <button
+                            type="button"
+                            className="absolute bottom-3 right-3 rounded-md p-3 bg-red-600 hover:bg-red-700 text-white text-sm place-self-end transition-colors"
+                            title="Delete Image"
+                            onClick={() => console.table({id: image.id, url: image.url})}
+                          >
+                            <FaTrash size={18} />
+                          </button>
+                        )}
                       </div>
                     ))}
                   </div>

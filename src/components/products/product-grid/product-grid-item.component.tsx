@@ -27,7 +27,10 @@ const ProductGridItem: FC<Props> = ({ product }) => {
 
         {displayImage !== null && (
           <Image
-            src={`/products/${displayImage.url}`}
+            src={displayImage.url.startsWith('https')
+              ? displayImage.url
+              : `/products/${displayImage.url}`
+            }
             alt={product.title}
             width={500}
             height={500}

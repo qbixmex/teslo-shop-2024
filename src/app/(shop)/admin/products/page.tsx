@@ -81,7 +81,10 @@ const ProductsPage: FC<Props> = async ({ searchParams }) => {
                             width={80}
                             height={80}
                             alt={product.title}
-                            src={`/products/${product.image}`}
+                            src={product.image.startsWith('http')
+                              ? product.image
+                              : `/products/${product.image}`
+                            }
                             className="w-[80px] h-[80px] object-cover rounded"
                           />
                         )}
