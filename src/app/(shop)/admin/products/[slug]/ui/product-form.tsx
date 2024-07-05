@@ -16,6 +16,7 @@ const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 type Props = {
   product: Partial<Product> & { productImage?: ProductImage[] };
   categories: Category[];
+  slug: string;
 };
 
 type FormInputs = {
@@ -28,7 +29,7 @@ type FormInputs = {
   gender: 'men' | 'women' | 'kid' | 'unisex' | 'select_gender';
   categoryId: string;
   sizes: string[];
-  image?: any;
+  images?: FileList,
 };
 
 const INITIAL_MESSAGE: {
@@ -39,7 +40,7 @@ const INITIAL_MESSAGE: {
   text: '',
 };
 
-const ProductForm: FC<Props> = ({ product, categories }) => {
+const ProductForm: FC<Props> = ({ product, categories, slug }) => {
 
   const router = useRouter();
   const [message, setMessage] = useState(INITIAL_MESSAGE);
@@ -53,16 +54,16 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
     watch,
   } = useForm<FormInputs>({
     defaultValues: {
-      title: product.title ?? 'Workout Running Shirt',
-      slug: product.slug ?? 'workout-running-shirt',
-      description: product.description ?? "Whether you're lifting weights at the gym, running down the track or exercising at home, you can count on our quick-drying tee-shirts to keep you cool, dry and comfy the entire time. Premium soft fabric with excellent moisture wicking ability keep you dry and comfort during training so you can focus on other more important things.",
-      price: product.price ?? 37.35,
-      inStock: product.inStock ?? 20,
-      tags: product.tags?.join(', ') ?? 'workout, running, shirt',
+      title: product.title ?? '',
+      slug: product.slug ?? '',
+      description: product.description ?? "",
+      price: product.price ?? 0.00,
+      inStock: product.inStock ?? 0,
+      tags: product.tags?.join(', ') ?? '',
       gender: product.gender ?? 'men',
-      categoryId: product.categoryId ?? categories[3].id,
-      sizes: product.sizes ?? ['XS', 'S', 'M', 'L', 'XL'],
-      // TODO: images TODO
+      categoryId: product.categoryId ?? '',
+      sizes: product.sizes ?? [],
+      images: undefined,
     }
   });
 
@@ -80,7 +81,7 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
 
     const formData = new FormData();
 
-    const { ...productToSave } = data;
+    const { images, ...productToSave } = data;
 
     formData.append('title', productToSave.title);
     formData.append('slug', productToSave.slug);
@@ -92,10 +93,21 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
     formData.append('categoryId', productToSave.categoryId);
     formData.append('sizes', productToSave.sizes.join(','));
 
+    if (images) {
+      for (const i in images) {
+        formData.append('images', images[i]);
+      }
+    }
+
     let response: {
       ok: boolean;
       message: string;
-    } = { ok: false, message: 'No action has been called !' };
+      product?: Product;
+    } = {
+      ok: false,
+      message: 'No action has been called !',
+      product: undefined,
+    };
 
     if (product.id === undefined) {
       response = await createProduct(formData);
@@ -113,7 +125,7 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
     if (response.ok) {
       setMessage({ type: 'success', text: response.message });
       setTimeout(() => setMessage({ type: 'none', text: '' }), 3000);
-      router.replace(`/admin/products/${product.slug}`);
+      router.replace(`/product/${response.product?.slug}`);
     }
   };
   
@@ -137,7 +149,7 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
                 id="title"
                 type="text"
                 autoComplete="off"
-                // autoFocus // TODO: Put true if we are in new product
+                autoFocus={slug === 'new' ? true : false}
                 className={clsx(styles.formInput, {
                   [styles.fieldError]: errors.title
                 })}
@@ -355,9 +367,17 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
                   id="images"
                   type="file"
                   multiple
-                  className={styles.formImages}
-                  accept="image/png, image/jpeg"
+                  className={clsx(styles.formImages, {
+                    [styles.fieldError]: errors.images
+                  })}
+                  {...register('images')}
+                  accept="image/png, image/jpeg, image/gif, image/webp"
                 />
+                {errors.images && (
+                  <p className={styles.errorMessage}>
+                    * {errors.images.message}
+                  </p>
+                )}
               </div>
 
               {(product.images && (product.images.length !== 0)) && (

@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import { slugFormat } from "@/utils";
 import { Size } from "@prisma/client";
 import productSchema from "./product.schema";
+import { revalidatePath } from "next/cache";
 
 const createProduct = async ( formData: FormData ) => {
   const data = Object.fromEntries(formData);
@@ -25,6 +26,19 @@ const createProduct = async ( formData: FormData ) => {
 
   try {
     const prismaTransaction = await prisma.$transaction(async (transaction) => {
+
+      // TODO: 1. Load Images to third-party storage.
+      // TODO: 2. Save Each Image URL to the database.
+
+      if (formData.getAll('images')) {
+        console.log(formData.getAll('images'));
+      }
+
+      return {
+        ok: true,
+        message: 'Check the images',
+      };
+
       const createdProduct = await prisma.product.create({
         data: {
           title: productToSave.title,
@@ -38,16 +52,20 @@ const createProduct = async ( formData: FormData ) => {
           gender: productToSave.gender,
         },
       });
+
       return {
         ok: true,
         message: 'Product created successfully',
-        product: createdProduct,
+        product: {
+          ...createdProduct,
+          images: [],
+        },
       }
     });
 
-    // TODO: revalidatePath()
-
-    console.log(prismaTransaction);
+    // Revalidate Paths
+    revalidatePath('/products');
+    revalidatePath('/admin/products');
 
     return prismaTransaction;
 

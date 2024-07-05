@@ -54,7 +54,10 @@ const updateProduct = async ( id: string, formData: FormData ) => {
       return {
         ok: true,
         message: 'Product updated successfully',
-        product: updatedProduct,
+        product: {
+          ...updatedProduct,
+          images: [],
+        },
       };
     });
 

@@ -35,6 +35,7 @@ const ProductPage: FC<Props> = async ({ params }) => {
       <ProductForm
         product={product ?? {}}
         categories={categories}
+        slug={slug}
       />
     </section>
   );
