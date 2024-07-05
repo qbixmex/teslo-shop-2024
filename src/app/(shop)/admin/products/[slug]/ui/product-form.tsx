@@ -399,7 +399,7 @@ const ProductForm: FC<Props> = ({ product, categories, slug }) => {
                             onClick={() => deleteProductImage({
                               imageId: image.id,
                               imageUrl: image.url,
-                              publicId: image.publicId,
+                              publicId: image.publicId!,
                             })}
                           >
                             <FaTrash size={18} />

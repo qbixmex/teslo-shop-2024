@@ -36,6 +36,7 @@ const getPaginatedProductsWithImages = async ({
           select: {
             id: true,
             url: true,
+            publicId: true,
             productId: true,
           },
         }
