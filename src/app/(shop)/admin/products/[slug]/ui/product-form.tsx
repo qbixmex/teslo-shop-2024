@@ -9,7 +9,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { Alert } from "@/components";
 import { FaTrash } from 'react-icons/fa';
-import { createProduct, updateProduct } from "@/actions";
+import { createProduct, deleteProductImage, updateProduct } from "@/actions";
 import { ProductResponse } from "@/actions/products/product";
 
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
@@ -396,7 +396,11 @@ const ProductForm: FC<Props> = ({ product, categories, slug }) => {
                             type="button"
                             className="absolute bottom-3 right-3 rounded-md p-3 bg-red-600 hover:bg-red-700 text-white text-sm place-self-end transition-colors"
                             title="Delete Image"
-                            onClick={() => console.table({id: image.id, url: image.url})}
+                            onClick={() => deleteProductImage({
+                              imageId: image.id,
+                              imageUrl: image.url,
+                              publicId: image.publicId,
+                            })}
                           >
                             <FaTrash size={18} />
                           </button>

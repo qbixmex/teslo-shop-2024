@@ -1,7 +1,8 @@
 export interface ProductImage {
   id: string;
   url: string;
-  productId: string;
+  publicId: string;
+  productId: string | null;
 }
 
 export interface Product {

@@ -1,6 +1,6 @@
 "use server";
 
-import { Product } from "@/interfaces";
+import { Product, ProductImage } from "@/interfaces";
 import prisma from "@/lib/prisma";
 
 const getProductBySlug = async ( slug: string ): Promise<Product | null> => {
@@ -12,6 +12,7 @@ const getProductBySlug = async ( slug: string ): Promise<Product | null> => {
           select: {
             id: true,
             url: true,
+            publicId: true,
             productId: true,
           }
         }
@@ -24,7 +25,7 @@ const getProductBySlug = async ( slug: string ): Promise<Product | null> => {
 
     return {
       ...productRest,
-      images: product.ProductImage,
+      images: product.ProductImage as ProductImage[],
     };
 
   } catch (error) {
