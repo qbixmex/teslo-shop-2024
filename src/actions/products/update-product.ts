@@ -5,6 +5,7 @@ import prisma from "@/lib/prisma";
 import { slugFormat } from "@/utils";
 import productSchema from "./product.schema";
 import { Size } from "@prisma/client";
+import { revalidatePath } from "next/cache";
 
 const updateProduct = async ( id: string, formData: FormData ) => {
 
@@ -43,19 +44,26 @@ const updateProduct = async ( id: string, formData: FormData ) => {
           gender: productToUpdate.gender,
         },
       });
+
+      // Revalidate Paths
+      revalidatePath('/products');
+      revalidatePath(`/product/${updatedProduct.slug}`);
+      revalidatePath('/admin/products');
+      revalidatePath(`/admin/product/${updatedProduct.slug}`);
+
+      return {
+        ok: true,
+        message: 'Product updated successfully',
+        product: updatedProduct,
+      };
     });
 
-    // TODO: revalidatePath()
-
-    return {
-      ok: true,
-      message: 'Product updated successfully',
-    }
+    return prismaTransaction;
   } catch (error) {
     console.error(error);
     return {
       ok: false,
-      message: 'Error updating product',
+      message: 'Error updating product !',
     }
   }
 };

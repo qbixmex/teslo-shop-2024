@@ -6,7 +6,7 @@ import { Category, Product, ProductImage } from "@/interfaces";
 import styles from "./product-form.module.css";
 import clsx from 'clsx';
 import { SubmitHandler, useForm } from "react-hook-form";
-// import { useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { Alert } from "@/components";
 import { FaTrash } from 'react-icons/fa';
 import { createProduct, updateProduct } from "@/actions";
@@ -31,10 +31,18 @@ type FormInputs = {
   image?: any;
 };
 
+const INITIAL_MESSAGE: {
+  type: 'success' | 'error' | 'none';
+  text: string;
+} = {
+  type: 'none',
+  text: '',
+};
+
 const ProductForm: FC<Props> = ({ product, categories }) => {
 
-  // const router = useRouter();
-  const [errorMessage, setErrorMessage] = useState('');
+  const router = useRouter();
+  const [message, setMessage] = useState(INITIAL_MESSAGE);
 
   const {
     handleSubmit,
@@ -43,7 +51,6 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
     getValues,
     setValue,
     watch,
-    reset,
   } = useForm<FormInputs>({
     defaultValues: {
       title: product.title ?? 'Workout Running Shirt',
@@ -69,7 +76,7 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
   };
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-    setErrorMessage('');
+    setMessage({ type: 'none', text: '' });
 
     const formData = new FormData();
 
@@ -90,24 +97,33 @@ const ProductForm: FC<Props> = ({ product, categories }) => {
       message: string;
     } = { ok: false, message: 'No action has been called !' };
 
-    if (product.id) {
-      response = await updateProduct(product?.id as string, formData);
-    }
-    
     if (product.id === undefined) {
       response = await createProduct(formData);
     }
+
+    if (product.id) {
+      response = await updateProduct(product?.id as string, formData);
+    }
+
+    if (!response.ok) {
+      setMessage({ type: 'error', text: response.message });
+      return;
+    }
     
-    console.log("RESPONSE:", response);
-
-    // TODO: router.push('/admin/products');
-
+    if (response.ok) {
+      setMessage({ type: 'success', text: response.message });
+      setTimeout(() => setMessage({ type: 'none', text: '' }), 3000);
+      router.replace(`/admin/products/${product.slug}`);
+    }
   };
   
   return (
     <>
-      {errorMessage && (
-        <Alert type="error" withIcon>{errorMessage}</Alert>
+      {message.type !== 'none' && (
+        <Alert
+          type={ message.type === "error" ? "error" : 'success'}
+          withIcon
+        >{message.text}</Alert>
       )}
 
       <form onSubmit={handleSubmit(onSubmit)}>
