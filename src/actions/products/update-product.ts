@@ -6,8 +6,12 @@ import { slugFormat } from "@/utils";
 import productSchema from "./product.schema";
 import { Size } from "@prisma/client";
 import { revalidatePath } from "next/cache";
+import { ProductResponse } from "./product";
 
-const updateProduct = async ( id: string, formData: FormData ) => {
+const updateProduct = async (
+  id: string,
+  formData: FormData
+): Promise<ProductResponse> => {
 
   const data = Object.fromEntries(formData);
   const productParsed = productSchema.safeParse(data);
@@ -27,12 +31,7 @@ const updateProduct = async ( id: string, formData: FormData ) => {
       const updatedProduct = await prisma.product.update({
         where: { id },
         data: {
-          title: productToUpdate.title,
-          slug: productToUpdate.slug,
-          description: productToUpdate.description,
-          price: productToUpdate.price,
-          inStock: productToUpdate.inStock,
-          categoryId: productToUpdate.categoryId,
+          ...productToUpdate,
           sizes: {
             set: productToUpdate.sizes as Size[],
           },
@@ -41,7 +40,6 @@ const updateProduct = async ( id: string, formData: FormData ) => {
               .split(",")
               .map(tag => tag.trim().toLowerCase()),
           },
-          gender: productToUpdate.gender,
         },
       });
 
@@ -56,6 +54,8 @@ const updateProduct = async ( id: string, formData: FormData ) => {
         message: 'Product updated successfully',
         product: {
           ...updatedProduct,
+          price: updatedProduct.price ?? 0,
+          inStock: updatedProduct.inStock ?? 0,
           images: [],
         },
       };

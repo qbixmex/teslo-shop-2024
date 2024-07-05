@@ -10,6 +10,7 @@ import { useRouter } from "next/navigation";
 import { Alert } from "@/components";
 import { FaTrash } from 'react-icons/fa';
 import { createProduct, updateProduct } from "@/actions";
+import { ProductResponse } from "@/actions/products/product";
 
 const sizes = ["XS", "S", "M", "L", "XL", "XXL"];
 
@@ -99,15 +100,7 @@ const ProductForm: FC<Props> = ({ product, categories, slug }) => {
       }
     }
 
-    let response: {
-      ok: boolean;
-      message: string;
-      product?: Product;
-    } = {
-      ok: false,
-      message: 'No action has been called !',
-      product: undefined,
-    };
+    let response = {} as ProductResponse;
 
     if (product.id === undefined) {
       response = await createProduct(formData);
@@ -125,7 +118,7 @@ const ProductForm: FC<Props> = ({ product, categories, slug }) => {
     if (response.ok) {
       setMessage({ type: 'success', text: response.message });
       setTimeout(() => setMessage({ type: 'none', text: '' }), 3000);
-      router.replace(`/product/${response.product?.slug}`);
+      // router.replace(`/product/${response.product?.slug}`);
     }
   };
   

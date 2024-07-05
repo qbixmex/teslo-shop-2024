@@ -1,13 +1,18 @@
 "use server";
+import * as fs from "fs";
 
 import prisma from "@/lib/prisma";
 
 import { slugFormat } from "@/utils";
 import { Size } from "@prisma/client";
+import { v2 as cloudinary } from "cloudinary";
 import productSchema from "./product.schema";
 import { revalidatePath } from "next/cache";
+import { CloudinaryResponse, ProductResponse } from "./product";
 
-const createProduct = async ( formData: FormData ) => {
+cloudinary.config(process.env.CLOUDINARY_URL ?? '');
+
+const createProduct = async ( formData: FormData ): Promise<ProductResponse> => {
   const data = Object.fromEntries(formData);
   const productParsed = productSchema.safeParse(data);
 
@@ -27,37 +32,31 @@ const createProduct = async ( formData: FormData ) => {
   try {
     const prismaTransaction = await prisma.$transaction(async (transaction) => {
 
-      // TODO: 1. Load Images to third-party storage.
-      // TODO: 2. Save Each Image URL to the database.
-
-      if (formData.getAll('images')) {
-        console.log(formData.getAll('images'));
-      }
-
-      return {
-        ok: true,
-        message: 'Check the images',
-      };
-
       const createdProduct = await prisma.product.create({
         data: {
-          title: productToSave.title,
-          slug: productToSave.slug,
-          description: productToSave.description,
-          price: productToSave.price,
-          inStock: productToSave.inStock,
-          categoryId: productToSave.categoryId,
+          ...productToSave,
           sizes: { set: productToSave.sizes as Size[] },
           tags: { set: tagsArray },
-          gender: productToSave.gender,
         },
       });
+      
+      // If user selected images from form,
+      // then upload them to cloudinary storage.
+      if (formData.getAll('images')) {
+        // 1. Load Images to third-party storage.
+        const images = await uploadImages(formData.getAll('images') as File[]);
+        console.log(images);
+      }
+      
+      // TODO: 2. Save Each Image URL to the database.
 
       return {
         ok: true,
         message: 'Product created successfully',
         product: {
           ...createdProduct,
+          price: createdProduct.price ?? 0,
+          inStock: createdProduct.inStock ?? 0,
           images: [],
         },
       }
@@ -75,6 +74,34 @@ const createProduct = async ( formData: FormData ) => {
       ok: false,
       message: 'Error creating a product',
     }
+  }
+};
+
+const uploadImages = async (images: File[]): Promise<(CloudinaryResponse | null)[] | null> => {
+  try {
+    const uploadPromises = images.map(async (image) => {
+      try {
+        const buffer = await image.arrayBuffer();
+        const base64Image = Buffer.from(buffer).toString('base64');
+
+        const response = await cloudinary.uploader.upload(`data:image/jpeg;base64,${base64Image}`);
+
+        return {
+          publicId: response.public_id,
+          secureUrl: response.secure_url,
+        };
+      } catch (error) {
+        console.error(error);
+        return null;
+      }
+    });
+
+    const uploadedImages = await Promise.all(uploadPromises);
+    return uploadedImages;
+
+  } catch (error) {
+    console.error(error);
+    return null;
   }
 };
 
