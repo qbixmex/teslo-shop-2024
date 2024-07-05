@@ -1,16 +1,11 @@
 "use server";
-import crypto from "node:crypto";
-
 import prisma from "@/lib/prisma";
 
-import { slugFormat } from "@/utils";
+import { slugFormat, uploadImages } from "@/utils";
 import { Size } from "@prisma/client";
-import { v2 as cloudinary } from "cloudinary";
 import productSchema from "./product.schema";
 import { revalidatePath } from "next/cache";
-import { CloudinaryResponse, ProductResponse } from "./product";
-
-cloudinary.config(process.env.CLOUDINARY_URL ?? '');
+import { ProductResponse } from "./product";
 
 const createProduct = async ( formData: FormData ): Promise<ProductResponse> => {
   const data = Object.fromEntries(formData);
@@ -49,7 +44,6 @@ const createProduct = async ( formData: FormData ): Promise<ProductResponse> => 
         if (!images) {
           throw 'Error uploading images to cloudinary';
         }
-        console.log(images);
 
         // 2. Save Each Image URL to the database.
         await prisma.productImage.createMany({
@@ -61,7 +55,6 @@ const createProduct = async ( formData: FormData ): Promise<ProductResponse> => 
         });
       }
       
-
       return {
         ok: true,
         message: 'Product created successfully',
@@ -89,35 +82,6 @@ const createProduct = async ( formData: FormData ): Promise<ProductResponse> => 
   }
 };
 
-const uploadImages = async (images: File[]): Promise<(CloudinaryResponse | null)[] | null> => {
-  try {
-    const uploadPromises = images.map(async (image) => {
-      try {
-        const buffer = await image.arrayBuffer();
-        const base64Image = Buffer.from(buffer).toString('base64');
 
-        return cloudinary.uploader.upload(`data:image/jpeg;base64,${base64Image}`, {
-          folder: 'teslo-shop/products',
-          public_id: crypto.randomUUID(),
-        }).then(response => {
-          return {
-            publicId: response.public_id,
-            secureUrl: response.secure_url,
-          };
-        });
-      } catch (error) {
-        console.error(error);
-        return null;
-      }
-    });
-
-    const uploadedImages = await Promise.all(uploadPromises);
-    return uploadedImages;
-
-  } catch (error) {
-    console.error(error);
-    return null;
-  }
-};
 
 export default createProduct;
